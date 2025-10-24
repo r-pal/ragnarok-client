@@ -1,4 +1,4 @@
-# Ragnarok Client
+# Ragnarök Client
 
 This is an app for keeping track of Houses, Scores and Games
 
