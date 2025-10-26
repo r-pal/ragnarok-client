@@ -21,9 +21,8 @@ export function ThemeProviderWrapper({ children }: ThemeProviderWrapperProps) {
     setTheme(newTheme);
   };
 
-  // Load default theme on mount
   useEffect(() => {
-    switchTheme('light');
+    switchTheme('dark');
   }, []);
 
   if (!theme) return null;
