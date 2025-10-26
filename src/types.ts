@@ -30,10 +30,6 @@ balance: number;
 total: number;
 }
 
-export interface IScoreboard {
-scoreboard: Array<IScoreboardItem>
-}
-
 export interface IScoreboardItem {   
 houseOrFactionName: string;
 score: IScore;
