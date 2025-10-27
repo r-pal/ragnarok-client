@@ -15,7 +15,7 @@ export enum Humours {
   choleric = "choleric",
   phlegmatic = "phlegmatic",
   melancholic = "melancholic",
-  sangine = "sangine",
+  sangine = "sangine"
 }
 
 export interface IScore {
