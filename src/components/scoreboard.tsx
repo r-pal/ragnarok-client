@@ -1,23 +1,74 @@
-import { Grid } from "@mui/material"
-import { scoreboardDummy } from "inputs/scoreboardDummy"
+import { Box, Divider, Grid } from "@mui/material";
+import { scoreboardDummy } from "inputs/scoreboardDummy";
 
-interface Scoreboard {
-
-}
+interface Scoreboard {}
 
 export const Scoreboard: React.FC<Scoreboard> = () => {
+  const rankedScoreboardData = scoreboardDummy.sort(
+    (a, b) => a.ranking - b.ranking,
+  );
 
-const scores = scoreboardDummy.map(score => 
-<Grid>
-<Grid>
-{score.ranking}
-</Grid>
-{score.houseOrFactionName}
-</Grid>)
+  const scores = rankedScoreboardData.map((team) => (
+    <>
+      <Grid
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: 4,
+          justifyContent: "flex-end",
+        }}
+      >
+        <Grid style={{ fontSize: 24 }}>{team.ranking}</Grid>
+        {team.houseOrFactionName}
+      </Grid>
+      <Grid
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: 4,
+          justifyContent: "flex-end",
+        }}
+      >
+        <Box
+          sx={{ border: 1 }}
+          style={{ borderColor: "green" }}
+          width={48}
+          height={48}
+        >
+          {team.score.phlegmatic}
+        </Box>
+        <Box
+          sx={{ border: 1 }}
+          style={{ borderColor: "crimson" }}
+          width={48}
+          height={48}
+        >
+          {team.score.sangine}
+        </Box>
+        <Box
+          sx={{ border: 1 }}
+          style={{ borderColor: "yellow" }}
+          width={48}
+          height={48}
+        >
+          {team.score.choleric}
+        </Box>
+        <Box
+          sx={{ border: 1 }}
+          style={{
+            borderColor: "linear-gradient(90deg, #ffffff 0%, #000000 100%)",
+          }}
+          width={48}
+          height={48}
+        >
+          {team.score.melancholic}
+        </Box>
+        <Divider />
+      </Grid>
+    </>
+  ));
 
-return (
-        <Grid style={{ display: 'flexbox', flexDirection: 'column' }}>
-            {scores}
-        </Grid>
-    )
-}
+  return (
+    <Grid style={{ display: "flex", flexDirection: "column" }}>{scores}</Grid>
+  );
+};

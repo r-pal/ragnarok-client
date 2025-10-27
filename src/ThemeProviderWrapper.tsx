@@ -1,7 +1,7 @@
-import {  createContext,  useState,  useEffect,  ReactNode} from 'react';
-import { ThemeProvider, CssBaseline } from '@mui/material';
-import { Theme } from '@mui/material/styles';
-import { loadTheme } from './hooks/themeLoader';
+import { createContext, useState, useEffect, ReactNode } from "react";
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import { Theme } from "@mui/material/styles";
+import { loadTheme } from "./hooks/themeLoader";
 
 interface ThemeContextType {
   switchTheme: (themeName: string) => Promise<void>;
@@ -22,7 +22,7 @@ export function ThemeProviderWrapper({ children }: ThemeProviderWrapperProps) {
   };
 
   useEffect(() => {
-    switchTheme('dark');
+    switchTheme("dark");
   }, []);
 
   if (!theme) return null;

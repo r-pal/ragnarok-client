@@ -1,4 +1,4 @@
-import { createTheme, ThemeOptions, Theme } from '@mui/material/styles';
+import { createTheme, ThemeOptions, Theme } from "@mui/material/styles";
 
 /**
  * Fetch a theme JSON file from the public folder and create a MUI theme.
@@ -11,9 +11,8 @@ export async function loadTheme(themeName: string): Promise<Theme> {
     return createTheme(themeData);
   } catch (err) {
     console.error(`Failed to load theme: ${themeName}`, err);
-    const fallbackRes = await fetch('/assets/themes/light.json');
+    const fallbackRes = await fetch("/assets/themes/light.json");
     const fallbackData = (await fallbackRes.json()) as ThemeOptions;
     return createTheme(fallbackData);
   }
 }
-
