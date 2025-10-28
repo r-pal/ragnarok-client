@@ -7,7 +7,7 @@ export const scoreboardDummy: Array<IScoreboardItem> = [
       choleric: 600,
       phlegmatic: 223,
       melancholic: 534,
-      sangine: 234
+      sanguine: 234
     },
     points: {
       balance: 1,
@@ -23,7 +23,7 @@ export const scoreboardDummy: Array<IScoreboardItem> = [
   //     choleric: 600,
   //     phlegmatic: 23,
   //     melancholic: 94,
-  //     sangine: 234
+  //     sanguine: 234
   //   },
   //   points: {
   //     balance: 6,
@@ -37,7 +37,7 @@ export const scoreboardDummy: Array<IScoreboardItem> = [
       choleric: 600,
       phlegmatic: 23,
       melancholic: 94,
-      sangine: 234
+      sanguine: 234
     },
     points: {
       balance: 2,

@@ -12,13 +12,13 @@ export interface IHouse {
   // history: Array<History>;
 }
 
-export type Humours = "choleric" | "phlegmatic" | "melancholic" | "sangine"
+export type Humours = "choleric" | "phlegmatic" | "melancholic" | "sanguine"
 
 export interface IScore {
   choleric: number;
   phlegmatic: number;
   melancholic: number;
-  sangine: number;
+  sanguine: number;
 }
 
 export interface IPoints {

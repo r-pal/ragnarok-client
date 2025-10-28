@@ -1,19 +1,17 @@
 import {
   Box,
   Button,
-  Dialog,
   Divider,
   Grid,
   List,
   ListItem,
   ListItemAvatar,
   ListItemButton,
-  Modal,
-  ModalManager
+  Modal
 } from "@mui/material";
 import { housesDummy } from "inputs/housesDummy";
 import { scoreboardDummy } from "inputs/scoreboardDummy";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IHouse, IScore } from "types";
 
 interface Scoreboard {}
@@ -64,7 +62,7 @@ export const Scoreboard: React.FC<Scoreboard> = () => {
           width={48}
           height={48}
         >
-          {score.sangine}
+          {score.sanguine}
         </Box>
         <Box
           sx={{ border: 1 }}

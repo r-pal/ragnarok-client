@@ -1,13 +1,16 @@
+import { Footer } from "components/footer";
 import { Scoreboard } from "components/scoreboard";
+import { useState } from "react";
 
 function App() {
+  const [adminMode, setAdminMode] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        Ragnarök
-        <Scoreboard />
-      </header>
-    </div>
+    <>
+      <header>Ragnarök</header>
+      <Scoreboard />
+      <Footer {...{ adminMode, setAdminMode }} />
+    </>
   );
 }
 

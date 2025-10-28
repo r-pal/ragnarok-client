@@ -12,7 +12,7 @@ export const housesDummy: Array<IHouse> = [
       choleric: 600,
       phlegmatic: 223,
       melancholic: 534,
-      sangine: 234
+      sanguine: 234
     },
     points: {
       balance: 1,
@@ -30,7 +30,7 @@ export const housesDummy: Array<IHouse> = [
       choleric: 600,
       phlegmatic: 23,
       melancholic: 94,
-      sangine: 234
+      sanguine: 234
     },
     points: {
       balance: 6,
@@ -44,12 +44,12 @@ export const housesDummy: Array<IHouse> = [
       motto: "memento mori",
       crestUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Coat_of_Arms_of_the_Count_of_Flanders_%28Escutcheon%29_%28according_to_the_Gelre_Armorial%29.svg/1280px-Coat_of_Arms_of_the_Count_of_Flanders_%28Escutcheon%29_%28according_to_the_Gelre_Armorial%29.svg.png",
       strength: "melancholic",
-      weakness: "sangine",
+      weakness: "sanguine",
     score: {
       choleric: 86,
       phlegmatic: 23,
       melancholic: 234,
-      sangine: 234
+      sanguine: 234
     },
     points: {
       balance: 5,
