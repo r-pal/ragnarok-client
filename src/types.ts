@@ -7,16 +7,12 @@ export interface IHouse {
   weakness: Humours;
   score: IScore;
   points: IPoints;
-  ranking: number;
+  factionId?: number
+  // ranking: number;
   // history: Array<History>;
 }
 
-export enum Humours {
-  choleric = "choleric",
-  phlegmatic = "phlegmatic",
-  melancholic = "melancholic",
-  sangine = "sangine"
-}
+export type Humours = "choleric" | "phlegmatic" | "melancholic" | "sangine"
 
 export interface IScore {
   choleric: number;
@@ -31,7 +27,8 @@ export interface IPoints {
 }
 
 export interface IScoreboardItem {
-  houseOrFactionName: string;
+  name: string;
+  houseIds?: Array<number>
   score: IScore;
   points: IPoints;
   ranking: number;
