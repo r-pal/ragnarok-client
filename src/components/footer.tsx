@@ -5,7 +5,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Divider,
   TextField
 } from "@mui/material";
 import { useState } from "react";
@@ -15,7 +14,7 @@ interface IFooter {
   setAdminMode: (x: boolean) => void;
 }
 
-const CORRECT_PASSWORD = "secret123";
+const SECRET_PASSWORD = "1234";
 
 export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode }) => {
   const [openAdminModeModal, setOpenAdminModeModal] = useState(false);
@@ -25,7 +24,7 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode }) => {
 
   const handleSubmit = () => {
     console.log(password);
-    if (password === CORRECT_PASSWORD) {
+    if (password === SECRET_PASSWORD) {
       setAdminMode(true);
     }
     setOpenAdminModeModal(false);
@@ -34,7 +33,6 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode }) => {
 
   return (
     <>
-      <Divider />
       <ButtonBase
         onClick={
           adminMode
@@ -42,14 +40,26 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode }) => {
             : () => setOpenAdminModeModal(!openAdminModeModal)
         }
         sx={{
-          backgroundColor: adminMode ? "red" : "grey",
+          backgroundColor: adminMode ? "maroon" : "darkslategrey",
           borderRadius: "8px",
           p: 1,
-          transition: "background-color 0.3s ease"
+          transition: "background-color 0.3s ease",
+          position: "fixed",
+          bottom: 0
         }}
       >
         <img src="assets/images/quill-img.svg" alt="Q" style={{ height: 24 }} />
       </ButtonBase>
+      {adminMode && (
+        <>
+          <Button onClick={() => setOpenAdminModeModal(!openAdminModeModal)}>
+            NEW HOUSE
+          </Button>
+          <Button onClick={() => setOpenAdminModeModal(!openAdminModeModal)}>
+            NEW FACTION
+          </Button>
+        </>
+      )}
       <Dialog
         open={openAdminModeModal}
         onClose={handleClose}

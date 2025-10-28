@@ -1,6 +1,8 @@
 import { IScoreboardItem } from "types";
 
-export const scoreboardDummy: Array<IScoreboardItem> = [
+export const scoreboardDummy: Array<IScoreboardItem> = 
+//GET
+[
   {
     name: "House of Boils",
     score: {
@@ -17,20 +19,6 @@ export const scoreboardDummy: Array<IScoreboardItem> = [
     houseIds: [1]
 
   },
-  // {
-  //   name: "House of Miasma",
-  //   score: {
-  //     choleric: 600,
-  //     phlegmatic: 23,
-  //     melancholic: 94,
-  //     sanguine: 234
-  //   },
-  //   points: {
-  //     balance: 6,
-  //     total: 800
-  //   },
-  //   ranking: 2
-  // },
   {
     name: "Faction Balance",
     score: {

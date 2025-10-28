@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <header>Ragnarök</header>
-      <Scoreboard />
+      <Scoreboard {...{ adminMode }} />
       <Footer {...{ adminMode, setAdminMode }} />
     </>
   );

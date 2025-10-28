@@ -1,6 +1,8 @@
 import { IHouse } from "types";
 
-export const housesDummy: Array<IHouse> = [
+export const housesDummy: Array<IHouse> = 
+//GET
+[
   {
       id: 1,
       name: "House of Boils",
@@ -15,7 +17,7 @@ export const housesDummy: Array<IHouse> = [
       sanguine: 234
     },
     points: {
-      balance: 1,
+      balance: 1, 
       total: 1200
     }
   },

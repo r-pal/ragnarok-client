@@ -1,6 +1,9 @@
 import {
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
   Divider,
   Grid,
   List,
@@ -14,12 +17,15 @@ import { scoreboardDummy } from "inputs/scoreboardDummy";
 import { useState } from "react";
 import { IHouse, IScore } from "types";
 
-interface Scoreboard {}
+interface Scoreboard {
+  adminMode: boolean;
+}
 
-export const Scoreboard: React.FC<Scoreboard> = () => {
+export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
   const [houses, setHouse] = useState<IHouse[] | undefined>(undefined);
   const [openHouseModal, setopenHouseModal] = useState(false);
   const [openFactionModal, setOpenFactionModal] = useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
   const rankedScoreboardData = scoreboardDummy.sort(
     (a, b) => a.ranking - b.ranking
@@ -39,6 +45,12 @@ export const Scoreboard: React.FC<Scoreboard> = () => {
 
   const handleCloseHouseModal = () => setopenHouseModal(false);
   const handleCloseFactionModal = () => setOpenFactionModal(false);
+  const handleCloseDeleteDialog = () => setOpenDeleteDialog(false);
+
+  const deleteHouse = () => {
+    handleCloseDeleteDialog();
+    console.log(`Deleted ${houses && houses[0].name}`);
+  };
 
   const humourScores = (score: IScore) => {
     return (
@@ -178,6 +190,12 @@ export const Scoreboard: React.FC<Scoreboard> = () => {
             <div>{`Weak Humour: ${houses[0].weakness}`}</div>
             {humourScores(houses[0].score)}
             <Button onClick={() => handleCloseHouseModal()}>CLOSE</Button>
+            {adminMode && (
+              <Button onClick={() => handleCloseHouseModal()}>EDIT</Button>
+            )}
+            {adminMode && (
+              <Button onClick={() => setOpenDeleteDialog(true)}>DELETE</Button>
+            )}
           </Box>
         </Modal>
       )}
@@ -203,8 +221,28 @@ export const Scoreboard: React.FC<Scoreboard> = () => {
               </ListItemButton>
             </ListItem>
           ))}
+          {adminMode && (
+            <ListItemButton
+              onClick={() =>
+                console.log(
+                  `delete faction of ${houses?.map((h) => h.name).join(" + ")}`
+                )
+              }
+            >
+              {`delete faction of ${houses?.map((h) => h.name).join(" + ")}?`}
+            </ListItemButton>
+          )}
         </List>
       </Modal>
+      <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
+        <DialogTitle>{`Are you sure - delete ${houses && houses[0].name}?`}</DialogTitle>
+        <DialogActions>
+          <Button onClick={handleCloseDeleteDialog}>No</Button>
+          <Button variant="contained" onClick={deleteHouse}>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
