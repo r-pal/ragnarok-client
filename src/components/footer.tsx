@@ -24,11 +24,12 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode }) => {
   const handleClose = () => setOpenAdminModeModal(false);
 
   const handleSubmit = () => {
+    console.log(password);
     if (password === CORRECT_PASSWORD) {
       setAdminMode(true);
     }
     setOpenAdminModeModal(false);
-    setPassword(""); // reset
+    setPassword("");
   };
 
   return (
@@ -65,7 +66,7 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode }) => {
             fullWidth
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+            onKeyUp={(e) => e.key === "Enter" && handleSubmit()}
           />
         </DialogContent>
         <DialogActions>
