@@ -1,11 +1,11 @@
-import { Grid } from "@mui/material";
-import { housesDummy } from "inputs/housesDummy";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { Grid } from "@mui/material";
+import { getHouses } from "mockAPI/getHouses";
 
 export const ViewHouse: React.FC = () => {
   const addCrest = () => {};
 
-  const house = housesDummy[0];
+  const house = getHouses[0];
 
   return (
     <Grid>

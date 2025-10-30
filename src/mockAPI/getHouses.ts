@@ -1,7 +1,6 @@
-import { IHouse } from "types";
+import { IHouse } from "types/house";
 
-export const housesDummy: Array<IHouse> = 
-//GET
+export const getHouses: Array<IHouse> = 
 [
   {
       id: 1,

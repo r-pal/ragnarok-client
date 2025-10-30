@@ -1,7 +1,6 @@
-import { IScoreboardItem } from "types";
+import { IScoreboardItem } from "types/scoreboard";
 
-export const scoreboardDummy: Array<IScoreboardItem> = 
-//GET
+export const getScoreboard: Array<IScoreboardItem> = 
 [
   {
     name: "House of Boils",

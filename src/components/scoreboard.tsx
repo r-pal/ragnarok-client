@@ -12,10 +12,11 @@ import {
   ListItemButton,
   Modal
 } from "@mui/material";
-import { housesDummy } from "inputs/housesDummy";
-import { scoreboardDummy } from "inputs/scoreboardDummy";
+import { getHouses } from "mockAPI/getHouses";
+import { getScoreboard } from "mockAPI/getScoreboard";
 import { useState } from "react";
-import { IHouse, IScore } from "types";
+import { IHouse } from "types/house";
+import { IScore } from "types/shared";
 
 interface Scoreboard {
   adminMode: boolean;
@@ -27,15 +28,13 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
   const [openFactionModal, setOpenFactionModal] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
-  const rankedScoreboardData = scoreboardDummy.sort(
+  const rankedScoreboardData = getScoreboard.sort(
     (a, b) => a.ranking - b.ranking
   );
 
   const openModal = (houseIds: number[]) => {
     setOpenFactionModal(false);
-    setHouse(
-      houseIds.map((id) => housesDummy.find((house) => house.id === id)!)
-    );
+    setHouse(houseIds.map((id) => getHouses.find((house) => house.id === id)!));
     if (houseIds.length === 1) {
       setopenHouseModal(true);
     } else {
@@ -100,7 +99,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
 
   const scores = rankedScoreboardData.map((team) => {
     const teams = team.houseIds?.map((id) =>
-      housesDummy.find((house) => house.id === id)
+      getHouses.find((house) => house.id === id)
     );
 
     const crests = teams?.map((team) => (
@@ -188,7 +187,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
             <div>{houses[0].motto}</div>
             <div>{`Strong Humour: ${houses[0].strength}`}</div>
             <div>{`Weak Humour: ${houses[0].weakness}`}</div>
-            {humourScores(houses[0].score)}
+            {houses[0].score && humourScores(houses[0].score)}
             <Button onClick={() => handleCloseHouseModal()}>CLOSE</Button>
             {adminMode && (
               <Button onClick={() => handleCloseHouseModal()}>EDIT</Button>
