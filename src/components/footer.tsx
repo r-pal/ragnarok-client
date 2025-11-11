@@ -5,26 +5,35 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField
 } from "@mui/material";
 import { useState } from "react";
 import { AddHouse } from "./House/addHouse";
 import { AddFaction } from "./Faction/addFaction";
 import { GameHistory } from "./Game/gameHistory";
+import { Explainer } from "./explainer";
+import { SortBy } from "./header";
 
 interface IFooter {
   adminMode: boolean;
   setAdminMode: (x: boolean) => void;
+  sortBy: SortBy;
+  onSortChange: (sortBy: SortBy) => void;
 }
 
 const SECRET_PASSWORD = "1234";
 
-export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode }) => {
+export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onSortChange }) => {
   const [openAdminModeModal, setOpenAdminModeModal] = useState(false);
   const [openNewHouseModal, setOpenNewHouseModal] = useState(false);
   const [openNewFactionModal, setOpenNewFactionModal] = useState(false);
   const [openNewGameModal, setOpenNewGameModal] = useState(false);
   const [openGameHistoryModal, setOpenGameHistoryModal] = useState(false);
+  const [openExplainer, setOpenExplainer] = useState(false);
   const [password, setPassword] = useState("");
 
   const handleClose = () => setOpenAdminModeModal(false);
@@ -46,13 +55,20 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode }) => {
     <>
       <div
         style={{
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
           backgroundColor: "rgba(0, 0, 0, 0.8)",
-          padding: "8px 16px",
+          padding: "12px 16px",
           display: "flex",
-          gap: "8px",
-          alignItems: "center"
+          gap: "16px",
+          alignItems: "center",
+          justifyContent: "space-between",
+          zIndex: 1000
         }}
       >
+        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
         <ButtonBase
           onClick={
             adminMode
@@ -87,6 +103,45 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode }) => {
             </Button>
           </>
         )}
+        </div>
+
+        <FormControl sx={{ minWidth: 200 }}>
+          <InputLabel sx={{ color: "white" }}>Rank By</InputLabel>
+          <Select
+            value={sortBy}
+            label="Rank By"
+            onChange={(e) => onSortChange(e.target.value as SortBy)}
+            sx={{
+              color: "white",
+              ".MuiOutlinedInput-notchedOutline": {
+                borderColor: "rgba(255, 255, 255, 0.3)"
+              },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "rgba(255, 255, 255, 0.5)"
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "white"
+              },
+              ".MuiSvgIcon-root": {
+                color: "white"
+              }
+            }}
+          >
+            <MenuItem value="balance">Balance (σ)</MenuItem>
+            <MenuItem value="total">Total Points</MenuItem>
+            <MenuItem value="choleric">Choleric</MenuItem>
+            <MenuItem value="phlegmatic">Phlegmatic</MenuItem>
+            <MenuItem value="melancholic">Melancholic</MenuItem>
+            <MenuItem value="sanguine">Sanguine</MenuItem>
+          </Select>
+        </FormControl>
+
+        <Button
+          onClick={() => setOpenExplainer(true)}
+          sx={{ color: "white", minWidth: "120px" }}
+        >
+          How It Works
+        </Button>
       </div>
       <Dialog
         open={openAdminModeModal}
@@ -171,6 +226,15 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode }) => {
         <DialogActions>
           <Button onClick={handleCloseGameHistory}>Close</Button>
         </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openExplainer}
+        onClose={() => setOpenExplainer(false)}
+        maxWidth="md"
+        fullWidth
+      >
+        <Explainer />
       </Dialog>
     </>
   );

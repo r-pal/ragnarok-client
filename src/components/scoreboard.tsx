@@ -14,11 +14,12 @@ import { IHouse } from "types/house";
 import { IScore } from "types/shared";
 import { ViewHouseModal } from "./House/viewHouseModal";
 import { ViewFactionModal } from "./Faction/viewFactionModal";
-import { Header, SortBy } from "./header";
+import { SortBy } from "./header";
 import { getStandardDeviation } from "helpers/maths";
 
 interface Scoreboard {
   adminMode: boolean;
+  sortBy: SortBy;
 }
 
 interface ScoreboardItem {
@@ -27,12 +28,11 @@ interface ScoreboardItem {
   houseIds: number[];
 }
 
-export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
+export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
   const [houses, setHouse] = useState<IHouse[] | undefined>(undefined);
   const [openHouseModal, setopenHouseModal] = useState(false);
   const [openFactionModal, setOpenFactionModal] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const [sortBy, setSortBy] = useState<SortBy>("balance");
 
   // Helper functions to calculate points
   const calculateTotal = (score: IScore) => {
@@ -48,6 +48,25 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
     ]);
   };
 
+  // Apply strength (×2) and weakness (÷2) multipliers to a house's score
+  const applyMultipliers = (house: IHouse): IScore => {
+    if (!house.score) return { choleric: 0, phlegmatic: 0, melancholic: 0, sanguine: 0 };
+    
+    const modifiedScore = { ...house.score };
+    
+    // Apply strength multiplier (×2)
+    if (house.strength) {
+      modifiedScore[house.strength] = house.score[house.strength] * 2;
+    }
+    
+    // Apply weakness multiplier (÷2)
+    if (house.weakness) {
+      modifiedScore[house.weakness] = house.score[house.weakness] / 2;
+    }
+    
+    return modifiedScore;
+  };
+
   // Build scoreboard from houses and factions
   const buildScoreboard = (): ScoreboardItem[] => {
     const housesInFactions = getFactions.flatMap(f => f.houseIds);
@@ -60,12 +79,24 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
         .filter(h => h && h.score) as IHouse[];
       
       if (factionHouses.length > 0) {
-        // Aggregate scores from all houses in faction
+        // Aggregate scores from all houses in faction (with strength/weakness multipliers)
         const aggregatedScore: IScore = {
-          choleric: factionHouses.reduce((sum, h) => sum + (h.score?.choleric || 0), 0),
-          phlegmatic: factionHouses.reduce((sum, h) => sum + (h.score?.phlegmatic || 0), 0),
-          melancholic: factionHouses.reduce((sum, h) => sum + (h.score?.melancholic || 0), 0),
-          sanguine: factionHouses.reduce((sum, h) => sum + (h.score?.sanguine || 0), 0)
+          choleric: factionHouses.reduce((sum, h) => {
+            const modifiedScore = applyMultipliers(h);
+            return sum + modifiedScore.choleric;
+          }, 0),
+          phlegmatic: factionHouses.reduce((sum, h) => {
+            const modifiedScore = applyMultipliers(h);
+            return sum + modifiedScore.phlegmatic;
+          }, 0),
+          melancholic: factionHouses.reduce((sum, h) => {
+            const modifiedScore = applyMultipliers(h);
+            return sum + modifiedScore.melancholic;
+          }, 0),
+          sanguine: factionHouses.reduce((sum, h) => {
+            const modifiedScore = applyMultipliers(h);
+            return sum + modifiedScore.sanguine;
+          }, 0)
         };
 
         scoreboardItems.push({
@@ -81,7 +112,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
       if (!housesInFactions.includes(house.id) && house.score) {
         scoreboardItems.push({
           name: house.name,
-          score: house.score,
+          score: applyMultipliers(house),
           houseIds: [house.id]
         });
       }
@@ -139,6 +170,12 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
   };
 
   const humourScores = (score: IScore) => {
+    const getBoxStyle = (humour: string) => ({
+      border: sortBy === humour ? 3 : 1,
+      backgroundColor: sortBy === humour ? "rgba(255, 215, 0, 0.2)" : "transparent",
+      fontWeight: sortBy === humour ? "bold" : "normal"
+    });
+
     return (
       <Grid
         style={{
@@ -147,7 +184,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
         }}
       >
         <Box
-          sx={{ border: 1 }}
+          sx={getBoxStyle("phlegmatic")}
           style={{ borderColor: "green" }}
           width={48}
           height={48}
@@ -155,7 +192,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
           {score.phlegmatic}
         </Box>
         <Box
-          sx={{ border: 1 }}
+          sx={getBoxStyle("sanguine")}
           style={{ borderColor: "crimson" }}
           width={48}
           height={48}
@@ -163,7 +200,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
           {score.sanguine}
         </Box>
         <Box
-          sx={{ border: 1 }}
+          sx={getBoxStyle("choleric")}
           style={{ borderColor: "yellow" }}
           width={48}
           height={48}
@@ -171,7 +208,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
           {score.choleric}
         </Box>
         <Box
-          sx={{ border: 1 }}
+          sx={getBoxStyle("melancholic")}
           style={{
             borderColor: "linear-gradient(90deg, #ffffff 0%, #000000 100%)"
           }}
@@ -238,10 +275,20 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
               minWidth: 250
             }}
           >
-            <div>
+            <div style={{
+              backgroundColor: sortBy === "total" ? "rgba(255, 215, 0, 0.2)" : "transparent",
+              padding: sortBy === "total" ? "4px 8px" : "0",
+              borderRadius: "4px",
+              fontWeight: sortBy === "total" ? "bold" : "normal"
+            }}>
               <strong>Total:</strong> {calculateTotal(team.score)}
             </div>
-            <div>
+            <div style={{
+              backgroundColor: sortBy === "balance" ? "rgba(255, 215, 0, 0.2)" : "transparent",
+              padding: sortBy === "balance" ? "4px 8px" : "0",
+              borderRadius: "4px",
+              fontWeight: sortBy === "balance" ? "bold" : "normal"
+            }}>
               <strong>Balance (σ):</strong> {calculateBalance(team.score).toFixed(2)}
             </div>
           </Grid>
@@ -258,13 +305,12 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
 
   return (
     <>
-      <Header sortBy={sortBy} onSortChange={setSortBy} />
       <Grid 
         style={{ 
           display: "flex", 
           flexDirection: "column",
           overflowY: "auto",
-          flex: 1
+          height: "100%"
         }}
       >
         {scores}
