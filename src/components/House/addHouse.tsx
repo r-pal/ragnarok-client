@@ -23,6 +23,18 @@ const initialValues: IPostHouse = {
 
 export const AddHouse: React.FC = () => {
   const handleSubmit = (values: IPostHouse) => {
+    // Validate that strength and weakness are selected
+    if (!values.strength || !values.weakness) {
+      alert("Please select both strength and weakness");
+      return;
+    }
+
+    // Validate that strength and weakness are different
+    if (values.strength === values.weakness) {
+      alert("Strength and weakness cannot be the same humour!");
+      return;
+    }
+
     console.log("New house:", values);
     // TODO: Add API call to create house
   };

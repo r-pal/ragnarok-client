@@ -5,18 +5,15 @@ import {
   DialogActions,
   DialogTitle,
   Divider,
-  Grid,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemButton,
-  Modal
+  Grid
 } from "@mui/material";
 import { getHouses } from "mockAPI/getHouses";
 import { getScoreboard } from "mockAPI/getScoreboard";
 import { useState } from "react";
 import { IHouse } from "types/house";
 import { IScore } from "types/shared";
+import { ViewHouseModal } from "./House/viewHouseModal";
+import { ViewFactionModal } from "./Faction/viewFactionModal";
 
 interface Scoreboard {
   adminMode: boolean;
@@ -34,10 +31,12 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
 
   const openModal = (houseIds: number[]) => {
     setOpenFactionModal(false);
-    setHouse(houseIds.map((id) => getHouses.find((house) => house.id === id)!));
+    const selectedHouses = houseIds.map((id) => getHouses.find((house) => house.id === id)!);
+    setHouse(selectedHouses);
     if (houseIds.length === 1) {
       setopenHouseModal(true);
     } else {
+      // Multiple houses = faction
       setOpenFactionModal(true);
     }
   };
@@ -156,83 +155,35 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
     );
   });
 
-  // const crests = houses?.map(house => house)
+  const handleDeleteFaction = () => {
+    console.log(
+      `delete faction of ${houses?.map((h) => h.name).join(" + ")}`
+    );
+  };
 
   return (
     <>
       <Grid style={{ display: "flex", flexDirection: "column" }}>{scores}</Grid>
-      {houses && (
-        <Modal
+      {houses && houses.length === 1 && (
+        <ViewHouseModal
           open={openHouseModal}
+          house={houses[0]}
+          adminMode={adminMode}
           onClose={handleCloseHouseModal}
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            // backgroundColor: "brown",
-            transform: "translate(-50%, -50%)",
-            display: "flex",
-            flexDirection: "column"
-          }}
-        >
-          <Box
-            style={{
-              gap: 4,
-              height: 400,
-              width: 300
-            }}
-          >
-            <img src={houses[0].crestUrl} style={{ height: 48 }} />
-            <div>{houses[0].name}</div>
-            <div>{houses[0].motto}</div>
-            <div>{`Strong Humour: ${houses[0].strength}`}</div>
-            <div>{`Weak Humour: ${houses[0].weakness}`}</div>
-            {houses[0].score && humourScores(houses[0].score)}
-            <Button onClick={() => handleCloseHouseModal()}>CLOSE</Button>
-            {adminMode && (
-              <Button onClick={() => handleCloseHouseModal()}>EDIT</Button>
-            )}
-            {adminMode && (
-              <Button onClick={() => setOpenDeleteDialog(true)}>DELETE</Button>
-            )}
-          </Box>
-        </Modal>
+          onDelete={() => setOpenDeleteDialog(true)}
+          humourScores={humourScores}
+        />
       )}
-      <Modal
-        open={openFactionModal}
-        onClose={handleCloseFactionModal}
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          backgroundColor: "brown",
-          transform: "translate(-50%, -50%)"
-        }}
-      >
-        <List>
-          {houses?.map((house) => (
-            <ListItem disablePadding key={house.id}>
-              <ListItemButton onClick={() => openModal([house.id])}>
-                <ListItemAvatar>
-                  <img src={house.crestUrl} style={{ height: 24 }} />
-                </ListItemAvatar>
-                {house.name}
-              </ListItemButton>
-            </ListItem>
-          ))}
-          {adminMode && (
-            <ListItemButton
-              onClick={() =>
-                console.log(
-                  `delete faction of ${houses?.map((h) => h.name).join(" + ")}`
-                )
-              }
-            >
-              {`delete faction of ${houses?.map((h) => h.name).join(" + ")}?`}
-            </ListItemButton>
-          )}
-        </List>
-      </Modal>
+      {houses && houses.length > 1 && (
+        <ViewFactionModal
+          open={openFactionModal}
+          houses={houses}
+          adminMode={adminMode}
+          onClose={handleCloseFactionModal}
+          onHouseClick={(houseId) => openModal([houseId])}
+          onDelete={handleDeleteFaction}
+        />
+      )}
       <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
         <DialogTitle>{`Are you sure - delete ${houses && houses[0].name}?`}</DialogTitle>
         <DialogActions>
