@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import { AddHouse } from "./House/addHouse";
 import { AddFaction } from "./Faction/addFaction";
+import { GameHistory } from "./Game/gameHistory";
 
 interface IFooter {
   adminMode: boolean;
@@ -22,11 +23,15 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode }) => {
   const [openAdminModeModal, setOpenAdminModeModal] = useState(false);
   const [openNewHouseModal, setOpenNewHouseModal] = useState(false);
   const [openNewFactionModal, setOpenNewFactionModal] = useState(false);
+  const [openNewGameModal, setOpenNewGameModal] = useState(false);
+  const [openGameHistoryModal, setOpenGameHistoryModal] = useState(false);
   const [password, setPassword] = useState("");
 
   const handleClose = () => setOpenAdminModeModal(false);
   const handleCloseNewHouse = () => setOpenNewHouseModal(false);
   const handleCloseNewFaction = () => setOpenNewFactionModal(false);
+  const handleCloseNewGame = () => setOpenNewGameModal(false);
+  const handleCloseGameHistory = () => setOpenGameHistoryModal(false);
 
   const handleSubmit = () => {
     console.log(password);
@@ -39,6 +44,16 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode }) => {
 
   return (
     <>
+      <Button
+        onClick={() => setOpenGameHistoryModal(true)}
+        sx={{
+          position: "fixed",
+          bottom: 0,
+          left: 60
+        }}
+      >
+        GAME HISTORY
+      </Button>
       <ButtonBase
         onClick={
           adminMode
@@ -63,6 +78,9 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode }) => {
           </Button>
           <Button onClick={() => setOpenNewFactionModal(true)}>
             NEW FACTION
+          </Button>
+          <Button onClick={() => setOpenNewGameModal(true)}>
+            NEW GAME
           </Button>
         </>
       )}
@@ -118,6 +136,36 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseNewFaction}>Close</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openNewGameModal}
+        onClose={handleCloseNewGame}
+        fullWidth
+        maxWidth="md"
+      >
+        <DialogTitle>New Game</DialogTitle>
+        <DialogContent>
+          {/* TODO: Add NewGame component */}
+          <p>New Game form coming soon...</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseNewGame}>Close</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openGameHistoryModal}
+        onClose={handleCloseGameHistory}
+        fullWidth
+        maxWidth="lg"
+      >
+        <DialogContent>
+          <GameHistory />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseGameHistory}>Close</Button>
         </DialogActions>
       </Dialog>
     </>
