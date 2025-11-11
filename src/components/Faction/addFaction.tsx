@@ -10,6 +10,7 @@ import {
 import { Formik, Form } from "formik";
 import { IFaction } from "types/faction";
 import { getHouses } from "mockAPI/getHouses";
+import { getFactions } from "mockAPI/getFactions";
 
 const initialValues: Omit<IFaction, "houseIds"> & { houseIds: number[] } = {
   name: "",
@@ -23,9 +24,12 @@ export const AddFaction: React.FC = () => {
     // TODO: Add API call to create faction
   };
 
+  // Get all house IDs that are already in factions
+  const housesInFactions = getFactions.flatMap(faction => faction.houseIds);
+
   // Only show houses that don't already belong to a faction
   const availableHouses = getHouses
-    .filter((house) => !house.factionId)
+    .filter((house) => !housesInFactions.includes(house.id))
     .map((house) => ({
       id: house.id,
       label: house.name,

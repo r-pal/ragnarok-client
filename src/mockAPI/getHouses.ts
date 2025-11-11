@@ -14,10 +14,6 @@ export const getHouses: Array<IHouse> =
       phlegmatic: 223,
       melancholic: 534,
       sanguine: 234
-    },
-    points: {
-      balance: 1, 
-      total: 1200
     }
   },
 {
@@ -32,12 +28,7 @@ export const getHouses: Array<IHouse> =
       phlegmatic: 23,
       melancholic: 94,
       sanguine: 234
-    },
-    points: {
-      balance: 6,
-      total: 800
-    },
-    factionId: 1
+    }
 },
   {
     id: 3,
@@ -51,12 +42,7 @@ export const getHouses: Array<IHouse> =
       phlegmatic: 23,
       melancholic: 234,
       sanguine: 234
-    },
-    points: {
-      balance: 5,
-      total: 800
-    },
-    factionId: 1
+    }
   },
   {
     id: 4,
@@ -70,10 +56,6 @@ export const getHouses: Array<IHouse> =
       phlegmatic: 89,
       melancholic: 312,
       sanguine: 567
-    },
-    points: {
-      balance: 3,
-      total: 950
     }
   },
   {
@@ -88,12 +70,7 @@ export const getHouses: Array<IHouse> =
       phlegmatic: 489,
       melancholic: 156,
       sanguine: 278
-    },
-    points: {
-      balance: 4,
-      total: 1050
-    },
-    factionId: 2
+    }
   },
   {
     id: 6,
@@ -107,12 +84,7 @@ export const getHouses: Array<IHouse> =
       phlegmatic: 134,
       melancholic: 245,
       sanguine: 123
-    },
-    points: {
-      balance: 2,
-      total: 1100
-    },
-    factionId: 2
+    }
   },
   {
     id: 7,
@@ -126,10 +98,6 @@ export const getHouses: Array<IHouse> =
       phlegmatic: 298,
       melancholic: 445,
       sanguine: 189
-    },
-    points: {
-      balance: 7,
-      total: 900
     }
   },
   {
@@ -144,10 +112,6 @@ export const getHouses: Array<IHouse> =
       phlegmatic: 345,
       melancholic: 123,
       sanguine: 612
-    },
-    points: {
-      balance: 8,
-      total: 1150
     }
   },
   {
@@ -162,10 +126,6 @@ export const getHouses: Array<IHouse> =
       phlegmatic: 534,
       melancholic: 267,
       sanguine: 145
-    },
-    points: {
-      balance: 6,
-      total: 1000
     }
   },
   {
@@ -180,10 +140,6 @@ export const getHouses: Array<IHouse> =
       phlegmatic: 156,
       melancholic: 478,
       sanguine: 234
-    },
-    points: {
-      balance: 5,
-      total: 975
     }
   }
 ];

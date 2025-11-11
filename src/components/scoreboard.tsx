@@ -8,16 +8,23 @@ import {
   Grid
 } from "@mui/material";
 import { getHouses } from "mockAPI/getHouses";
-import { getScoreboard } from "mockAPI/getScoreboard";
+import { getFactions } from "mockAPI/getFactions";
 import { useState } from "react";
 import { IHouse } from "types/house";
 import { IScore } from "types/shared";
 import { ViewHouseModal } from "./House/viewHouseModal";
 import { ViewFactionModal } from "./Faction/viewFactionModal";
 import { Header, SortBy } from "./header";
+import { getStandardDeviation } from "helpers/maths";
 
 interface Scoreboard {
   adminMode: boolean;
+}
+
+interface ScoreboardItem {
+  name: string;
+  score: IScore;
+  houseIds: number[];
 }
 
 export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
@@ -27,16 +34,72 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [sortBy, setSortBy] = useState<SortBy>("balance");
 
+  // Helper functions to calculate points
+  const calculateTotal = (score: IScore) => {
+    return score.choleric + score.phlegmatic + score.melancholic + score.sanguine;
+  };
+
+  const calculateBalance = (score: IScore) => {
+    return getStandardDeviation([
+      score.choleric,
+      score.phlegmatic,
+      score.melancholic,
+      score.sanguine
+    ]);
+  };
+
+  // Build scoreboard from houses and factions
+  const buildScoreboard = (): ScoreboardItem[] => {
+    const housesInFactions = getFactions.flatMap(f => f.houseIds);
+    const scoreboardItems: ScoreboardItem[] = [];
+
+    // Add factions
+    getFactions.forEach(faction => {
+      const factionHouses = faction.houseIds
+        .map(id => getHouses.find(h => h.id === id))
+        .filter(h => h && h.score) as IHouse[];
+      
+      if (factionHouses.length > 0) {
+        // Aggregate scores from all houses in faction
+        const aggregatedScore: IScore = {
+          choleric: factionHouses.reduce((sum, h) => sum + (h.score?.choleric || 0), 0),
+          phlegmatic: factionHouses.reduce((sum, h) => sum + (h.score?.phlegmatic || 0), 0),
+          melancholic: factionHouses.reduce((sum, h) => sum + (h.score?.melancholic || 0), 0),
+          sanguine: factionHouses.reduce((sum, h) => sum + (h.score?.sanguine || 0), 0)
+        };
+
+        scoreboardItems.push({
+          name: faction.name,
+          score: aggregatedScore,
+          houseIds: faction.houseIds
+        });
+      }
+    });
+
+    // Add individual houses (not in factions)
+    getHouses.forEach(house => {
+      if (!housesInFactions.includes(house.id) && house.score) {
+        scoreboardItems.push({
+          name: house.name,
+          score: house.score,
+          houseIds: [house.id]
+        });
+      }
+    });
+
+    return scoreboardItems;
+  };
+
   // Sort scoreboard based on selected criteria
-  const rankedScoreboardData = getScoreboard
+  const rankedScoreboardData = buildScoreboard()
     .sort((a, b) => {
       switch (sortBy) {
         case "balance":
           // Lower balance (std dev) is better
-          return a.points.balance - b.points.balance;
+          return calculateBalance(a.score) - calculateBalance(b.score);
         case "total":
           // Higher total is better
-          return b.points.total - a.points.total;
+          return calculateTotal(b.score) - calculateTotal(a.score);
         case "choleric":
           return b.score.choleric - a.score.choleric;
         case "phlegmatic":
@@ -46,7 +109,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
         case "sanguine":
           return b.score.sanguine - a.score.sanguine;
         default:
-          return a.points.balance - b.points.balance;
+          return calculateBalance(a.score) - calculateBalance(b.score);
       }
     })
     .map((item, index) => ({
@@ -121,13 +184,13 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
     );
   };
 
-  const scores = rankedScoreboardData.map((team: typeof rankedScoreboardData[0]) => {
-    const teams = team.houseIds?.map((id) =>
+  const scores = rankedScoreboardData.map((team: ScoreboardItem & { ranking: number }) => {
+    const teams = team.houseIds.map((id: number) =>
       getHouses.find((house) => house.id === id)
     );
 
-    const crests = teams?.map((team) => (
-      <img src={team?.crestUrl} style={{ height: 24 }} />
+    const crests = teams.map((house) => (
+      <img src={house?.crestUrl} style={{ height: 24 }} key={house?.id} />
     ));
 
     return (
@@ -176,10 +239,10 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
             }}
           >
             <div>
-              <strong>Total:</strong> {team.points.total}
+              <strong>Total:</strong> {calculateTotal(team.score)}
             </div>
             <div>
-              <strong>Balance (σ):</strong> {team.points.balance.toFixed(2)}
+              <strong>Balance (σ):</strong> {calculateBalance(team.score).toFixed(2)}
             </div>
           </Grid>
         </Grid>

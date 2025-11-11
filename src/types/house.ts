@@ -1,5 +1,5 @@
 
-import { Humours, IPoints, IScore } from "./shared";
+import { Humours, IScore } from "./shared";
 
 //POST new house and EDIT house:
 
@@ -20,11 +20,6 @@ export interface IHouse {
   strength: Humours;
   weakness: Humours;
   score?: IScore;
-  points?: IPoints;
-  factionId?: number;
-  factionName?: string;
-  factionMotto?: string;
-  // history: Array<History>; < low priority, would be cool for each house object to return a history 
 }
 
 //DELETE house:

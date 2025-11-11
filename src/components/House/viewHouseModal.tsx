@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { IHouse, IPostHouse } from "types/house";
 import { IScore, Humours, humourOptions } from "types/shared";
 import { getHouses } from "mockAPI/getHouses";
-import { getScoreboard } from "mockAPI/getScoreboard";
 import { HouseGameHistory } from "./houseGameHistory";
 
 interface ViewHouseModalProps {
@@ -69,13 +68,6 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
       houseToUpdate.crestUrl = editHouse.crestUrl;
       houseToUpdate.strength = editHouse.strength;
       houseToUpdate.weakness = editHouse.weakness;
-      
-      const scoreboardEntry = getScoreboard.find(entry => 
-        entry.houseIds && entry.houseIds.length === 1 && entry.houseIds[0] === house.id
-      );
-      if (scoreboardEntry) {
-        scoreboardEntry.name = editHouse.name;
-      }
       
       setIsEditMode(false);
       alert(`House "${editHouse.name}" updated successfully!`);
