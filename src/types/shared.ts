@@ -1,5 +1,12 @@
 export type Humours = "choleric" | "phlegmatic" | "melancholic" | "sanguine"
 
+export const humourOptions: Humours[] = [
+  "choleric",
+  "phlegmatic",
+  "melancholic",
+  "sanguine",
+];
+
 export interface IScore {
   choleric: number;
   phlegmatic: number;

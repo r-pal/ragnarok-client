@@ -7,8 +7,8 @@ export interface IPostHouse {
   name: string;
   motto: string;
   crestUrl?: string;
-  strength: Humours;
-  weakness: Humours;
+  strength?: Humours;
+  weakness?: Humours;
 }
 
 //GET array of:

@@ -57,5 +57,133 @@ export const getHouses: Array<IHouse> =
       total: 800
     },
     factionId: 1
+  },
+  {
+    id: 4,
+    name: "House of Crimson Tides",
+    motto: "Blood flows eternal",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Blason_Royaume_Navarre.svg/1200px-Blason_Royaume_Navarre.svg.png",
+    strength: "sanguine",
+    weakness: "phlegmatic",
+    score: {
+      choleric: 145,
+      phlegmatic: 89,
+      melancholic: 312,
+      sanguine: 567
+    },
+    points: {
+      balance: 3,
+      total: 950
+    }
+  },
+  {
+    id: 5,
+    name: "House of Whispers",
+    motto: "Silence speaks volumes",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Arms_of_the_Kingdom_of_Saxony.svg/1200px-Arms_of_the_Kingdom_of_Saxony.svg.png",
+    strength: "phlegmatic",
+    weakness: "choleric",
+    score: {
+      choleric: 201,
+      phlegmatic: 489,
+      melancholic: 156,
+      sanguine: 278
+    },
+    points: {
+      balance: 4,
+      total: 1050
+    },
+    factionId: 2
+  },
+  {
+    id: 6,
+    name: "House of Iron Will",
+    motto: "Unyielding as steel",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Armoiries_Bourgogne_anciennes.svg/1200px-Armoiries_Bourgogne_anciennes.svg.png",
+    strength: "choleric",
+    weakness: "sanguine",
+    score: {
+      choleric: 678,
+      phlegmatic: 134,
+      melancholic: 245,
+      sanguine: 123
+    },
+    points: {
+      balance: 2,
+      total: 1100
+    },
+    factionId: 2
+  },
+  {
+    id: 7,
+    name: "House of Twilight",
+    motto: "Between light and shadow",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Armoiries_Bretagne_-_Arms_of_Brittany.svg/1200px-Armoiries_Bretagne_-_Arms_of_Brittany.svg.png",
+    strength: "melancholic",
+    weakness: "choleric",
+    score: {
+      choleric: 167,
+      phlegmatic: 298,
+      melancholic: 445,
+      sanguine: 189
+    },
+    points: {
+      balance: 7,
+      total: 900
+    }
+  },
+  {
+    id: 8,
+    name: "House of Golden Dawn",
+    motto: "Rise with the sun",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Coat_of_arms_of_Castile_and_Le%C3%B3n.svg/1200px-Coat_of_arms_of_Castile_and_Le%C3%B3n.svg.png",
+    strength: "sanguine",
+    weakness: "melancholic",
+    score: {
+      choleric: 234,
+      phlegmatic: 345,
+      melancholic: 123,
+      sanguine: 612
+    },
+    points: {
+      balance: 8,
+      total: 1150
+    }
+  },
+  {
+    id: 9,
+    name: "House of Frost",
+    motto: "Cold hearts, clear minds",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Coat_of_arms_of_the_Kingdom_of_Bavaria.svg/1200px-Coat_of_arms_of_the_Kingdom_of_Bavaria.svg.png",
+    strength: "phlegmatic",
+    weakness: "sanguine",
+    score: {
+      choleric: 178,
+      phlegmatic: 534,
+      melancholic: 267,
+      sanguine: 145
+    },
+    points: {
+      balance: 6,
+      total: 1000
+    }
+  },
+  {
+    id: 10,
+    name: "House of Verdant Roots",
+    motto: "From earth we grow",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Coat_of_arms_of_the_Kingdom_of_Portugal_%281481-1910%29.svg/1200px-Coat_of_arms_of_the_Kingdom_of_Portugal_%281481-1910%29.svg.png",
+    strength: "melancholic",
+    weakness: "phlegmatic",
+    score: {
+      choleric: 289,
+      phlegmatic: 156,
+      melancholic: 478,
+      sanguine: 234
+    },
+    points: {
+      balance: 5,
+      total: 975
+    }
   }
 ];

@@ -8,6 +8,8 @@ import {
   TextField
 } from "@mui/material";
 import { useState } from "react";
+import { AddHouse } from "./House/addHouse";
+import { AddFaction } from "./Faction/addFaction";
 
 interface IFooter {
   adminMode: boolean;
@@ -18,9 +20,13 @@ const SECRET_PASSWORD = "1234";
 
 export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode }) => {
   const [openAdminModeModal, setOpenAdminModeModal] = useState(false);
+  const [openNewHouseModal, setOpenNewHouseModal] = useState(false);
+  const [openNewFactionModal, setOpenNewFactionModal] = useState(false);
   const [password, setPassword] = useState("");
 
   const handleClose = () => setOpenAdminModeModal(false);
+  const handleCloseNewHouse = () => setOpenNewHouseModal(false);
+  const handleCloseNewFaction = () => setOpenNewFactionModal(false);
 
   const handleSubmit = () => {
     console.log(password);
@@ -52,10 +58,10 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode }) => {
       </ButtonBase>
       {adminMode && (
         <>
-          <Button onClick={() => setOpenAdminModeModal(!openAdminModeModal)}>
+          <Button onClick={() => setOpenNewHouseModal(true)}>
             NEW HOUSE
           </Button>
-          <Button onClick={() => setOpenAdminModeModal(!openAdminModeModal)}>
+          <Button onClick={() => setOpenNewFactionModal(true)}>
             NEW FACTION
           </Button>
         </>
@@ -84,6 +90,34 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode }) => {
           <Button variant="contained" onClick={handleSubmit}>
             Submit
           </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openNewHouseModal}
+        onClose={handleCloseNewHouse}
+        fullWidth
+        maxWidth="md"
+      >
+        <DialogContent>
+          <AddHouse />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseNewHouse}>Close</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openNewFactionModal}
+        onClose={handleCloseNewFaction}
+        fullWidth
+        maxWidth="md"
+      >
+        <DialogContent>
+          <AddFaction />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseNewFaction}>Close</Button>
         </DialogActions>
       </Dialog>
     </>
