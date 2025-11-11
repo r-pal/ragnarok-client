@@ -14,6 +14,7 @@ import { IHouse } from "types/house";
 import { IScore } from "types/shared";
 import { ViewHouseModal } from "./House/viewHouseModal";
 import { ViewFactionModal } from "./Faction/viewFactionModal";
+import { Header, SortBy } from "./header";
 
 interface Scoreboard {
   adminMode: boolean;
@@ -24,10 +25,34 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
   const [openHouseModal, setopenHouseModal] = useState(false);
   const [openFactionModal, setOpenFactionModal] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [sortBy, setSortBy] = useState<SortBy>("balance");
 
-  const rankedScoreboardData = getScoreboard.sort(
-    (a, b) => a.ranking - b.ranking
-  );
+  // Sort scoreboard based on selected criteria
+  const rankedScoreboardData = getScoreboard
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "balance":
+          // Lower balance (std dev) is better
+          return a.points.balance - b.points.balance;
+        case "total":
+          // Higher total is better
+          return b.points.total - a.points.total;
+        case "choleric":
+          return b.score.choleric - a.score.choleric;
+        case "phlegmatic":
+          return b.score.phlegmatic - a.score.phlegmatic;
+        case "melancholic":
+          return b.score.melancholic - a.score.melancholic;
+        case "sanguine":
+          return b.score.sanguine - a.score.sanguine;
+        default:
+          return a.points.balance - b.points.balance;
+      }
+    })
+    .map((item, index) => ({
+      ...item,
+      ranking: index + 1
+    }));
 
   const openModal = (houseIds: number[]) => {
     setOpenFactionModal(false);
@@ -96,7 +121,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
     );
   };
 
-  const scores = rankedScoreboardData.map((team) => {
+  const scores = rankedScoreboardData.map((team: typeof rankedScoreboardData[0]) => {
     const teams = team.houseIds?.map((id) =>
       getHouses.find((house) => house.id === id)
     );
@@ -111,8 +136,9 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
           display: "flex",
           flexDirection: "row",
           gap: 4,
-          justifyContent: "flex-start",
-          alignItems: "last baseline"
+          justifyContent: "space-between",
+          alignItems: "last baseline",
+          width: "100%"
         }}
         onClick={() => {
           team.houseIds && openModal(team.houseIds);
@@ -120,35 +146,41 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
         }}
       >
         <Grid style={{ fontSize: 60 }}>{team.ranking}</Grid>
-        {crests}
         <Grid
           style={{
             display: "flex",
-            flexDirection: "column",
-            gap: 4,
-            justifyContent: "flex-start"
+            flexDirection: "row",
+            gap: 16,
+            alignItems: "center",
+            flex: 1,
+            justifyContent: "flex-end",
+            flexWrap: "wrap"
           }}
         >
-          <Grid
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              gap: 4,
-              justifyContent: "flex-end"
-            }}
-          >
+          <Grid style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            {crests}
+          </Grid>
+          <Grid style={{ minWidth: 200, textAlign: "right" }}>
             {team.name}
+          </Grid>
+          <Grid style={{ display: "flex", gap: 4 }}>
+            {humourScores(team.score)}
           </Grid>
           <Grid
             style={{
               display: "flex",
               flexDirection: "row",
-              gap: 4,
-              justifyContent: "flex-end"
+              gap: 16,
+              fontSize: 14,
+              minWidth: 250
             }}
           >
-            {humourScores(team.score)}
-            <Divider />
+            <div>
+              <strong>Total:</strong> {team.points.total}
+            </div>
+            <div>
+              <strong>Balance (σ):</strong> {team.points.balance.toFixed(2)}
+            </div>
           </Grid>
         </Grid>
       </Button>
@@ -163,7 +195,17 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode }) => {
 
   return (
     <>
-      <Grid style={{ display: "flex", flexDirection: "column" }}>{scores}</Grid>
+      <Header sortBy={sortBy} onSortChange={setSortBy} />
+      <Grid 
+        style={{ 
+          display: "flex", 
+          flexDirection: "column",
+          overflowY: "auto",
+          flex: 1
+        }}
+      >
+        {scores}
+      </Grid>
       {houses && houses.length === 1 && (
         <ViewHouseModal
           open={openHouseModal}

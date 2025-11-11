@@ -1,4 +1,9 @@
 import { IScoreboardItem } from "types/scoreboard";
+import { getStandardDeviation } from "helpers/maths";
+
+const calculateBalance = (choleric: number, phlegmatic: number, melancholic: number, sanguine: number) => {
+  return getStandardDeviation([choleric, phlegmatic, melancholic, sanguine]);
+};
 
 export const getScoreboard: Array<IScoreboardItem> = 
 [
@@ -11,10 +16,9 @@ export const getScoreboard: Array<IScoreboardItem> =
       sanguine: 612
     },
     points: {
-      balance: 8,
+      balance: calculateBalance(234, 345, 123, 612),
       total: 1150
     },
-    ranking: 1,
     houseIds: [8]
   },
   {
@@ -26,10 +30,9 @@ export const getScoreboard: Array<IScoreboardItem> =
       sanguine: 234
     },
     points: {
-      balance: 1,
+      balance: calculateBalance(600, 223, 534, 234),
       total: 1200
     },
-    ranking: 2,
     houseIds: [1]
   },
   {
@@ -41,10 +44,9 @@ export const getScoreboard: Array<IScoreboardItem> =
       sanguine: 401
     },
     points: {
-      balance: 6,
+      balance: calculateBalance(879, 623, 401, 401),
       total: 2150
     },
-    ranking: 3,
     houseIds: [5, 6]
   },
   {
@@ -56,10 +58,9 @@ export const getScoreboard: Array<IScoreboardItem> =
       sanguine: 145
     },
     points: {
-      balance: 6,
+      balance: calculateBalance(178, 534, 267, 145),
       total: 1000
     },
-    ranking: 4,
     houseIds: [9]
   },
   {
@@ -71,10 +72,9 @@ export const getScoreboard: Array<IScoreboardItem> =
       sanguine: 234
     },
     points: {
-      balance: 5,
+      balance: calculateBalance(289, 156, 478, 234),
       total: 975
     },
-    ranking: 5,
     houseIds: [10]
   },
   {
@@ -86,10 +86,9 @@ export const getScoreboard: Array<IScoreboardItem> =
       sanguine: 567
     },
     points: {
-      balance: 3,
+      balance: calculateBalance(145, 89, 312, 567),
       total: 950
     },
-    ranking: 6,
     houseIds: [4]
   },
   {
@@ -101,10 +100,9 @@ export const getScoreboard: Array<IScoreboardItem> =
       sanguine: 189
     },
     points: {
-      balance: 7,
+      balance: calculateBalance(167, 298, 445, 189),
       total: 900
     },
-    ranking: 7,
     houseIds: [7]
   },
   {
@@ -116,10 +114,9 @@ export const getScoreboard: Array<IScoreboardItem> =
       sanguine: 468
     },
     points: {
-      balance: 11,
+      balance: calculateBalance(686, 46, 328, 468),
       total: 1600
     },
-    ranking: 8,
     houseIds: [2, 3]
   }
 ];

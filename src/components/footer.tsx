@@ -44,46 +44,50 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode }) => {
 
   return (
     <>
-      <Button
-        onClick={() => setOpenGameHistoryModal(true)}
-        sx={{
-          position: "fixed",
-          bottom: 0,
-          left: 60
+      <div
+        style={{
+          backgroundColor: "rgba(0, 0, 0, 0.8)",
+          padding: "8px 16px",
+          display: "flex",
+          gap: "8px",
+          alignItems: "center"
         }}
       >
-        GAME HISTORY
-      </Button>
-      <ButtonBase
-        onClick={
-          adminMode
-            ? () => setAdminMode(false)
-            : () => setOpenAdminModeModal(!openAdminModeModal)
-        }
-        sx={{
-          backgroundColor: adminMode ? "maroon" : "darkslategrey",
-          borderRadius: "8px",
-          p: 1,
-          transition: "background-color 0.3s ease",
-          position: "fixed",
-          bottom: 0
-        }}
-      >
-        <img src="assets/images/quill-img.svg" alt="Q" style={{ height: 24 }} />
-      </ButtonBase>
-      {adminMode && (
-        <>
-          <Button onClick={() => setOpenNewHouseModal(true)}>
-            NEW HOUSE
-          </Button>
-          <Button onClick={() => setOpenNewFactionModal(true)}>
-            NEW FACTION
-          </Button>
-          <Button onClick={() => setOpenNewGameModal(true)}>
-            NEW GAME
-          </Button>
-        </>
-      )}
+        <ButtonBase
+          onClick={
+            adminMode
+              ? () => setAdminMode(false)
+              : () => setOpenAdminModeModal(!openAdminModeModal)
+          }
+          sx={{
+            backgroundColor: adminMode ? "maroon" : "darkslategrey",
+            borderRadius: "8px",
+            p: 1,
+            transition: "background-color 0.3s ease"
+          }}
+        >
+          <img src="assets/images/quill-img.svg" alt="Q" style={{ height: 24 }} />
+        </ButtonBase>
+        <Button
+          onClick={() => setOpenGameHistoryModal(true)}
+          sx={{ color: "white" }}
+        >
+          GAME HISTORY
+        </Button>
+        {adminMode && (
+          <>
+            <Button onClick={() => setOpenNewHouseModal(true)} sx={{ color: "white" }}>
+              NEW HOUSE
+            </Button>
+            <Button onClick={() => setOpenNewFactionModal(true)} sx={{ color: "white" }}>
+              NEW FACTION
+            </Button>
+            <Button onClick={() => setOpenNewGameModal(true)} sx={{ color: "white" }}>
+              NEW GAME
+            </Button>
+          </>
+        )}
+      </div>
       <Dialog
         open={openAdminModeModal}
         onClose={handleClose}

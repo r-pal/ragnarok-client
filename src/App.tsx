@@ -6,11 +6,18 @@ function App() {
   const [adminMode, setAdminMode] = useState(false);
 
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+        overflow: "hidden"
+      }}
+    >
       <header>Ragnarök</header>
       <Scoreboard {...{ adminMode }} />
       <Footer {...{ adminMode, setAdminMode }} />
-    </>
+    </div>
   );
 }
 

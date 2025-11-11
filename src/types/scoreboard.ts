@@ -6,5 +6,4 @@ export interface IScoreboardItem {
   houseIds?: Array<number>
   score: IScore;
   points: IPoints;
-  ranking: number;
 }
