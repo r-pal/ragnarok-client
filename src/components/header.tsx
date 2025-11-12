@@ -28,7 +28,7 @@ export const Header: React.FC<HeaderProps> = ({ sortBy, onSortChange }) => {
           onClick={() => setOpenExplainer(true)}
           sx={{ color: "white", minWidth: "100px" }}
         >
-          How It Works
+          Sacred Rules
         </Button>
       <FormControl sx={{ minWidth: 200 }}>
         <InputLabel sx={{ color: "white" }}>Rank By</InputLabel>

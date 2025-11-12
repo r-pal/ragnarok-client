@@ -28,19 +28,22 @@ export const GameHistory: React.FC = () => {
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h4" gutterBottom>
-        Game History
+        Chronicle of Sacred Rites
+      </Typography>
+      <Typography variant="body2" color="text.secondary" paragraph>
+        Behold the record of trials past and humours bestowed
       </Typography>
 
       <Stack spacing={3}>
         <FormControl fullWidth>
-          <InputLabel>Select Game</InputLabel>
+          <InputLabel>Select Sacred Rite</InputLabel>
           <Select
             value={selectedGameId}
             onChange={(e) => setSelectedGameId(e.target.value as number)}
-            label="Select Game"
+            label="Select Sacred Rite"
           >
             <MenuItem value="">
-              <em>Choose a game...</em>
+              <em>Choose a rite...</em>
             </MenuItem>
             {getGames.map((game) => (
               <MenuItem key={game.id} value={game.id}>

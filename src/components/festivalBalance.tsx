@@ -1,12 +1,17 @@
 import {
   Box,
   Typography,
-  Paper
+  Paper,
+  useMediaQuery,
+  useTheme
 } from "@mui/material";
 import { getHouses } from "mockAPI/getHouses";
 import { getStandardDeviation } from "helpers/maths";
 
 export const FestivalBalance: React.FC = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  
   // Calculate total scores across all houses
   const totalScores = getHouses.reduce(
     (acc, house) => {
@@ -37,21 +42,21 @@ export const FestivalBalance: React.FC = () => {
     totalScores.sanguine;
 
   return (
-    <Box sx={{ maxWidth: 700, mx: "auto", p: 3 }}>
-      <Typography variant="h3" gutterBottom sx={{ textAlign: "center", mb: 4 }}>
-        Festival Balance
+    <Box sx={{ maxWidth: 700, mx: "auto", p: isMobile ? 2 : 3 }}>
+      <Typography variant={isMobile ? "h4" : "h3"} gutterBottom sx={{ textAlign: "center", mb: isMobile ? 2 : 4 }}>
+        The Great Reckoning
       </Typography>
 
-      <Typography variant="body1" color="text.secondary" paragraph sx={{ textAlign: "center", mb: 4 }}>
-        The combined humour scores across all houses in Ragnarök, representing the overall balance of the festival.
+      <Typography variant={isMobile ? "body2" : "body1"} color="text.secondary" paragraph sx={{ textAlign: "center", mb: isMobile ? 2 : 4 }}>
+        Behold the combined humours of all houses in the Festival of Humoural Ascension—the measure of sacred balance ere the final rite.
       </Typography>
 
-      <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
-        <Typography variant="h5" gutterBottom sx={{ mb: 3 }}>
-          Total Humour Scores
+      <Paper elevation={3} sx={{ p: isMobile ? 2 : 3, mb: isMobile ? 2 : 3 }}>
+        <Typography variant={isMobile ? "h6" : "h5"} gutterBottom sx={{ mb: isMobile ? 2 : 3 }}>
+          The Four Humours Divine—Summed Across All Houses
         </Typography>
 
-        <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 3 }}>
+        <Box sx={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 2 : 3 }}>
           <Box>
             <Paper 
               elevation={1} 
@@ -62,10 +67,10 @@ export const FestivalBalance: React.FC = () => {
                 borderColor: "gold"
               }}
             >
-              <Typography variant="h6" color="text.secondary">
+              <Typography variant={isMobile ? "subtitle1" : "h6"} color="text.secondary">
                 Choleric 🟡
               </Typography>
-              <Typography variant="h3" sx={{ fontWeight: "bold", color: "goldenrod" }}>
+              <Typography variant={isMobile ? "h4" : "h3"} sx={{ fontWeight: "bold", color: "goldenrod" }}>
                 {totalScores.choleric.toLocaleString()}
               </Typography>
             </Paper>
@@ -81,10 +86,10 @@ export const FestivalBalance: React.FC = () => {
                 borderColor: "green"
               }}
             >
-              <Typography variant="h6" color="text.secondary">
+              <Typography variant={isMobile ? "subtitle1" : "h6"} color="text.secondary">
                 Phlegmatic 🟢
               </Typography>
-              <Typography variant="h3" sx={{ fontWeight: "bold", color: "green" }}>
+              <Typography variant={isMobile ? "h4" : "h3"} sx={{ fontWeight: "bold", color: "green" }}>
                 {totalScores.phlegmatic.toLocaleString()}
               </Typography>
             </Paper>
@@ -100,10 +105,10 @@ export const FestivalBalance: React.FC = () => {
                 borderColor: "gray"
               }}
             >
-              <Typography variant="h6" color="text.secondary">
+              <Typography variant={isMobile ? "subtitle1" : "h6"} color="text.secondary">
                 Melancholic ⚫
               </Typography>
-              <Typography variant="h3" sx={{ fontWeight: "bold", color: "gray" }}>
+              <Typography variant={isMobile ? "h4" : "h3"} sx={{ fontWeight: "bold", color: "gray" }}>
                 {totalScores.melancholic.toLocaleString()}
               </Typography>
             </Paper>
@@ -119,10 +124,10 @@ export const FestivalBalance: React.FC = () => {
                 borderColor: "crimson"
               }}
             >
-              <Typography variant="h6" color="text.secondary">
+              <Typography variant={isMobile ? "subtitle1" : "h6"} color="text.secondary">
                 Sanguine 🔴
               </Typography>
-              <Typography variant="h3" sx={{ fontWeight: "bold", color: "crimson" }}>
+              <Typography variant={isMobile ? "h4" : "h3"} sx={{ fontWeight: "bold", color: "crimson" }}>
                 {totalScores.sanguine.toLocaleString()}
               </Typography>
             </Paper>
@@ -130,14 +135,14 @@ export const FestivalBalance: React.FC = () => {
         </Box>
       </Paper>
 
-      <Paper elevation={3} sx={{ p: 3, mb: 3, bgcolor: "rgba(0, 0, 0, 0.02)" }}>
-        <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 3 }}>
+      <Paper elevation={3} sx={{ p: isMobile ? 2 : 3, mb: isMobile ? 2 : 3, bgcolor: "rgba(0, 0, 0, 0.02)" }}>
+        <Box sx={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 2 : 3 }}>
           <Box>
             <Box sx={{ textAlign: "center" }}>
-              <Typography variant="h6" color="text.secondary" gutterBottom>
-                Grand Total
+              <Typography variant={isMobile ? "subtitle1" : "h6"} color="text.secondary" gutterBottom>
+                Sum of All Humours
               </Typography>
-              <Typography variant="h2" sx={{ fontWeight: "bold" }}>
+              <Typography variant={isMobile ? "h4" : "h2"} sx={{ fontWeight: "bold" }}>
                 {grandTotal.toLocaleString()}
               </Typography>
             </Box>
@@ -145,11 +150,11 @@ export const FestivalBalance: React.FC = () => {
 
           <Box>
             <Box sx={{ textAlign: "center" }}>
-              <Typography variant="h6" color="text.secondary" gutterBottom>
-                Overall Balance (σ)
+              <Typography variant={isMobile ? "subtitle1" : "h6"} color="text.secondary" gutterBottom>
+                Sacred Balance (σ)
               </Typography>
               <Typography 
-                variant="h2" 
+                variant={isMobile ? "h4" : "h2"} 
                 sx={{ 
                   fontWeight: "bold",
                   color: overallBalance < 100 ? "green" : overallBalance < 200 ? "orange" : "red"
@@ -164,8 +169,8 @@ export const FestivalBalance: React.FC = () => {
 
       <Paper elevation={2} sx={{ p: 2, bgcolor: "rgba(255, 215, 0, 0.1)", border: "1px solid rgba(255, 215, 0, 0.3)" }}>
         <Typography variant="body2" sx={{ textAlign: "center" }}>
-          <strong>Balance Interpretation:</strong> Lower is better. A perfectly balanced festival would have a balance (σ) of 0, 
-          meaning all four humours are in perfect harmony across all houses.
+          <strong>The Doctrine of Balance:</strong> Lower is holier. A perfectly balanced festival achieves (σ) of 0, 
+          wherein all four humours dwell in perfect harmony across all houses. Balance must be won ere the final rite, or all is unmade in pus and glory.
         </Typography>
       </Paper>
     </Box>

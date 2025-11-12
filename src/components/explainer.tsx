@@ -18,22 +18,25 @@ export const Explainer: React.FC = () => {
         overflowY: "auto"
       }}
     >
-      <Typography variant="h3" gutterBottom sx={{ mb: 4, textAlign: "center" }}>
-        How Ragnarök Works
+      <Typography variant="h3" gutterBottom sx={{ mb: 2, textAlign: "center" }}>
+        The Sacred Rules of Ascension
+      </Typography>
+      <Typography variant="body1" sx={{ mb: 4, textAlign: "center", fontStyle: "italic", color: "text.secondary" }}>
+        Wherein the mysteries of humour, balance, and sacred affliction are made known
       </Typography>
 
       {/* Section A: Points Calculation */}
       <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
         <Typography variant="h5" gutterBottom color="primary">
-          A. How Points Are Calculated
+          A. The Sacred Humours & Their Reckoning
         </Typography>
         <Divider sx={{ mb: 2 }} />
         
         <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-          The Four Humours
+          The Four Humours Divine
         </Typography>
         <Typography paragraph>
-          Each house earns points across four humours, representing different aspects of medieval medicine:
+          Each noble house accrues points across the four sacred humours—blood, bile, phlegm, and melancholy—each a divine essence governing body and fate:
         </Typography>
         <List>
           <ListItem>
@@ -63,17 +66,17 @@ export const Explainer: React.FC = () => {
         </List>
 
         <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
-          Strength & Weakness Multipliers
+          Blessed Afflictions & Sacred Weaknesses
         </Typography>
         <Typography paragraph>
-          Every house has one <strong>strength</strong> and one <strong>weakness</strong>:
+          Each house is born with one <strong>blessed affliction</strong> (a humour of strength) and one <strong>sacred weakness</strong> (a humour of frailty):
         </Typography>
         <Box sx={{ pl: 2, mb: 2 }}>
           <Typography paragraph>
-            • <strong>Strength (×2):</strong> Points in your strength humour are doubled
+            • <strong>Blessed Affliction (×2):</strong> Points in thy strength humour are doubled—a divine gift
           </Typography>
           <Typography paragraph>
-            • <strong>Weakness (÷2):</strong> Points in your weakness humour are halved
+            • <strong>Sacred Weakness (÷2):</strong> Points in thy weakness humour are halved—a holy burden
           </Typography>
         </Box>
 
@@ -86,10 +89,10 @@ export const Explainer: React.FC = () => {
         </Typography>
 
         <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
-          The Six Categories of Competition
+          The Six Paths to Glory
         </Typography>
         <Typography paragraph>
-          Houses and factions compete across <strong>six different categories</strong>:
+          Houses and factions vie for supremacy across <strong>six sacred categories</strong>, each a path to ascension:
         </Typography>
         <List>
           <ListItem>
@@ -101,7 +104,7 @@ export const Explainer: React.FC = () => {
           <ListItem>
             <ListItemText
               primary="2. Balance (σ) ⭐"
-              secondary="Standard deviation of humours—lower is better (most important)"
+              secondary="The harmony of humours—lower is holier. Sacred imbalance brings glory, but balance brings ascension (most important)"
             />
           </ListItem>
           <ListItem>
@@ -131,73 +134,73 @@ export const Explainer: React.FC = () => {
         </List>
 
         <Typography variant="body2" sx={{ bgcolor: "rgba(255,215,0,0.1)", p: 2, borderRadius: 1, mt: 2, border: "1px solid rgba(255,215,0,0.3)" }}>
-          <strong>⭐ Most Important:</strong> While you can rank #1 in any individual humour, 
-          <strong> Total Points</strong> and <strong>Balance</strong> are the primary measures of success. 
-          A house that excels in these two categories demonstrates both power and harmony—the ultimate goal of Ragnarök.
+          <strong>⭐ The Path to Ascension:</strong> Though ye may reign supreme in any single humour, 
+          <strong> Total Points</strong> and <strong>Balance</strong> are the twin pillars of true glory. 
+          A house that masters both demonstrates power and harmony—the ultimate ascension ere the final rite.
         </Typography>
       </Paper>
 
       {/* Section B: Factions */}
       <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
         <Typography variant="h5" gutterBottom color="primary">
-          B. Forming Factions
+          B. The Binding of Houses
         </Typography>
         <Divider sx={{ mb: 2 }} />
         
         <Typography paragraph>
-          Houses can unite to form <strong>factions</strong>, combining their strengths to compete more effectively.
+          Noble houses may unite in sacred covenant to form <strong>factions</strong>—alliances bound by oath and affliction, combining their blessed strengths to ascend together.
         </Typography>
 
         <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-          How to Form a Faction
+          The Rite of Binding
         </Typography>
         <Typography paragraph>
-          To form a faction, houses must seek out <strong>the priest</strong> who has the sacred power to conjoin houses. 
-          The priest will bind the houses together, creating a unified faction that competes as one entity on the scoreboard.
+          To forge a faction, houses must seek audience with <strong>the priest</strong>—keeper of sacred oaths and wielder of the binding rite. 
+          The priest alone possesses the divine authority to conjoin houses, creating a unified faction that shall compete as one flesh upon the scoreboard of ascension.
         </Typography>
 
         <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-          Leaving a Faction
+          The Breaking of Oaths
         </Typography>
         <Typography paragraph>
-          Any house may leave a faction at any time <strong>without the consent of other houses</strong>. However, there are consequences:
+          Any house may sunder its sacred bond at any time <strong>without consent of its brethren</strong>. Yet beware—such betrayal carries dire consequence:
         </Typography>
         <Box sx={{ pl: 2, mb: 2 }}>
           <Typography paragraph>
-            • <strong>Two-house faction:</strong> If one house leaves, the faction dissolves and both houses return to competing individually
+            • <strong>Two-house covenant:</strong> Should one house forsake the bond, the faction dissolves utterly and both return to solitary struggle
           </Typography>
           <Typography paragraph>
-            • <strong>Multi-house faction (3+ houses):</strong> If any house leaves, the <strong>entire faction falls apart</strong> and all houses return to competing individually
+            • <strong>Greater covenant (3+ houses):</strong> Should any house break faith, the <strong>entire faction crumbles to dust</strong> and all houses are cast back to individual strife
           </Typography>
         </Box>
         <Typography variant="body2" sx={{ fontStyle: "italic", bgcolor: "rgba(255,0,0,0.05)", p: 2, borderRadius: 1, border: "1px solid rgba(255,0,0,0.2)" }}>
-          <strong>⚠️ Warning:</strong> Leaving a faction is a serious decision that affects all member houses. 
-          Choose your allies wisely and maintain strong bonds to prevent dissolution.
+          <strong>⚠️ Heed This Warning:</strong> To break a sacred oath is to unmake all that was built. 
+          Choose thy allies with wisdom, lest betrayal bring ruin to all.
         </Typography>
 
         <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
-          How Faction Scores Work
+          The Reckoning of Bound Houses
         </Typography>
         <Typography paragraph>
-          When houses form a faction:
+          When houses unite in sacred covenant, their humours mingle thus:
         </Typography>
         <List>
           <ListItem>
             <ListItemText
-              primary="1. Individual Multipliers Apply First"
-              secondary="Each house's strength and weakness multipliers are applied to their own scores"
+              primary="1. Afflictions Remain True"
+              secondary="Each house's blessed affliction and sacred weakness apply to their own humours first"
             />
           </ListItem>
           <ListItem>
             <ListItemText
-              primary="2. Scores Are Aggregated"
-              secondary="All modified scores from member houses are summed together"
+              primary="2. Humours Commingle"
+              secondary="All blessed and cursed humours from member houses flow together as one"
             />
           </ListItem>
           <ListItem>
             <ListItemText
-              primary="3. Faction Competes as One"
-              secondary="The faction appears on the scoreboard with combined totals"
+              primary="3. United in Flesh"
+              secondary="The faction ascends as a single body upon the sacred scoreboard"
             />
           </ListItem>
         </List>
@@ -229,64 +232,64 @@ export const Explainer: React.FC = () => {
       {/* Section C: Special Clemency */}
       <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
         <Typography variant="h5" gutterBottom color="primary">
-          C. Special Clemency
+          C. Divine Clemency
         </Typography>
         <Divider sx={{ mb: 2 }} />
         
         <Typography paragraph>
-          Under rare circumstances, a house may be granted <strong>special clemency</strong> by the game masters.
+          In rarest circumstance, a house may receive <strong>divine clemency</strong> from the Sacred Order—a miraculous intervention that reshapes the very humours of one's being.
         </Typography>
 
         <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-          What Can Be Changed
+          The Miracle of Transformation
         </Typography>
         <Typography paragraph>
-          With special clemency, a house may alter their fundamental nature:
+          Through divine clemency, a house may transmute the very essence of its humours:
         </Typography>
         <List>
           <ListItem>
             <ListItemText
-              primary="Change Your Strength"
-              secondary="Shift your ×2 multiplier to a different humour"
+              primary="Transmute Thy Blessed Affliction"
+              secondary="Shift thy divine gift (×2) to a different humour"
             />
           </ListItem>
           <ListItem>
             <ListItemText
-              primary="Change Your Weakness"
-              secondary="Move your ÷2 penalty to a different humour"
+              primary="Redirect Thy Sacred Burden"
+              secondary="Move thy holy weakness (÷2) to a different humour"
             />
           </ListItem>
         </List>
 
         <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
-          Important Rules
+          Sacred Edicts
         </Typography>
         <Box sx={{ pl: 2 }}>
           <Typography paragraph>
-            • Your strength and weakness <strong>cannot be the same humour</strong>
+            • Thy blessed affliction and sacred weakness <strong>cannot dwell in the same humour</strong>—such is forbidden
           </Typography>
           <Typography paragraph>
-            • Special clemency is <strong>rarely granted</strong> and must be earned through exceptional circumstances
+            • Divine clemency is <strong>granted most rarely</strong> and must be earned through deeds most exceptional
           </Typography>
           <Typography paragraph>
-            • Changes take effect immediately and apply to all future score calculations
+            • Transformation takes effect at once, reshaping all future reckonings of thy humours
           </Typography>
         </Box>
 
         <Typography variant="body2" sx={{ fontStyle: "italic", bgcolor: "rgba(255,215,0,0.1)", p: 2, borderRadius: 1, mt: 2, border: "1px solid rgba(255,215,0,0.3)" }}>
-          <strong>Note:</strong> This is a powerful ability that can dramatically shift the balance of power. Use it wisely!
+          <strong>Beware:</strong> This divine gift wields great power to shift the balance of all things. Wield it with wisdom, lest it bring thy undoing!
         </Typography>
       </Paper>
 
       {/* Summary */}
       <Paper elevation={3} sx={{ p: 3, bgcolor: "rgba(0,0,0,0.02)" }}>
         <Typography variant="h6" gutterBottom>
-          Summary
+          Thus Speaks the Sacred Order
         </Typography>
         <Typography paragraph>
-          Ragnarök is a game of strategy, alliances, and balance. Master your house's strengths, 
-          shore up your weaknesses through clever faction formation, and compete for supremacy 
-          across the four humours. May the most balanced house prevail!
+          The Festival of Humoural Ascension is a trial of cunning, covenant, and balance most holy. Master thy blessed afflictions, 
+          shore up thy sacred weaknesses through wise alliance, and compete for glory 
+          across the four humours divine. Balance must be won ere the final rite, or all is unmade in pus and glory. So come ye, and ascend!
         </Typography>
       </Paper>
     </Box>

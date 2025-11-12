@@ -9,7 +9,12 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TextField
+  TextField,
+  IconButton,
+  Menu,
+  useMediaQuery,
+  useTheme,
+  Box
 } from "@mui/material";
 import { useState } from "react";
 import { AddHouse } from "./House/addHouse";
@@ -38,6 +43,18 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
   const [openExplainer, setOpenExplainer] = useState(false);
   const [openFestivalBalance, setOpenFestivalBalance] = useState(false);
   const [password, setPassword] = useState("");
+  const [mobileMenuAnchor, setMobileMenuAnchor] = useState<null | HTMLElement>(null);
+  
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  
+  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setMobileMenuAnchor(event.currentTarget);
+  };
+  
+  const handleMobileMenuClose = () => {
+    setMobileMenuAnchor(null);
+  };
 
   const handleClose = () => setOpenAdminModeModal(false);
   const handleCloseNewHouse = () => setOpenNewHouseModal(false);
@@ -71,50 +88,98 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
           zIndex: 1000
         }}
       >
-        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-        <ButtonBase
-          onClick={
-            adminMode
-              ? () => setAdminMode(false)
-              : () => setOpenAdminModeModal(!openAdminModeModal)
-          }
-          sx={{
-            backgroundColor: adminMode ? "maroon" : "darkslategrey",
-            borderRadius: "8px",
-            p: 1,
-            transition: "background-color 0.3s ease"
-          }}
-        >
-          <img src="assets/images/quill-img.svg" alt="Q" style={{ height: 24 }} />
-        </ButtonBase>
-        <Button
-          onClick={() => setOpenGameHistoryModal(true)}
-          sx={{ color: "white" }}
-        >
-          GAME HISTORY
-        </Button>
-        <Button
-          onClick={() => setOpenFestivalBalance(true)}
-          sx={{ color: "white" }}
-        >
-          FESTIVAL BALANCE
-        </Button>
-        {adminMode && (
-          <>
-            <Button onClick={() => setOpenNewHouseModal(true)} sx={{ color: "white" }}>
-              NEW HOUSE
-            </Button>
-            <Button onClick={() => setOpenNewFactionModal(true)} sx={{ color: "white" }}>
-              NEW FACTION
-            </Button>
-            <Button onClick={() => setOpenNewGameModal(true)} sx={{ color: "white" }}>
-              NEW GAME
-            </Button>
-          </>
-        )}
-        </div>
+        <Box sx={{ display: "flex", gap: "8px", alignItems: "center" }}>
+          <ButtonBase
+            onClick={
+              adminMode
+                ? () => setAdminMode(false)
+                : () => setOpenAdminModeModal(!openAdminModeModal)
+            }
+            sx={{
+              backgroundColor: adminMode ? "maroon" : "darkslategrey",
+              borderRadius: "8px",
+              p: 1,
+              transition: "background-color 0.3s ease"
+            }}
+          >
+            <img src="assets/images/quill-img.svg" alt="Q" style={{ height: 24 }} />
+          </ButtonBase>
+          
+          {isMobile ? (
+            <>
+              <IconButton
+                onClick={handleMobileMenuOpen}
+                sx={{ color: "white" }}
+              >
+                ☰
+              </IconButton>
+              <Menu
+                anchorEl={mobileMenuAnchor}
+                open={Boolean(mobileMenuAnchor)}
+                onClose={handleMobileMenuClose}
+                PaperProps={{
+                  sx: {
+                    backgroundColor: "rgba(0, 0, 0, 0.95)",
+                    color: "white"
+                  }
+                }}
+              >
+                <MenuItem onClick={() => { setOpenGameHistoryModal(true); handleMobileMenuClose(); }}>
+                  CHRONICLE OF RITES
+                </MenuItem>
+                <MenuItem onClick={() => { setOpenFestivalBalance(true); handleMobileMenuClose(); }}>
+                  THE GREAT RECKONING
+                </MenuItem>
+                {adminMode && (
+                  <>
+                    <MenuItem onClick={() => { setOpenNewHouseModal(true); handleMobileMenuClose(); }}>
+                      CONSECRATE HOUSE
+                    </MenuItem>
+                    <MenuItem onClick={() => { setOpenNewFactionModal(true); handleMobileMenuClose(); }}>
+                      FORGE COVENANT
+                    </MenuItem>
+                    <MenuItem onClick={() => { setOpenNewGameModal(true); handleMobileMenuClose(); }}>
+                      RECORD RITE
+                    </MenuItem>
+                  </>
+                )}
+                <MenuItem onClick={() => { setOpenExplainer(true); handleMobileMenuClose(); }}>
+                  THE SACRED RULES
+                </MenuItem>
+              </Menu>
+            </>
+          ) : (
+            <>
+              <Button
+                onClick={() => setOpenGameHistoryModal(true)}
+                sx={{ color: "white" }}
+              >
+                CHRONICLE OF RITES
+              </Button>
+              <Button
+                onClick={() => setOpenFestivalBalance(true)}
+                sx={{ color: "white" }}
+              >
+                THE GREAT RECKONING
+              </Button>
+              {adminMode && (
+                <>
+                  <Button onClick={() => setOpenNewHouseModal(true)} sx={{ color: "white" }}>
+                    CONSECRATE HOUSE
+                  </Button>
+                  <Button onClick={() => setOpenNewFactionModal(true)} sx={{ color: "white" }}>
+                    FORGE COVENANT
+                  </Button>
+                  <Button onClick={() => setOpenNewGameModal(true)} sx={{ color: "white" }}>
+                    RECORD RITE
+                  </Button>
+                </>
+              )}
+            </>
+          )}
+        </Box>
 
-        <FormControl sx={{ minWidth: 200 }}>
+        <FormControl sx={{ minWidth: isMobile ? 150 : 200 }}>
           <InputLabel sx={{ color: "white" }}>Rank By</InputLabel>
           <Select
             value={sortBy}
@@ -145,12 +210,14 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
           </Select>
         </FormControl>
 
-        <Button
-          onClick={() => setOpenExplainer(true)}
-          sx={{ color: "white", minWidth: "120px" }}
-        >
-          How It Works
-        </Button>
+        {!isMobile && (
+          <Button
+            onClick={() => setOpenExplainer(true)}
+            sx={{ color: "white", minWidth: "120px" }}
+          >
+            THE SACRED RULES OF ASCENSION
+          </Button>
+        )}
       </div>
       <Dialog
         open={openAdminModeModal}

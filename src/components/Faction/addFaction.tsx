@@ -38,7 +38,10 @@ export const AddFaction: React.FC = () => {
   return (
     <Box sx={{ maxWidth: 600, mx: "auto", p: 3 }}>
       <Typography variant="h4" gutterBottom>
-        Add New Faction
+        Forge a Sacred Covenant
+      </Typography>
+      <Typography variant="body2" color="text.secondary" paragraph>
+        Bind noble houses in oath and affliction to compete as one flesh
       </Typography>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {({ values, handleChange, handleBlur, setFieldValue }) => (
@@ -47,7 +50,7 @@ export const AddFaction: React.FC = () => {
               <TextField
                 fullWidth
                 name="name"
-                label="Faction Name"
+                label="Covenant Name"
                 value={values.name}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -57,7 +60,7 @@ export const AddFaction: React.FC = () => {
               <TextField
                 fullWidth
                 name="motto"
-                label="Faction Motto"
+                label="Covenant Oath"
                 value={values.motto}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -80,8 +83,8 @@ export const AddFaction: React.FC = () => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Select Houses"
-                    placeholder="Choose houses for this faction"
+                    label="Houses to Bind"
+                    placeholder="Choose houses to unite in sacred covenant"
                   />
                 )}
                 renderTags={(value, getTagProps) =>
@@ -102,7 +105,7 @@ export const AddFaction: React.FC = () => {
                 fullWidth
                 size="large"
               >
-                Create Faction
+                Forge Covenant
               </Button>
             </Stack>
           </Form>

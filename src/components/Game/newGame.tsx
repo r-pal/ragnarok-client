@@ -28,7 +28,7 @@ interface GameResult {
   houseScores: IGameScores[];
 }
 
-const steps = ["Game Information", "Select Houses", "Enter Scores"];
+const steps = ["Rite Information", "Houses Afflicted", "Reckon Humours"];
 
 export const NewGame: React.FC = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -97,7 +97,7 @@ export const NewGame: React.FC = () => {
       }
     });
     
-    alert(`Game "${gameName}" recorded! Scores updated for ${scoresArray.length} house(s).`);
+    alert(`Sacred rite "${gameName}" inscribed! Humours bestowed upon ${scoresArray.length} house(s).`);
     // TODO: Add API call to save game result
     
     // Reset form
@@ -119,20 +119,20 @@ export const NewGame: React.FC = () => {
           <Stack spacing={3}>
             <TextField
               fullWidth
-              label="Game Name"
+              label="Rite Name"
               value={gameName}
               onChange={(e) => setGameName(e.target.value)}
               required
-              placeholder="e.g., The Great Debate, Archery Contest"
+              placeholder="e.g., The Leeching Trials, The Bleeding Contest"
             />
             <TextField
               fullWidth
-              label="Game Description (Optional)"
+              label="Rite Description (Optional)"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               multiline
               rows={3}
-              placeholder="Describe what happened in this game..."
+              placeholder="Describe the sacred trial and its afflictions..."
             />
           </Stack>
         );
@@ -142,7 +142,7 @@ export const NewGame: React.FC = () => {
         return (
           <Stack spacing={2}>
             <Typography variant="body2" color="text.secondary">
-              Select all houses that participated in this game:
+              Select all houses that endured this sacred trial:
             </Typography>
             {getHouses.map((house) => (
               <FormControlLabel
@@ -241,7 +241,10 @@ export const NewGame: React.FC = () => {
   return (
     <Box sx={{ maxWidth: 900, mx: "auto", p: 3 }}>
       <Typography variant="h4" gutterBottom>
-        Record New Game Result
+        Record Sacred Rite
+      </Typography>
+      <Typography variant="body2" color="text.secondary" paragraph>
+        Inscribe the outcome of a trial and bestow humours upon the worthy
       </Typography>
       
       <Stepper activeStep={activeStep} sx={{ mb: 4 }}>
@@ -270,7 +273,7 @@ export const NewGame: React.FC = () => {
               color="primary"
               onClick={handleSubmit}
             >
-              Submit Game Result
+              Inscribe Sacred Rite
             </Button>
           ) : (
             <Button
