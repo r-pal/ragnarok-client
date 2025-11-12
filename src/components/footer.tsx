@@ -17,6 +17,7 @@ import { AddFaction } from "./Faction/addFaction";
 import { GameHistory } from "./Game/gameHistory";
 import { NewGame } from "./Game/newGame";
 import { Explainer } from "./explainer";
+import { FestivalBalance } from "./festivalBalance";
 import { SortBy } from "./header";
 
 interface IFooter {
@@ -35,6 +36,7 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
   const [openNewGameModal, setOpenNewGameModal] = useState(false);
   const [openGameHistoryModal, setOpenGameHistoryModal] = useState(false);
   const [openExplainer, setOpenExplainer] = useState(false);
+  const [openFestivalBalance, setOpenFestivalBalance] = useState(false);
   const [password, setPassword] = useState("");
 
   const handleClose = () => setOpenAdminModeModal(false);
@@ -90,6 +92,12 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
           sx={{ color: "white" }}
         >
           GAME HISTORY
+        </Button>
+        <Button
+          onClick={() => setOpenFestivalBalance(true)}
+          sx={{ color: "white" }}
+        >
+          FESTIVAL BALANCE
         </Button>
         {adminMode && (
           <>
@@ -234,6 +242,15 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         fullWidth
       >
         <Explainer />
+      </Dialog>
+
+      <Dialog
+        open={openFestivalBalance}
+        onClose={() => setOpenFestivalBalance(false)}
+        maxWidth="md"
+        fullWidth
+      >
+        <FestivalBalance />
       </Dialog>
     </>
   );

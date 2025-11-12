@@ -289,7 +289,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
               borderRadius: "4px",
               fontWeight: sortBy === "balance" ? "bold" : "normal"
             }}>
-              <strong>Balance (σ):</strong> {calculateBalance(team.score).toFixed(2)}
+              <strong>Balance:</strong> {calculateBalance(team.score).toFixed(2)}
             </div>
           </Grid>
         </Grid>
