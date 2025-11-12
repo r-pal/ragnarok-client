@@ -4,6 +4,7 @@ export const getGames: Array<IGame> = [
   {
     id: 1,
     name: "The Great Tournament of 1453",
+    description: "A grand tournament where houses competed in tests of strength, wisdom, and balance.",
     scores: [
       {
         houseId: 1,
@@ -40,6 +41,7 @@ export const getGames: Array<IGame> = [
   {
     id: 2,
     name: "Battle of the Four Humours",
+    description: "An epic confrontation testing mastery of all four humours in a single day.",
     scores: [
       {
         houseId: 2,

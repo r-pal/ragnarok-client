@@ -11,14 +11,16 @@ export interface IGameScores {
 export interface IPostGame {
   id?: number;
   name: string;
-  scores: Array<IGameScores>
+  scores: Array<IGameScores>;
+  description?: string;
 }
 
 // GET games list - array of IGame - this is a record of all the games played - put in chronological order
 export interface IGame {
   id: number;
   name: string;
-  scores: Array<IGameScores>
+  scores: Array<IGameScores>;
+  description?: string;
 }
 
 //DELETE game: if scores were submitted erroneously, this can be used to delete that game entry.

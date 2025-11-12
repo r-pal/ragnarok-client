@@ -16,8 +16,7 @@ function App() {
         overflow: "hidden"
       }}
     >
-      <header>Ragnarök</header>
-      <div style={{ flex: 1, overflow: "hidden", paddingBottom: "80px" }}>
+        <div style={{ flex: 1, overflow: "hidden", paddingBottom: "80px" }}>
         <Scoreboard adminMode={adminMode} sortBy={sortBy} />
       </div>
       <Footer 

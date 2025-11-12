@@ -15,6 +15,7 @@ import { useState } from "react";
 import { AddHouse } from "./House/addHouse";
 import { AddFaction } from "./Faction/addFaction";
 import { GameHistory } from "./Game/gameHistory";
+import { NewGame } from "./Game/newGame";
 import { Explainer } from "./explainer";
 import { SortBy } from "./header";
 
@@ -204,10 +205,8 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         fullWidth
         maxWidth="md"
       >
-        <DialogTitle>New Game</DialogTitle>
         <DialogContent>
-          {/* TODO: Add NewGame component */}
-          <p>New Game form coming soon...</p>
+          <NewGame />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseNewGame}>Close</Button>

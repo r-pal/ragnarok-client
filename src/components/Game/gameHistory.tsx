@@ -55,6 +55,12 @@ export const GameHistory: React.FC = () => {
             <Typography variant="h5" gutterBottom sx={{ mt: 2 }}>
               {selectedGame.name}
             </Typography>
+            
+            {selectedGame.description && (
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 2, fontStyle: "italic" }}>
+                {selectedGame.description}
+              </Typography>
+            )}
 
             <TableContainer component={Paper} sx={{ mt: 2 }}>
               <Table>
