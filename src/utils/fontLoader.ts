@@ -13,7 +13,7 @@ export async function loadFont(fontFamily: string, fileName: string): Promise<vo
     
     const fontFace = new FontFace(
       cleanFontFamily,
-      `url(/assets/fonts/${encodedFileName})`
+      `url(${process.env.PUBLIC_URL}/assets/fonts/${encodedFileName})`
     );
     
     const loadedFont = await fontFace.load();

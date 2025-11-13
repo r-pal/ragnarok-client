@@ -95,8 +95,8 @@ export function ThemeProviderWrapper({ children }: ThemeProviderWrapperProps) {
   // Update background image when theme changes
   useEffect(() => {
     const backgroundImage = currentTheme === "dark" 
-      ? "url(/assets/images/w05913-small.jpg)"
-      : "url(/assets/images/Parchment-Background-HQ-Desktop-Wallpaper-14482.jpg)";
+      ? `url(${process.env.PUBLIC_URL}/assets/images/w05913-small.jpg)`
+      : `url(${process.env.PUBLIC_URL}/assets/images/Parchment-Background-HQ-Desktop-Wallpaper-14482.jpg)`;
     
     document.body.style.backgroundImage = backgroundImage;
     document.body.style.backgroundSize = "cover";

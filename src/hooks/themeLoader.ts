@@ -7,7 +7,7 @@ async function loadDefaultFont(): Promise<void> {
   try {
     const fontFace = new FontFace(
       'Medieval Sharp',
-      `url(/assets/fonts/MedievalSharp-Book.ttf)`
+      `url(${process.env.PUBLIC_URL}/assets/fonts/MedievalSharp-Book.ttf)`
     );
     
     const loadedFont = await fontFace.load();
@@ -23,7 +23,7 @@ async function loadDefaultFont(): Promise<void> {
  */
 export async function loadTheme(themeName: string, customFontFamily?: string): Promise<Theme> {
   try {
-    const res = await fetch(`/assets/themes/${themeName}.json`);
+    const res = await fetch(`${process.env.PUBLIC_URL}/assets/themes/${themeName}.json`);
     if (!res.ok) throw new Error(`Theme file not found: ${themeName}`);
     const themeData = (await res.json()) as ThemeOptions;
     
@@ -64,7 +64,7 @@ export async function loadTheme(themeName: string, customFontFamily?: string): P
           }
           body {
             font-family: ${fontFamily} !important;
-            background-image: url(/assets/images/Parchment-Background-HQ-Desktop-Wallpaper-14482.jpg);
+            background-image: url(${process.env.PUBLIC_URL}/assets/images/Parchment-Background-HQ-Desktop-Wallpaper-14482.jpg);
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
@@ -77,7 +77,7 @@ export async function loadTheme(themeName: string, customFontFamily?: string): P
     return createTheme(themeData);
   } catch (err) {
     console.error(`Failed to load theme: ${themeName}`, err);
-    const fallbackRes = await fetch("/assets/themes/light.json");
+    const fallbackRes = await fetch(`${process.env.PUBLIC_URL}/assets/themes/light.json`);
     const fallbackData = (await fallbackRes.json()) as ThemeOptions;
     return createTheme(fallbackData);
   }
