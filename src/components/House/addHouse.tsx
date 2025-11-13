@@ -4,10 +4,13 @@ import {
   Typography,
   Box,
   Stack,
+  Collapse,
 } from "@mui/material";
+import { useState } from "react";
 import { Formik, Form } from "formik";
 import { IPostHouse } from "types/house";
 import { HumourSelect } from "components/shared/HumourSelect";
+import { CrestSearch } from "components/shared/CrestSearch";
 
 const initialValues: IPostHouse = {
   name: "",
@@ -18,6 +21,8 @@ const initialValues: IPostHouse = {
 };
 
 export const AddHouse: React.FC = () => {
+  const [showCrestSearch, setShowCrestSearch] = useState(false);
+  
   const handleSubmit = (values: IPostHouse) => {
     // Validate that strength and weakness are selected
     if (!values.strength || !values.weakness) {
@@ -67,14 +72,34 @@ export const AddHouse: React.FC = () => {
                 required
               />
 
-              <TextField
-                fullWidth
-                name="crestUrl"
-                label="Crest URL (Sigil of Thy House)"
-                value={values.crestUrl}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
+              <Box>
+                <TextField
+                  fullWidth
+                  name="crestUrl"
+                  label="Crest URL (Sigil of Thy House)"
+                  value={values.crestUrl}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <Button 
+                  onClick={() => setShowCrestSearch(!showCrestSearch)}
+                  sx={{ mt: 1 }}
+                  variant="outlined"
+                  size="small"
+                  type="button"
+                >
+                  {showCrestSearch ? "Hide Search" : "Search Wikimedia Commons"}
+                </Button>
+              </Box>
+              
+              <Collapse in={showCrestSearch}>
+                <CrestSearch 
+                  onSelectCrest={(url) => {
+                    handleChange({ target: { name: 'crestUrl', value: url } });
+                    setShowCrestSearch(false);
+                  }}
+                />
+              </Collapse>
 
               <Stack direction="row" spacing={2}>
                 <HumourSelect

@@ -1,4 +1,4 @@
-import { Box, Button, Typography, Stack, TextField, Divider } from "@mui/material";
+import { Box, Button, Typography, Stack, TextField, Divider, Collapse } from "@mui/material";
 import { useState, useEffect } from "react";
 import { IHouse, IPostHouse } from "types/house";
 import { IScore } from "types/shared";
@@ -6,6 +6,7 @@ import { getHouses } from "mockAPI/getHouses";
 import { HouseGameHistory } from "./houseGameHistory";
 import { CenteredModal } from "components/shared/CenteredModal";
 import { HumourSelect } from "components/shared/HumourSelect";
+import { CrestSearch } from "components/shared/CrestSearch";
 
 interface ViewHouseModalProps {
   open: boolean;
@@ -26,6 +27,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
 }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [openGameHistory, setOpenGameHistory] = useState(false);
+  const [showCrestSearch, setShowCrestSearch] = useState(false);
   const [editHouse, setEditHouse] = useState<IPostHouse>({
     name: "",
     motto: "",
@@ -125,21 +127,40 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
                 }}
               />
               
-              <TextField
-                fullWidth
-                label="Crest URL"
-                value={editHouse.crestUrl}
-                onChange={(e) => setEditHouse({...editHouse, crestUrl: e.target.value})}
-                sx={{
-                  '& .MuiInputLabel-root': { color: 'rgba(62, 39, 35, 0.7)' },
-                  '& .MuiOutlinedInput-root': {
-                    color: '#3e2723',
-                    '& fieldset': { borderColor: 'rgba(62, 39, 35, 0.3)' },
-                    '&:hover fieldset': { borderColor: 'rgba(62, 39, 35, 0.5)' },
-                    '&.Mui-focused fieldset': { borderColor: '#3e2723' }
-                  }
-                }}
-              />
+              <Box>
+                <TextField
+                  fullWidth
+                  label="Crest URL"
+                  value={editHouse.crestUrl}
+                  onChange={(e) => setEditHouse({...editHouse, crestUrl: e.target.value})}
+                  sx={{
+                    '& .MuiInputLabel-root': { color: 'rgba(62, 39, 35, 0.7)' },
+                    '& .MuiOutlinedInput-root': {
+                      color: '#3e2723',
+                      '& fieldset': { borderColor: 'rgba(62, 39, 35, 0.3)' },
+                      '&:hover fieldset': { borderColor: 'rgba(62, 39, 35, 0.5)' },
+                      '&.Mui-focused fieldset': { borderColor: '#3e2723' }
+                    }
+                  }}
+                />
+                <Button 
+                  onClick={() => setShowCrestSearch(!showCrestSearch)}
+                  sx={{ mt: 1 }}
+                  variant="outlined"
+                  size="small"
+                >
+                  {showCrestSearch ? "Hide Search" : "Search Wikimedia Commons"}
+                </Button>
+              </Box>
+              
+              <Collapse in={showCrestSearch}>
+                <CrestSearch 
+                  onSelectCrest={(url) => {
+                    setEditHouse({...editHouse, crestUrl: url});
+                    setShowCrestSearch(false);
+                  }}
+                />
+              </Collapse>
               
               {editHouse.crestUrl && (
                 <Box>

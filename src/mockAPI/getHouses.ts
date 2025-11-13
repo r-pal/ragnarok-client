@@ -34,7 +34,7 @@ export const getHouses: Array<IHouse> =
     id: 3,
       name: "Plague Doctors",
       motto: "memento mori",
-      crestUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Coat_of_Arms_of_the_Count_of_Flanders_%28Escutcheon%29_%28according_to_the_Gelre_Armorial%29.svg/1280px-Coat_of_Arms_of_the_Count_of_Flanders_%28Escutcheon%29_%28according_to_the_Gelre_Armorial%29.svg.png",
+      crestUrl: "https://upload.wikimedia.org/wikipedia/commons/7/74/Coat_of_arms_of_the_Crusaders_with_the_Red_Star.svg",
       strength: "melancholic",
       weakness: "sanguine",
     score: {
@@ -48,7 +48,7 @@ export const getHouses: Array<IHouse> =
     id: 4,
     name: "House of Crimson Tides",
     motto: "Blood flows eternal",
-    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Blason_Royaume_Navarre.svg/1200px-Blason_Royaume_Navarre.svg.png",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/2/28/Imperial_Coat_of_Arms_of_the_Empire_of_Austria.svg",
     strength: "sanguine",
     weakness: "phlegmatic",
     score: {
@@ -62,7 +62,7 @@ export const getHouses: Array<IHouse> =
     id: 5,
     name: "House of Whispers",
     motto: "Silence speaks volumes",
-    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Arms_of_the_Kingdom_of_Saxony.svg/1200px-Arms_of_the_Kingdom_of_Saxony.svg.png",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/6/6e/Coat_of_Arms_of_Blagodarny.png",
     strength: "phlegmatic",
     weakness: "choleric",
     score: {
@@ -76,7 +76,7 @@ export const getHouses: Array<IHouse> =
     id: 6,
     name: "House of Iron Will",
     motto: "Unyielding as steel",
-    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Armoiries_Bourgogne_anciennes.svg/1200px-Armoiries_Bourgogne_anciennes.svg.png",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/d/dd/Coat_of_arms_of_Greenland.svg",
     strength: "choleric",
     weakness: "sanguine",
     score: {
@@ -90,9 +90,9 @@ export const getHouses: Array<IHouse> =
     id: 7,
     name: "House of Twilight",
     motto: "Between light and shadow",
-    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Armoiries_Bretagne_-_Arms_of_Brittany.svg/1200px-Armoiries_Bretagne_-_Arms_of_Brittany.svg.png",
     strength: "melancholic",
     weakness: "choleric",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Coat_of_arms_of_Illyria_%28yellow_star%29.svg",
     score: {
       choleric: 167,
       phlegmatic: 298,
@@ -104,9 +104,9 @@ export const getHouses: Array<IHouse> =
     id: 8,
     name: "House of Golden Dawn",
     motto: "Rise with the sun",
-    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Coat_of_arms_of_Castile_and_Le%C3%B3n.svg/1200px-Coat_of_arms_of_Castile_and_Le%C3%B3n.svg.png",
     strength: "sanguine",
     weakness: "melancholic",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/1/12/Lesser_Coat_of_Arms_of_Yellow_Ukraine.svg",
     score: {
       choleric: 234,
       phlegmatic: 345,
@@ -118,9 +118,9 @@ export const getHouses: Array<IHouse> =
     id: 9,
     name: "House of Frost",
     motto: "Cold hearts, clear minds",
-    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Coat_of_arms_of_the_Kingdom_of_Bavaria.svg/1200px-Coat_of_arms_of_the_Kingdom_of_Bavaria.svg.png",
     strength: "phlegmatic",
     weakness: "sanguine",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/b/be/Coat_of_arms_of_Paul_Nguy%E1%BB%85n_Thanh_Hoan.svg",
     score: {
       choleric: 178,
       phlegmatic: 534,
@@ -132,9 +132,9 @@ export const getHouses: Array<IHouse> =
     id: 10,
     name: "House of Verdant Roots",
     motto: "From earth we grow",
-    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Coat_of_arms_of_the_Kingdom_of_Portugal_%281481-1910%29.svg/1200px-Coat_of_arms_of_the_Kingdom_of_Portugal_%281481-1910%29.svg.png",
     strength: "melancholic",
     weakness: "phlegmatic",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/5/56/Coat_of_Arms_of_Monza_%28ancient%29.svg",
     score: {
       choleric: 289,
       phlegmatic: 156,
