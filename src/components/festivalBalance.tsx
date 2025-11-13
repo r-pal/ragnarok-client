@@ -6,7 +6,7 @@ import {
   useTheme
 } from "@mui/material";
 import { getHouses } from "mockAPI/getHouses";
-import { getStandardDeviation } from "helpers/maths";
+import { getStandardDeviation } from "helpers/scoreHelpers";
 import { HUMOUR_CONFIG, HUMOUR_ORDER } from "config/humourConfig";
 
 export const FestivalBalance: React.FC = () => {

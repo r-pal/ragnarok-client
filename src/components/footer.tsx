@@ -16,7 +16,7 @@ import {
   useTheme,
   Box
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { AddHouse } from "./House/addHouse";
 import { AddFaction } from "./Faction/addFaction";
 import { GameHistory } from "./Game/gameHistory";
@@ -44,6 +44,8 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
   const [openFestivalBalance, setOpenFestivalBalance] = useState(false);
   const [password, setPassword] = useState("");
   const [mobileMenuAnchor, setMobileMenuAnchor] = useState<null | HTMLElement>(null);
+  const [isAutoCycling, setIsAutoCycling] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -69,6 +71,36 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
     }
     setOpenAdminModeModal(false);
     setPassword("");
+  };
+
+  // Auto-cycle through sort options
+  const sortOptions: SortBy[] = ["balance", "total", "choleric", "phlegmatic", "melancholic", "sanguine", "hot", "cold", "moist", "dry"];
+  
+  useEffect(() => {
+    if (isAutoCycling) {
+      const currentIndex = sortOptions.indexOf(sortBy);
+      
+      intervalRef.current = setInterval(() => {
+        const nextIndex = (currentIndex + 1) % sortOptions.length;
+        const nextSort = sortOptions[nextIndex];
+        onSortChange(nextSort);
+      }, 15000); // 15 seconds
+      
+      return () => {
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
+      };
+    } else {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    }
+  }, [isAutoCycling, sortBy, onSortChange]);
+
+  const toggleAutoCycle = () => {
+    setIsAutoCycling(!isAutoCycling);
   };
 
   return (
@@ -179,36 +211,57 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
           )}
         </Box>
 
-        <FormControl sx={{ minWidth: isMobile ? 150 : 200 }}>
-          <InputLabel sx={{ color: "white" }}>Rank By</InputLabel>
-          <Select
-            value={sortBy}
-            label="Rank By"
-            onChange={(e) => onSortChange(e.target.value as SortBy)}
+        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+          <FormControl sx={{ minWidth: isMobile ? 150 : 200 }}>
+            <InputLabel sx={{ color: "white" }}>Rank By</InputLabel>
+            <Select
+              value={sortBy}
+              label="Rank By"
+              onChange={(e) => onSortChange(e.target.value as SortBy)}
+              sx={{
+                color: "white",
+                ".MuiOutlinedInput-notchedOutline": {
+                  borderColor: "rgba(255, 255, 255, 0.3)"
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "rgba(255, 255, 255, 0.5)"
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "white"
+                },
+                ".MuiSvgIcon-root": {
+                  color: "white"
+                }
+              }}
+            >
+              <MenuItem value="balance">Balance (σ)</MenuItem>
+              <MenuItem value="total">Total Points</MenuItem>
+              <MenuItem value="choleric">Choleric</MenuItem>
+              <MenuItem value="phlegmatic">Phlegmatic</MenuItem>
+              <MenuItem value="melancholic">Melancholic</MenuItem>
+              <MenuItem value="sanguine">Sanguine</MenuItem>
+              <MenuItem value="hot">Hot (Choleric + Sanguine)</MenuItem>
+              <MenuItem value="cold">Cold (Phlegmatic + Melancholic)</MenuItem>
+              <MenuItem value="moist">Moist (Sanguine + Phlegmatic)</MenuItem>
+              <MenuItem value="dry">Dry (Choleric + Melancholic)</MenuItem>
+            </Select>
+          </FormControl>
+          
+          <IconButton
+            onClick={toggleAutoCycle}
             sx={{
               color: "white",
-              ".MuiOutlinedInput-notchedOutline": {
-                borderColor: "rgba(255, 255, 255, 0.3)"
-              },
-              "&:hover .MuiOutlinedInput-notchedOutline": {
-                borderColor: "rgba(255, 255, 255, 0.5)"
-              },
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "white"
-              },
-              ".MuiSvgIcon-root": {
-                color: "white"
+              backgroundColor: isAutoCycling ? "rgba(255, 215, 0, 0.3)" : "transparent",
+              border: isAutoCycling ? "2px solid gold" : "2px solid rgba(255, 255, 255, 0.3)",
+              "&:hover": {
+                backgroundColor: isAutoCycling ? "rgba(255, 215, 0, 0.4)" : "rgba(255, 255, 255, 0.1)"
               }
             }}
+            title={isAutoCycling ? "Stop auto-cycle" : "Auto-cycle rankings (15s each)"}
           >
-            <MenuItem value="balance">Balance (σ)</MenuItem>
-            <MenuItem value="total">Total Points</MenuItem>
-            <MenuItem value="choleric">Choleric</MenuItem>
-            <MenuItem value="phlegmatic">Phlegmatic</MenuItem>
-            <MenuItem value="melancholic">Melancholic</MenuItem>
-            <MenuItem value="sanguine">Sanguine</MenuItem>
-          </Select>
-        </FormControl>
+            {isAutoCycling ? "⏸" : "▶"}
+          </IconButton>
+        </Box>
 
         {!isMobile && (
           <Button

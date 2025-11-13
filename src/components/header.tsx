@@ -2,7 +2,7 @@ import { Button, Dialog, FormControl, InputLabel, MenuItem, Select } from "@mui/
 import { useState } from "react";
 import { Explainer } from "./explainer";
 
-type SortBy = "balance" | "total" | "choleric" | "phlegmatic" | "melancholic" | "sanguine";
+type SortBy = "balance" | "total" | "choleric" | "phlegmatic" | "melancholic" | "sanguine" | "hot" | "cold" | "moist" | "dry";
 
 interface HeaderProps {
   sortBy: SortBy;

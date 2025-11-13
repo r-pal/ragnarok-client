@@ -1,6 +1,6 @@
 import { IScore, Humours } from "types/shared";
 import { IHouse } from "types/house";
-import { HUMOUR_ORDER } from "config/humourConfig";
+import { HUMOUR_ORDER, HUMOUR_CONFIG, HumourProperty } from "config/humourConfig";
 
 /**
  * Apply strength (×2) and weakness (÷2) multipliers to a house's score
@@ -53,4 +53,30 @@ export const formatScoreDisplay = (value: number): {
   const display = value.toLocaleString();
   const fontSize = display.length > 4 ? "0.75rem" : "1rem";
   return { display, fontSize };
+};
+
+/**
+ * Calculate standard deviation of an array of numbers
+ */
+export const getStandardDeviation = (array: number[]): number => {
+  const n = array.length;
+  const mean = array.reduce((a, b) => a + b) / n;
+  return Math.sqrt(array.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n);
+};
+
+/**
+ * Get all humours that have a specific property
+ */
+export const getHumoursWithProperty = (property: HumourProperty): Humours[] => {
+  return HUMOUR_ORDER.filter(humour => 
+    HUMOUR_CONFIG[humour].properties.includes(property)
+  );
+};
+
+/**
+ * Calculate property score (hot, cold, moist, dry) by summing relevant humours
+ */
+export const calculatePropertyScore = (score: IScore, property: HumourProperty): number => {
+  const humours = getHumoursWithProperty(property);
+  return humours.reduce((sum: number, humour: Humours) => sum + score[humour], 0);
 };

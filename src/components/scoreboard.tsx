@@ -15,9 +15,8 @@ import { IScore } from "types/shared";
 import { ViewHouseModal } from "./House/viewHouseModal";
 import { ViewFactionModal } from "./Faction/viewFactionModal";
 import { SortBy } from "./header";
-import { getStandardDeviation } from "helpers/maths";
-import { applyMultipliers, aggregateScores, calculateTotal } from "helpers/scoreHelpers";
-import { HUMOUR_ORDER } from "config/humourConfig";
+import { applyMultipliers, aggregateScores, calculateTotal, calculatePropertyScore, getStandardDeviation, getHumoursWithProperty } from "helpers/scoreHelpers";
+import { HUMOUR_ORDER, HumourProperty } from "config/humourConfig";
 import { HumourScoreBox } from "./shared/HumourScoreBox";
 import { HighlightedMetric } from "./shared/HighlightedMetric";
 
@@ -105,6 +104,14 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
           return b.score.melancholic - a.score.melancholic;
         case "sanguine":
           return b.score.sanguine - a.score.sanguine;
+        case "hot":
+          return calculatePropertyScore(b.score, "hot") - calculatePropertyScore(a.score, "hot");
+        case "cold":
+          return calculatePropertyScore(b.score, "cold") - calculatePropertyScore(a.score, "cold");
+        case "moist":
+          return calculatePropertyScore(b.score, "moist") - calculatePropertyScore(a.score, "moist");
+        case "dry":
+          return calculatePropertyScore(b.score, "dry") - calculatePropertyScore(a.score, "dry");
         default:
           return calculateBalance(a.score) - calculateBalance(b.score);
       }
@@ -135,18 +142,32 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
     console.log(`Deleted ${houses && houses[0].name}`);
   };
 
-  const humourScores = (score: IScore) => (
-    <Grid style={{ display: "flex", gap: 4 }}>
-      {HUMOUR_ORDER.map(humour => (
-        <HumourScoreBox
-          key={humour}
-          humour={humour}
-          value={score[humour]}
-          isHighlighted={sortBy === humour}
-        />
-      ))}
-    </Grid>
-  );
+  const humourScores = (score: IScore) => {
+    // Check if sortBy is a property (hot, cold, moist, dry)
+    const propertyHumours = ["hot", "cold", "moist", "dry"].includes(sortBy)
+      ? getHumoursWithProperty(sortBy as HumourProperty)
+      : [];
+    
+    return (
+      <Grid style={{ display: "flex", gap: 4 }}>
+        {HUMOUR_ORDER.map(humour => {
+          // Highlight if:
+          // 1. sortBy matches the humour directly, OR
+          // 2. sortBy is a property and this humour has that property
+          const isHighlighted = sortBy === humour || propertyHumours.includes(humour);
+          
+          return (
+            <HumourScoreBox
+              key={humour}
+              humour={humour}
+              value={score[humour]}
+              isHighlighted={isHighlighted}
+            />
+          );
+        })}
+      </Grid>
+    );
+  };
 
   const scores = rankedScoreboardData.map((team: ScoreboardItem & { ranking: number }) => {
     const teams = team.houseIds.map((id: number) =>
