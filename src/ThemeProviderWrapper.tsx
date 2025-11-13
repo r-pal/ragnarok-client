@@ -87,17 +87,95 @@ export function ThemeProviderWrapper({ children }: ThemeProviderWrapperProps) {
       
       // Then load the theme with the font
       await switchTheme("light");
-      
-      // Add parchment background to body
-      document.body.style.backgroundImage = "url(/assets/images/Parchment-Background-HQ-Desktop-Wallpaper-14482.jpg)";
-      document.body.style.backgroundSize = "cover";
-      document.body.style.backgroundAttachment = "fixed";
-      document.body.style.backgroundPosition = "center";
-      document.body.style.backgroundRepeat = "no-repeat";
     };
     
     initializeApp();
   }, []);
+
+  // Update background image when theme changes
+  useEffect(() => {
+    const backgroundImage = currentTheme === "dark" 
+      ? "url(/assets/images/w05913-small.jpg)"
+      : "url(/assets/images/Parchment-Background-HQ-Desktop-Wallpaper-14482.jpg)";
+    
+    document.body.style.backgroundImage = backgroundImage;
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundAttachment = "fixed";
+    document.body.style.backgroundPosition = "center";
+    document.body.style.backgroundRepeat = "no-repeat";
+  }, [currentTheme]);
+
+  // Update scrollbar styling when theme changes
+  useEffect(() => {
+    const styleId = 'custom-scrollbar-styles';
+    let styleElement = document.getElementById(styleId) as HTMLStyleElement;
+    
+    if (!styleElement) {
+      styleElement = document.createElement('style');
+      styleElement.id = styleId;
+      document.head.appendChild(styleElement);
+    }
+
+    const scrollbarStyles = currentTheme === "dark" 
+      ? `
+        /* Webkit browsers (Chrome, Safari, Edge) */
+        ::-webkit-scrollbar {
+          width: 12px;
+          height: 12px;
+        }
+        
+        ::-webkit-scrollbar-track {
+          background: rgba(40, 30, 25, 0.5);
+          border-radius: 6px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+          background: rgba(161, 136, 127, 0.6);
+          border-radius: 6px;
+          border: 2px solid rgba(40, 30, 25, 0.5);
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+          background: rgba(161, 136, 127, 0.8);
+        }
+
+        /* Firefox */
+        * {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(161, 136, 127, 0.6) rgba(40, 30, 25, 0.5);
+        }
+      `
+      : `
+        /* Webkit browsers (Chrome, Safari, Edge) */
+        ::-webkit-scrollbar {
+          width: 12px;
+          height: 12px;
+        }
+        
+        ::-webkit-scrollbar-track {
+          background: rgba(245, 230, 211, 0.3);
+          border-radius: 6px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+          background: rgba(93, 64, 55, 0.5);
+          border-radius: 6px;
+          border: 2px solid rgba(245, 230, 211, 0.3);
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+          background: rgba(93, 64, 55, 0.7);
+        }
+
+        /* Firefox */
+        * {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(93, 64, 55, 0.5) rgba(245, 230, 211, 0.3);
+        }
+      `;
+
+    styleElement.textContent = scrollbarStyles;
+  }, [currentTheme]);
 
   if (!theme) return null;
 

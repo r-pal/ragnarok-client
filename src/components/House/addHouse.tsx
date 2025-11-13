@@ -17,7 +17,8 @@ const initialValues: IPostHouse = {
   motto: "",
   crestUrl: "",
   strength: undefined,
-  weakness: undefined
+  weakness: undefined,
+  password: ""
 };
 
 export const AddHouse: React.FC = () => {
@@ -33,6 +34,12 @@ export const AddHouse: React.FC = () => {
     // Validate that strength and weakness are different
     if (values.strength === values.weakness) {
       alert("Thy blessed affliction and sacred weakness cannot dwell in the same humour—such is forbidden!");
+      return;
+    }
+
+    // Validate password
+    if (!values.password || values.password.length < 4) {
+      alert("Thou must provide a password of at least 4 characters to protect thy house");
       return;
     }
 
@@ -119,6 +126,18 @@ export const AddHouse: React.FC = () => {
                   required
                 />
               </Stack>
+
+              <TextField
+                fullWidth
+                name="password"
+                label="House Password (Sacred Key)"
+                type="password"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                required
+                helperText="Required to edit house details without admin access"
+              />
 
               {values.crestUrl && (
                 <Box>

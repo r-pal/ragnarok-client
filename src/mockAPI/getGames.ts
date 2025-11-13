@@ -120,5 +120,126 @@ export const getGames: Array<IGame> = [
         }
       }
     ]
+  },
+  {
+    id: 4,
+    name: "The Moonlit Trials",
+    description: "A nocturnal competition testing endurance and wisdom under the pale moon.",
+    scores: [
+      {
+        houseId: 11,
+        houseName: "House of Silver Moon",
+        score: {
+          choleric: 67,
+          phlegmatic: 234,
+          melancholic: 123,
+          sanguine: 89
+        }
+      },
+      {
+        houseId: 3,
+        houseName: "Plague Doctors",
+        score: {
+          choleric: 52,
+          phlegmatic: 12,
+          melancholic: 78,
+          sanguine: 156
+        }
+      },
+      {
+        houseId: 7,
+        houseName: "House of Twilight",
+        score: {
+          choleric: 122,
+          phlegmatic: 200,
+          melancholic: 311,
+          sanguine: 133
+        }
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: "The Inferno Gauntlet",
+    description: "A test of raw power and fiery determination through trials of flame.",
+    scores: [
+      {
+        houseId: 12,
+        houseName: "House of Ember",
+        score: {
+          choleric: 378,
+          phlegmatic: 56,
+          melancholic: 89,
+          sanguine: 167
+        }
+      },
+      {
+        houseId: 1,
+        houseName: "House of Boils",
+        score: {
+          choleric: 450,
+          phlegmatic: 178,
+          melancholic: 414,
+          sanguine: 167
+        }
+      },
+      {
+        houseId: 6,
+        houseName: "House of Iron Will",
+        score: {
+          choleric: 444,
+          phlegmatic: 89,
+          melancholic: 156,
+          sanguine: 27
+        }
+      }
+    ]
+  },
+  {
+    id: 6,
+    name: "The Vigil of Shadows",
+    description: "An ancient rite where houses prove their worth through contemplation and vigilance.",
+    scores: [
+      {
+        houseId: 13,
+        houseName: "House of Eternal Vigil",
+        score: {
+          choleric: 98,
+          phlegmatic: 145,
+          melancholic: 412,
+          sanguine: 67
+        }
+      },
+      {
+        houseId: 5,
+        houseName: "House of Whispers",
+        score: {
+          choleric: 123,
+          phlegmatic: 322,
+          melancholic: 100,
+          sanguine: 189
+        }
+      },
+      {
+        houseId: 10,
+        houseName: "House of Verdant Roots",
+        score: {
+          choleric: 177,
+          phlegmatic: 89,
+          melancholic: 300,
+          sanguine: 145
+        }
+      },
+      {
+        houseId: 8,
+        houseName: "House of Golden Dawn",
+        score: {
+          choleric: 167,
+          phlegmatic: 222,
+          melancholic: 78,
+          sanguine: 378
+        }
+      }
+    ]
   }
 ];

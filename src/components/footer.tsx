@@ -51,6 +51,23 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
   const theme = useTheme();
   const { toggleTheme, currentTheme } = useThemeContext();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  // Listen for custom event to open Sacred Rules
+  useEffect(() => {
+    const handleOpenSacredRules = (e: any) => {
+      setOpenExplainer(true);
+      // Scroll to section after modal opens
+      setTimeout(() => {
+        const element = document.getElementById(e.detail?.scrollTo);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 300);
+    };
+    
+    window.addEventListener('openSacredRules', handleOpenSacredRules);
+    return () => window.removeEventListener('openSacredRules', handleOpenSacredRules);
+  }, []);
   
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMenuAnchor(event.currentTarget);

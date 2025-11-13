@@ -8,6 +8,7 @@ interface CenteredModalProps {
   width?: number | string;
   height?: number | string;
   maxWidth?: number | string;
+  maxHeight?: number | string;
   backgroundColor?: string;
 }
 
@@ -18,6 +19,7 @@ export const CenteredModal: React.FC<CenteredModalProps> = ({
   width = 300,
   height = 400,
   maxWidth,
+  maxHeight,
   backgroundColor
 }) => {
   const theme = useTheme();
@@ -36,6 +38,7 @@ export const CenteredModal: React.FC<CenteredModalProps> = ({
           width,
           height,
           maxWidth,
+          maxHeight,
           backgroundColor: backgroundColor || theme.palette.background.paper,
           color: theme.palette.text.primary,
           borderRadius: 2,

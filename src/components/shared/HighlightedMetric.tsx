@@ -1,3 +1,5 @@
+import { useTheme, alpha } from "@mui/material";
+
 interface HighlightedMetricProps {
   label: string;
   value: string | number;
@@ -9,10 +11,12 @@ export const HighlightedMetric: React.FC<HighlightedMetricProps> = ({
   value, 
   isHighlighted 
 }) => {
+  const theme = useTheme();
+  
   return (
     <div
       style={{
-        backgroundColor: isHighlighted ? "rgba(93, 64, 55, 0.3)" : "transparent",
+        backgroundColor: isHighlighted ? alpha(theme.palette.primary.main, 0.3) : "transparent",
         padding: isHighlighted ? "4px 8px" : "0",
         borderRadius: "4px",
         fontWeight: isHighlighted ? "bold" : "normal"

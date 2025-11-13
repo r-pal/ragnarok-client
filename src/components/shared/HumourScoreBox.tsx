@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useTheme, alpha } from "@mui/material";
 import { Humours } from "types/shared";
 import { HUMOUR_CONFIG } from "config/humourConfig";
 import { formatScoreDisplay } from "helpers/scoreHelpers";
@@ -14,6 +14,7 @@ export const HumourScoreBox: React.FC<HumourScoreBoxProps> = ({
   value, 
   isHighlighted = false 
 }) => {
+  const theme = useTheme();
   const config = HUMOUR_CONFIG[humour];
   const { display, fontSize } = formatScoreDisplay(value);
 
@@ -21,7 +22,7 @@ export const HumourScoreBox: React.FC<HumourScoreBoxProps> = ({
     <Box
       sx={{
         border: isHighlighted ? 3 : 1,
-        backgroundColor: isHighlighted ? "rgba(93, 64, 55, 0.3)" : "transparent",
+        backgroundColor: isHighlighted ? alpha(theme.palette.primary.main, 0.3) : "transparent",
         fontWeight: isHighlighted ? "bold" : "normal",
         borderColor: config.borderColor,
         minWidth: 48,

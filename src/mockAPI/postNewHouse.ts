@@ -6,5 +6,6 @@ export const postNewHouse: IPostHouse =
    motto: "St. Christoper died not in vain",
    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/9/93/Jheronimus_Bosch_-_Saint_Christopher_-_Google_Art_ProjectFXD.jpg",
    strength: "phlegmatic",
-   weakness: "sanguine"
+   weakness: "sanguine",
+   password: "christoper123"
 };

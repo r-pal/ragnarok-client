@@ -2,7 +2,10 @@ import {
   List,
   ListItem,
   ListItemAvatar,
-  ListItemButton
+  ListItemButton,
+  Typography,
+  Box,
+  useTheme
 } from "@mui/material";
 import { IHouse } from "types/house";
 import { CenteredModal } from "components/shared/CenteredModal";
@@ -26,6 +29,8 @@ export const ViewFactionModal: React.FC<ViewFactionModalProps> = ({
   onHouseClick,
   onDelete,
 }) => {
+  const theme = useTheme();
+  
   return (
     <CenteredModal
       open={open}
@@ -33,6 +38,35 @@ export const ViewFactionModal: React.FC<ViewFactionModalProps> = ({
       width={400}
       height="auto"
     >
+      {factionName && (
+        <Typography variant="h6" sx={{ px: 2, pt: 2, pb: 1, fontWeight: 'bold' }}>
+          {factionName}
+        </Typography>
+      )}
+      
+      <Typography variant="caption" sx={{ px: 2, pb: 1, display: 'block', fontStyle: 'italic' }}>
+        Learn more about{' '}
+        <Box 
+          component="a" 
+          href="#factions"
+          onClick={(e) => {
+            e.preventDefault();
+            const event = new CustomEvent('openSacredRules', { detail: { scrollTo: 'factions' } });
+            window.dispatchEvent(event);
+          }}
+          sx={{ 
+            color: theme.palette.primary.main, 
+            textDecoration: 'underline',
+            cursor: 'pointer',
+            '&:hover': {
+              color: theme.palette.secondary.main
+            }
+          }}
+        >
+          The Binding of Houses
+        </Box>
+      </Typography>
+
       <List>
         {houses?.map((house) => (
           <ListItem disablePadding key={house.id}>

@@ -9,6 +9,7 @@ export interface IPostHouse {
   crestUrl?: string;
   strength?: Humours;
   weakness?: Humours;
+  password: string;
 }
 
 //GET array of:
@@ -20,6 +21,7 @@ export interface IHouse {
   strength: Humours;
   weakness: Humours;
   score?: IScore;
+  password: string;
 }
 
 //DELETE house:

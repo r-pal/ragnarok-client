@@ -9,6 +9,7 @@ export const getHouses: Array<IHouse> =
       crestUrl: "https://upload.wikimedia.org/wikipedia/commons/9/96/Escut_dels_vescomtes_de_Cabrera.png",
       strength: "choleric",
       weakness: "melancholic",
+      password: "boils123",
     score: {
       choleric: 600,
       phlegmatic: 223,
@@ -23,6 +24,7 @@ export const getHouses: Array<IHouse> =
       crestUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Blason_Sceau_Raymond_B%C3%A9ranger_IV_Barcelone.svg/1280px-Blason_Sceau_Raymond_B%C3%A9ranger_IV_Barcelone.svg.png",
       strength: "choleric",
       weakness: "phlegmatic",
+      password: "miasma123",
     score: {
       choleric: 600,
       phlegmatic: 23,
@@ -37,6 +39,7 @@ export const getHouses: Array<IHouse> =
       crestUrl: "https://upload.wikimedia.org/wikipedia/commons/7/74/Coat_of_arms_of_the_Crusaders_with_the_Red_Star.svg",
       strength: "melancholic",
       weakness: "sanguine",
+      password: "plague123",
     score: {
       choleric: 86,
       phlegmatic: 23,
@@ -51,6 +54,7 @@ export const getHouses: Array<IHouse> =
     crestUrl: "https://upload.wikimedia.org/wikipedia/commons/2/28/Imperial_Coat_of_Arms_of_the_Empire_of_Austria.svg",
     strength: "sanguine",
     weakness: "phlegmatic",
+    password: "crimson123",
     score: {
       choleric: 145,
       phlegmatic: 89,
@@ -65,6 +69,7 @@ export const getHouses: Array<IHouse> =
     crestUrl: "https://upload.wikimedia.org/wikipedia/commons/6/6e/Coat_of_Arms_of_Blagodarny.png",
     strength: "phlegmatic",
     weakness: "choleric",
+    password: "whispers123",
     score: {
       choleric: 201,
       phlegmatic: 489,
@@ -79,6 +84,7 @@ export const getHouses: Array<IHouse> =
     crestUrl: "https://upload.wikimedia.org/wikipedia/commons/d/dd/Coat_of_arms_of_Greenland.svg",
     strength: "choleric",
     weakness: "sanguine",
+    password: "iron123",
     score: {
       choleric: 678,
       phlegmatic: 134,
@@ -93,6 +99,7 @@ export const getHouses: Array<IHouse> =
     strength: "melancholic",
     weakness: "choleric",
     crestUrl: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Coat_of_arms_of_Illyria_%28yellow_star%29.svg",
+    password: "twilight123",
     score: {
       choleric: 167,
       phlegmatic: 298,
@@ -107,6 +114,7 @@ export const getHouses: Array<IHouse> =
     strength: "sanguine",
     weakness: "melancholic",
     crestUrl: "https://upload.wikimedia.org/wikipedia/commons/1/12/Lesser_Coat_of_Arms_of_Yellow_Ukraine.svg",
+    password: "golden123",
     score: {
       choleric: 234,
       phlegmatic: 345,
@@ -121,6 +129,7 @@ export const getHouses: Array<IHouse> =
     strength: "phlegmatic",
     weakness: "sanguine",
     crestUrl: "https://upload.wikimedia.org/wikipedia/commons/b/be/Coat_of_arms_of_Paul_Nguy%E1%BB%85n_Thanh_Hoan.svg",
+    password: "frost123",
     score: {
       choleric: 178,
       phlegmatic: 534,
@@ -135,11 +144,57 @@ export const getHouses: Array<IHouse> =
     strength: "melancholic",
     weakness: "phlegmatic",
     crestUrl: "https://upload.wikimedia.org/wikipedia/commons/5/56/Coat_of_Arms_of_Monza_%28ancient%29.svg",
+    password: "verdant123",
     score: {
       choleric: 289,
       phlegmatic: 156,
       melancholic: 478,
       sanguine: 234
+    }
+  },
+  {
+    id: 11,
+    name: "House of the Silver Moon",
+    motto: "By moonlight we endure",
+    strength: "phlegmatic",
+    weakness: "choleric",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/2/2c/Coat_of_Arms_of_the_Principality_of_Abkhazia.svg",
+    password: "silver123",
+    score: {
+      choleric: 145,
+      phlegmatic: 523,
+      melancholic: 267,
+      sanguine: 189
+    }
+  },
+  {
+    id: 12,
+    name: "House of Ember",
+    motto: "From ashes we rise",
+    strength: "choleric",
+    weakness: "phlegmatic",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/0/05/Coat_of_arms_of_the_British_Virgin_Islands.svg",
+    password: "ember123",
+    score: {
+      choleric: 612,
+      phlegmatic: 98,
+      melancholic: 234,
+      sanguine: 345
+    }
+  },
+  {
+    id: 13,
+    name: "House of Eternal Vigil",
+    motto: "Ever watchful, never sleeping",
+    strength: "melancholic",
+    weakness: "sanguine",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/commons/1/11/Coat_of_arms_of_Bosnia_and_Herzegovina_%281889%E2%80%931918%29.svg",
+    password: "vigil123",
+    score: {
+      choleric: 198,
+      phlegmatic: 267,
+      melancholic: 589,
+      sanguine: 123
     }
   }
 ];

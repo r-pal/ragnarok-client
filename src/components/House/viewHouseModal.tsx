@@ -1,4 +1,4 @@
-import { Box, Button, Typography, Stack, TextField, Divider, Collapse } from "@mui/material";
+import { Box, Button, Typography, Stack, TextField, Divider, Collapse, useTheme } from "@mui/material";
 import { useState, useEffect } from "react";
 import { IHouse, IPostHouse } from "types/house";
 import { IScore } from "types/shared";
@@ -25,15 +25,20 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
   onDelete,
   humourScores,
 }) => {
+  const theme = useTheme();
   const [isEditMode, setIsEditMode] = useState(false);
   const [openGameHistory, setOpenGameHistory] = useState(false);
   const [showCrestSearch, setShowCrestSearch] = useState(false);
+  const [passwordInput, setPasswordInput] = useState("");
+  const [isPasswordVerified, setIsPasswordVerified] = useState(false);
+  const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
   const [editHouse, setEditHouse] = useState<IPostHouse>({
     name: "",
     motto: "",
     crestUrl: "",
     strength: "choleric",
-    weakness: "phlegmatic"
+    weakness: "phlegmatic",
+    password: ""
   });
 
   // Initialize edit state when house changes
@@ -44,7 +49,8 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
         motto: house.motto,
         crestUrl: house.crestUrl || "",
         strength: house.strength,
-        weakness: house.weakness
+        weakness: house.weakness,
+        password: house.password
       });
     }
   }, [house]);
@@ -55,7 +61,23 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
   };
 
   const handleEditClick = () => {
-    setIsEditMode(true);
+    if (adminMode) {
+      setIsEditMode(true);
+      setIsPasswordVerified(true);
+    } else {
+      setShowPasswordPrompt(true);
+    }
+  };
+
+  const handlePasswordSubmit = () => {
+    if (passwordInput === house.password) {
+      setIsPasswordVerified(true);
+      setShowPasswordPrompt(false);
+      setIsEditMode(true);
+      setPasswordInput("");
+    } else {
+      alert("Incorrect password! Thy sacred key doth not match.");
+    }
   };
 
   const handleSaveEdit = () => {
@@ -84,16 +106,19 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
       motto: house.motto,
       crestUrl: house.crestUrl || "",
       strength: house.strength,
-      weakness: house.weakness
+      weakness: house.weakness,
+      password: house.password
     });
     setIsEditMode(false);
+    setIsPasswordVerified(false);
+    setPasswordInput("");
   };
   return (
     <>
-      <CenteredModal open={open} onClose={handleClose} width={500} height="auto">
+      <CenteredModal open={open} onClose={handleClose} width={500} height="auto" maxHeight="90vh">
           {isEditMode ? (
             <Stack spacing={3}>
-              <Typography variant="h5" sx={{ color: "#3e2723" }}>Edit House</Typography>
+              <Typography variant="h5" sx={{ color: theme.palette.text.primary }}>Edit House</Typography>
               
               <TextField
                 fullWidth
@@ -101,12 +126,12 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
                 value={editHouse.name}
                 onChange={(e) => setEditHouse({...editHouse, name: e.target.value})}
                 sx={{
-                  '& .MuiInputLabel-root': { color: 'rgba(62, 39, 35, 0.7)' },
+                  '& .MuiInputLabel-root': { color: theme.palette.text.secondary },
                   '& .MuiOutlinedInput-root': {
-                    color: '#3e2723',
-                    '& fieldset': { borderColor: 'rgba(62, 39, 35, 0.3)' },
-                    '&:hover fieldset': { borderColor: 'rgba(62, 39, 35, 0.5)' },
-                    '&.Mui-focused fieldset': { borderColor: '#3e2723' }
+                    color: theme.palette.text.primary,
+                    '& fieldset': { borderColor: theme.palette.divider },
+                    '&:hover fieldset': { borderColor: theme.palette.text.secondary },
+                    '&.Mui-focused fieldset': { borderColor: theme.palette.primary.main }
                   }
                 }}
               />
@@ -117,12 +142,12 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
                 value={editHouse.motto}
                 onChange={(e) => setEditHouse({...editHouse, motto: e.target.value})}
                 sx={{
-                  '& .MuiInputLabel-root': { color: 'rgba(62, 39, 35, 0.7)' },
+                  '& .MuiInputLabel-root': { color: theme.palette.text.secondary },
                   '& .MuiOutlinedInput-root': {
-                    color: '#3e2723',
-                    '& fieldset': { borderColor: 'rgba(62, 39, 35, 0.3)' },
-                    '&:hover fieldset': { borderColor: 'rgba(62, 39, 35, 0.5)' },
-                    '&.Mui-focused fieldset': { borderColor: '#3e2723' }
+                    color: theme.palette.text.primary,
+                    '& fieldset': { borderColor: theme.palette.divider },
+                    '&:hover fieldset': { borderColor: theme.palette.text.secondary },
+                    '&.Mui-focused fieldset': { borderColor: theme.palette.primary.main }
                   }
                 }}
               />
@@ -134,12 +159,12 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
                   value={editHouse.crestUrl}
                   onChange={(e) => setEditHouse({...editHouse, crestUrl: e.target.value})}
                   sx={{
-                    '& .MuiInputLabel-root': { color: 'rgba(62, 39, 35, 0.7)' },
+                    '& .MuiInputLabel-root': { color: theme.palette.text.secondary },
                     '& .MuiOutlinedInput-root': {
-                      color: '#3e2723',
-                      '& fieldset': { borderColor: 'rgba(62, 39, 35, 0.3)' },
-                      '&:hover fieldset': { borderColor: 'rgba(62, 39, 35, 0.5)' },
-                      '&.Mui-focused fieldset': { borderColor: '#3e2723' }
+                      color: theme.palette.text.primary,
+                      '& fieldset': { borderColor: theme.palette.divider },
+                      '&:hover fieldset': { borderColor: theme.palette.text.secondary },
+                      '&.Mui-focused fieldset': { borderColor: theme.palette.primary.main }
                     }
                   }}
                 />
@@ -164,7 +189,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
               
               {editHouse.crestUrl && (
                 <Box>
-                  <Typography variant="subtitle2" sx={{ color: 'rgba(62, 39, 35, 0.7)', mb: 1 }}>Preview:</Typography>
+                  <Typography variant="subtitle2" sx={{ color: theme.palette.text.secondary, mb: 1 }}>Preview:</Typography>
                   <img src={editHouse.crestUrl} style={{ height: 64, borderRadius: 4 }} alt="Crest preview" />
                 </Box>
               )}
@@ -174,6 +199,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
                 value={editHouse.strength}
                 onChange={(e) => setEditHouse({...editHouse, strength: e.target.value as any})}
                 required
+                disabled={!adminMode}
               />
               
               <HumourSelect
@@ -182,10 +208,47 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
                 value={editHouse.weakness}
                 onChange={(e) => setEditHouse({...editHouse, weakness: e.target.value as any})}
                 required
+                disabled={!adminMode}
+              />
+
+              {!adminMode && (
+                <Typography variant="caption" sx={{ color: theme.palette.text.secondary, fontStyle: 'italic', opacity: 0.8 }}>
+                  * Strength and Weakness can only be changed by{' '}
+                  <Box 
+                    component="a" 
+                    href="#divine-clemency"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      // Open Sacred Rules modal (handled by parent)
+                      const event = new CustomEvent('openSacredRules', { detail: { scrollTo: 'divine-clemency' } });
+                      window.dispatchEvent(event);
+                    }}
+                    sx={{ 
+                      color: theme.palette.primary.main, 
+                      textDecoration: 'underline',
+                      cursor: 'pointer',
+                      '&:hover': {
+                        color: theme.palette.secondary.main
+                      }
+                    }}
+                  >
+                    Divine Clemency
+                  </Box>
+                </Typography>
+              )}
+
+              <TextField
+                fullWidth
+                label="House Password"
+                type="password"
+                value={editHouse.password}
+                onChange={(e) => setEditHouse({...editHouse, password: e.target.value})}
+                required
+                helperText="Change password to protect thy house"
               />
               
               <Stack direction="row" spacing={2} justifyContent="flex-end">
-                <Button onClick={handleCancelEdit} variant="outlined" sx={{ color: '#3e2723', borderColor: 'rgba(62, 39, 35, 0.3)' }}>CANCEL</Button>
+                <Button onClick={handleCancelEdit} variant="outlined" sx={{ color: theme.palette.text.primary, borderColor: theme.palette.divider }}>CANCEL</Button>
                 <Button onClick={handleSaveEdit} variant="contained">SAVE</Button>
               </Stack>
             </Stack>
@@ -194,37 +257,35 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <img src={house.crestUrl} style={{ height: 64, borderRadius: 4 }} alt="House crest" />
                 <Box>
-                  <Typography variant="h5" sx={{ color: '#3e2723', fontWeight: 'bold' }}>{house.name}</Typography>
-                  <Typography variant="body2" sx={{ color: 'rgba(62, 39, 35, 0.6)', fontStyle: 'italic' }}>"{house.motto}"</Typography>
+                  <Typography variant="h5" sx={{ color: theme.palette.text.primary, fontWeight: 'bold' }}>{house.name}</Typography>
+                  <Typography variant="body2" sx={{ color: theme.palette.text.secondary, fontStyle: 'italic', opacity: 0.8 }}>"{house.motto}"</Typography>
                 </Box>
               </Box>
               
-              <Divider sx={{ borderColor: 'rgba(62, 39, 35, 0.1)' }} />
+              <Divider sx={{ borderColor: theme.palette.divider }} />
               
               <Box>
-                <Typography variant="body2" sx={{ color: 'rgba(62, 39, 35, 0.7)' }}>
-                  <strong style={{ color: '#8B4513' }}>Blessed Affliction:</strong> {house.strength?.charAt(0).toUpperCase() + house.strength?.slice(1)}
+                <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
+                  <strong style={{ color: theme.palette.primary.main }}>Blessed Affliction:</strong> {house.strength?.charAt(0).toUpperCase() + house.strength?.slice(1)}
                 </Typography>
-                <Typography variant="body2" sx={{ color: 'rgba(62, 39, 35, 0.7)', mt: 1 }}>
-                  <strong style={{ color: '#5d4037' }}>Sacred Weakness:</strong> {house.weakness?.charAt(0).toUpperCase() + house.weakness?.slice(1)}
+                <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mt: 1 }}>
+                  <strong style={{ color: theme.palette.secondary.main }}>Sacred Weakness:</strong> {house.weakness?.charAt(0).toUpperCase() + house.weakness?.slice(1)}
                 </Typography>
               </Box>
               
               {house.score && (
                 <Box>
-                  <Typography variant="body2" sx={{ color: 'rgba(62, 39, 35, 0.7)', mb: 1 }}>Humour Scores:</Typography>
+                  <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mb: 1 }}>Humour Scores:</Typography>
                   {humourScores(house.score)}
                 </Box>
               )}
               
-              <Divider sx={{ borderColor: 'rgba(62, 39, 35, 0.1)' }} />
+              <Divider sx={{ borderColor: theme.palette.divider }} />
               
               <Stack direction="row" spacing={2} flexWrap="wrap">
-                <Button onClick={() => setOpenGameHistory(true)} variant="outlined" sx={{ color: '#3e2723', borderColor: 'rgba(62, 39, 35, 0.3)' }}>VIEW GAME HISTORY</Button>
-                <Button onClick={handleClose} variant="outlined" sx={{ color: '#3e2723', borderColor: 'rgba(62, 39, 35, 0.3)' }}>CLOSE</Button>
-                {adminMode && (
-                  <Button onClick={handleEditClick} variant="contained" color="primary">EDIT</Button>
-                )}
+                <Button onClick={() => setOpenGameHistory(true)} variant="outlined" sx={{ color: theme.palette.text.primary, borderColor: theme.palette.divider }}>VIEW GAME HISTORY</Button>
+                <Button onClick={handleClose} variant="outlined" sx={{ color: theme.palette.text.primary, borderColor: theme.palette.divider }}>CLOSE</Button>
+                <Button onClick={handleEditClick} variant="contained" color="primary">EDIT</Button>
                 {adminMode && (
                   <Button onClick={onDelete} variant="contained" color="error">DELETE</Button>
                 )}
@@ -232,6 +293,30 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
             </Stack>
           )}
       </CenteredModal>
+
+      {/* Password Prompt Dialog */}
+      <CenteredModal open={showPasswordPrompt} onClose={() => setShowPasswordPrompt(false)} width={400} height="auto">
+        <Stack spacing={3}>
+          <Typography variant="h6">Enter House Password</Typography>
+          <Typography variant="body2" color="text.secondary">
+            To edit this house without admin access, enter the sacred key.
+          </Typography>
+          <TextField
+            fullWidth
+            label="Password"
+            type="password"
+            value={passwordInput}
+            onChange={(e) => setPasswordInput(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && handlePasswordSubmit()}
+            autoFocus
+          />
+          <Stack direction="row" spacing={2} justifyContent="flex-end">
+            <Button onClick={() => setShowPasswordPrompt(false)} variant="outlined">CANCEL</Button>
+            <Button onClick={handlePasswordSubmit} variant="contained">SUBMIT</Button>
+          </Stack>
+        </Stack>
+      </CenteredModal>
+
       <HouseGameHistory
         open={openGameHistory}
         house={house}

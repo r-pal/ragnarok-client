@@ -141,7 +141,7 @@ export const Explainer: React.FC = () => {
       </Paper>
 
       {/* Section B: Factions */}
-      <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
+      <Paper elevation={3} sx={{ p: 3, mb: 3 }} id="factions">
         <Typography variant="h5" gutterBottom color="primary">
           B. The Binding of Houses
         </Typography>
@@ -230,7 +230,7 @@ export const Explainer: React.FC = () => {
       </Paper>
 
       {/* Section C: Special Clemency */}
-      <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
+      <Paper elevation={3} sx={{ p: 3, mb: 3 }} id="divine-clemency">
         <Typography variant="h5" gutterBottom color="primary">
           C. Divine Clemency
         </Typography>

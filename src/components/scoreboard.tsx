@@ -41,8 +41,16 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
   const [selectedFactionName, setSelectedFactionName] = useState<string | undefined>(undefined);
   
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
-  const fontScale = isDesktop ? 1.5 : 1;
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md')); // >= 900px
+  const isXL = useMediaQuery('(min-width:1500px)'); // >= 1500px
+  
+  // Font scale: mobile (1x), medium (1.25x), XL (1.5x)
+  let fontScale = 1;
+  if (isXL) {
+    fontScale = 1.5;
+  } else if (isDesktop) {
+    fontScale = 1.25;
+  }
 
   // Helper function to calculate balance
 
@@ -183,10 +191,41 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
       getHouses.find((house) => house.id === id)
     );
 
-    // Dynamic crest size: big if single house, smaller if multiple
-    const crestSize = teams.length === 1 ? 60 * fontScale : 32 * fontScale;
+    // Base shield size that scales with screen size
+    // Mobile: 80px, Medium (900-1500): 100px, XL (1500+): 120px
+    const baseShieldSize = 80;
+    const largeShieldSize = baseShieldSize * fontScale;
+    
+    // Dynamic crest size based on number of houses and screen size
+    // Mobile: smaller shields that can wrap
+    // Desktop: large shields in single row
+    let crestSize: number;
+    if (isDesktop) {
+      // Desktop: keep large size for up to 6 houses
+      if (teams.length <= 6) {
+        crestSize = largeShieldSize;
+      } else {
+        crestSize = (baseShieldSize * 0.625) * fontScale; // 62.5% of base
+      }
+    } else {
+      // Mobile: use smaller shields that can wrap
+      if (teams.length === 1) {
+        crestSize = 60;
+      } else {
+        crestSize = 32; // Small size for multiple houses on mobile
+      }
+    }
+    
     const crests = teams.map((house) => (
-      <img src={house?.crestUrl} style={{ height: crestSize }} key={house?.id} />
+      <img 
+        src={house?.crestUrl} 
+        style={{ 
+          height: crestSize,
+          width: 'auto',
+          objectFit: 'contain'
+        }} 
+        key={house?.id} 
+      />
     ));
 
     return (
@@ -198,9 +237,12 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
           justifyContent: "space-between",
           alignItems: "center",
           width: "100%",
-          color: "#000000",
+          color: theme.palette.text.primary,
           fontWeight: "bold",
-          fontFamily: "'Medieval Sharp Bold', serif"
+          fontFamily: "'Medieval Sharp Bold', serif",
+          textShadow: theme.palette.mode === 'dark' ? '2px 2px 4px rgba(0, 0, 0, 0.8)' : 'none',
+          padding: "12px 16px",
+          minHeight: isDesktop ? `${largeShieldSize + 24}px` : 'auto'
         }}
         onClick={() => {
           team.houseIds && openModal(team.houseIds, team.name);
@@ -208,13 +250,21 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
         }}
       >
         <Grid style={{ display: "flex", gap: 8, alignItems: "center", flexShrink: 0 }}>
-          <Grid style={{ fontSize: 60, color: "#000000", fontWeight: "bold" }}>{team.ranking}</Grid>
+          <Grid style={{ 
+            fontSize: isDesktop ? largeShieldSize : 60, 
+            lineHeight: isDesktop ? `${largeShieldSize}px` : '60px',
+            color: theme.palette.text.primary, 
+            fontWeight: "bold",
+            textShadow: theme.palette.mode === 'dark' ? '3px 3px 6px rgba(0, 0, 0, 0.9)' : 'none'
+          }}>{team.ranking}</Grid>
           <Grid style={{ 
             display: "flex", 
-            gap: 4, 
+            gap: isDesktop ? 8 : 4, 
             alignItems: "center",
-            flexWrap: "wrap",
-            maxWidth: "100px"
+            flexWrap: isDesktop ? "nowrap" : "wrap",
+            justifyContent: "flex-start",
+            height: isDesktop ? `${largeShieldSize}px` : 'auto',
+            maxWidth: isDesktop ? 'none' : '100px'
           }}>
             {crests}
           </Grid>
@@ -231,7 +281,12 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
             minWidth: 0
           }}
         >
-          <Grid style={{ minWidth: "auto", textAlign: "right", fontSize: 16 * fontScale }}>
+          <Grid style={{ 
+            minWidth: "auto", 
+            textAlign: "right", 
+            fontSize: 16 * fontScale,
+            textShadow: theme.palette.mode === 'dark' ? '2px 2px 4px rgba(0, 0, 0, 0.8)' : 'none'
+          }}>
             {team.name}
           </Grid>
           <Grid style={{ display: "flex", gap: 4, flexShrink: 0 }}>
@@ -244,7 +299,8 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
               gap: 16,
               fontSize: 14 * fontScale,
               minWidth: "auto",
-              flexShrink: 0
+              flexShrink: 0,
+              textShadow: theme.palette.mode === 'dark' ? '1px 1px 3px rgba(0, 0, 0, 0.8)' : 'none'
             }}
           >
             <HighlightedMetric

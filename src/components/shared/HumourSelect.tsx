@@ -9,6 +9,7 @@ interface HumourSelectProps {
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   required?: boolean;
   fullWidth?: boolean;
+  disabled?: boolean;
 }
 
 export const HumourSelect: React.FC<HumourSelectProps> = ({
@@ -18,10 +19,11 @@ export const HumourSelect: React.FC<HumourSelectProps> = ({
   onChange,
   onBlur,
   required = false,
-  fullWidth = true
+  fullWidth = true,
+  disabled = false
 }) => {
   return (
-    <FormControl fullWidth={fullWidth} required={required}>
+    <FormControl fullWidth={fullWidth} required={required} disabled={disabled}>
       <InputLabel>{label}</InputLabel>
       <Select
         name={name}
@@ -29,6 +31,7 @@ export const HumourSelect: React.FC<HumourSelectProps> = ({
         onChange={onChange}
         onBlur={onBlur}
         label={label}
+        disabled={disabled}
       >
         {humourOptions.map((humour) => (
           <MenuItem key={humour} value={humour}>
