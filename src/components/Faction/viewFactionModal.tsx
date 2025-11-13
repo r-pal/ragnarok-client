@@ -2,10 +2,10 @@ import {
   List,
   ListItem,
   ListItemAvatar,
-  ListItemButton,
-  Modal
+  ListItemButton
 } from "@mui/material";
 import { IHouse } from "types/house";
+import { CenteredModal } from "components/shared/CenteredModal";
 
 interface ViewFactionModalProps {
   open: boolean;
@@ -25,16 +25,12 @@ export const ViewFactionModal: React.FC<ViewFactionModalProps> = ({
   onDelete,
 }) => {
   return (
-    <Modal
+    <CenteredModal
       open={open}
       onClose={onClose}
-      style={{
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        backgroundColor: "brown",
-        transform: "translate(-50%, -50%)"
-      }}
+      width={400}
+      height="auto"
+      backgroundColor="brown"
     >
       <List>
         {houses?.map((house) => (
@@ -53,6 +49,6 @@ export const ViewFactionModal: React.FC<ViewFactionModalProps> = ({
           </ListItemButton>
         )}
       </List>
-    </Modal>
+    </CenteredModal>
   );
 };

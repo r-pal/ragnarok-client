@@ -16,6 +16,10 @@ import { ViewHouseModal } from "./House/viewHouseModal";
 import { ViewFactionModal } from "./Faction/viewFactionModal";
 import { SortBy } from "./header";
 import { getStandardDeviation } from "helpers/maths";
+import { applyMultipliers, aggregateScores, calculateTotal } from "helpers/scoreHelpers";
+import { HUMOUR_ORDER } from "config/humourConfig";
+import { HumourScoreBox } from "./shared/HumourScoreBox";
+import { HighlightedMetric } from "./shared/HighlightedMetric";
 
 interface Scoreboard {
   adminMode: boolean;
@@ -34,10 +38,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
   const [openFactionModal, setOpenFactionModal] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
-  // Helper functions to calculate points
-  const calculateTotal = (score: IScore) => {
-    return score.choleric + score.phlegmatic + score.melancholic + score.sanguine;
-  };
+  // Helper function to calculate balance
 
   const calculateBalance = (score: IScore) => {
     return getStandardDeviation([
@@ -48,24 +49,6 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
     ]);
   };
 
-  // Apply strength (×2) and weakness (÷2) multipliers to a house's score
-  const applyMultipliers = (house: IHouse): IScore => {
-    if (!house.score) return { choleric: 0, phlegmatic: 0, melancholic: 0, sanguine: 0 };
-    
-    const modifiedScore = { ...house.score };
-    
-    // Apply strength multiplier (×2)
-    if (house.strength) {
-      modifiedScore[house.strength] = house.score[house.strength] * 2;
-    }
-    
-    // Apply weakness multiplier (÷2)
-    if (house.weakness) {
-      modifiedScore[house.weakness] = house.score[house.weakness] / 2;
-    }
-    
-    return modifiedScore;
-  };
 
   // Build scoreboard from houses and factions
   const buildScoreboard = (): ScoreboardItem[] => {
@@ -80,24 +63,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
       
       if (factionHouses.length > 0) {
         // Aggregate scores from all houses in faction (with strength/weakness multipliers)
-        const aggregatedScore: IScore = {
-          choleric: factionHouses.reduce((sum, h) => {
-            const modifiedScore = applyMultipliers(h);
-            return sum + modifiedScore.choleric;
-          }, 0),
-          phlegmatic: factionHouses.reduce((sum, h) => {
-            const modifiedScore = applyMultipliers(h);
-            return sum + modifiedScore.phlegmatic;
-          }, 0),
-          melancholic: factionHouses.reduce((sum, h) => {
-            const modifiedScore = applyMultipliers(h);
-            return sum + modifiedScore.melancholic;
-          }, 0),
-          sanguine: factionHouses.reduce((sum, h) => {
-            const modifiedScore = applyMultipliers(h);
-            return sum + modifiedScore.sanguine;
-          }, 0)
-        };
+        const aggregatedScore = aggregateScores(factionHouses);
 
         scoreboardItems.push({
           name: faction.name,
@@ -169,57 +135,18 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
     console.log(`Deleted ${houses && houses[0].name}`);
   };
 
-  const humourScores = (score: IScore) => {
-    const getBoxStyle = (humour: string) => ({
-      border: sortBy === humour ? 3 : 1,
-      backgroundColor: sortBy === humour ? "rgba(255, 215, 0, 0.2)" : "transparent",
-      fontWeight: sortBy === humour ? "bold" : "normal"
-    });
-
-    return (
-      <Grid
-        style={{
-          display: "flex",
-          gap: 4
-        }}
-      >
-        <Box
-          sx={getBoxStyle("phlegmatic")}
-          style={{ borderColor: "green" }}
-          width={48}
-          height={48}
-        >
-          {score.phlegmatic}
-        </Box>
-        <Box
-          sx={getBoxStyle("sanguine")}
-          style={{ borderColor: "crimson" }}
-          width={48}
-          height={48}
-        >
-          {score.sanguine}
-        </Box>
-        <Box
-          sx={getBoxStyle("choleric")}
-          style={{ borderColor: "yellow" }}
-          width={48}
-          height={48}
-        >
-          {score.choleric}
-        </Box>
-        <Box
-          sx={getBoxStyle("melancholic")}
-          style={{
-            borderColor: "linear-gradient(90deg, #ffffff 0%, #000000 100%)"
-          }}
-          width={48}
-          height={48}
-        >
-          {score.melancholic}
-        </Box>
-      </Grid>
-    );
-  };
+  const humourScores = (score: IScore) => (
+    <Grid style={{ display: "flex", gap: 4 }}>
+      {HUMOUR_ORDER.map(humour => (
+        <HumourScoreBox
+          key={humour}
+          humour={humour}
+          value={score[humour]}
+          isHighlighted={sortBy === humour}
+        />
+      ))}
+    </Grid>
+  );
 
   const scores = rankedScoreboardData.map((team: ScoreboardItem & { ranking: number }) => {
     const teams = team.houseIds.map((id: number) =>
@@ -275,22 +202,16 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
               minWidth: 250
             }}
           >
-            <div style={{
-              backgroundColor: sortBy === "total" ? "rgba(255, 215, 0, 0.2)" : "transparent",
-              padding: sortBy === "total" ? "4px 8px" : "0",
-              borderRadius: "4px",
-              fontWeight: sortBy === "total" ? "bold" : "normal"
-            }}>
-              <strong>Total:</strong> {calculateTotal(team.score)}
-            </div>
-            <div style={{
-              backgroundColor: sortBy === "balance" ? "rgba(255, 215, 0, 0.2)" : "transparent",
-              padding: sortBy === "balance" ? "4px 8px" : "0",
-              borderRadius: "4px",
-              fontWeight: sortBy === "balance" ? "bold" : "normal"
-            }}>
-              <strong>Balance:</strong> {calculateBalance(team.score).toFixed(2)}
-            </div>
+            <HighlightedMetric
+              label="Total"
+              value={calculateTotal(team.score)}
+              isHighlighted={sortBy === "total"}
+            />
+            <HighlightedMetric
+              label="Balance"
+              value={calculateBalance(team.score).toFixed(2)}
+              isHighlighted={sortBy === "balance"}
+            />
           </Grid>
         </Grid>
       </Button>

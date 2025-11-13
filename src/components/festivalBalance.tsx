@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import { getHouses } from "mockAPI/getHouses";
 import { getStandardDeviation } from "helpers/maths";
+import { HUMOUR_CONFIG, HUMOUR_ORDER } from "config/humourConfig";
 
 export const FestivalBalance: React.FC = () => {
   const theme = useTheme();
@@ -57,81 +58,29 @@ export const FestivalBalance: React.FC = () => {
         </Typography>
 
         <Box sx={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 2 : 3 }}>
-          <Box>
-            <Paper 
-              elevation={1} 
-              sx={{ 
-                p: 2, 
-                textAlign: "center",
-                border: "2px solid",
-                borderColor: "gold"
-              }}
-            >
-              <Typography variant={isMobile ? "subtitle1" : "h6"} color="text.secondary">
-                Choleric 🟡
-              </Typography>
-              <Typography variant={isMobile ? "h4" : "h3"} sx={{ fontWeight: "bold", color: "goldenrod" }}>
-                {totalScores.choleric.toLocaleString()}
-              </Typography>
-            </Paper>
-          </Box>
-
-          <Box>
-            <Paper 
-              elevation={1} 
-              sx={{ 
-                p: 2, 
-                textAlign: "center",
-                border: "2px solid",
-                borderColor: "green"
-              }}
-            >
-              <Typography variant={isMobile ? "subtitle1" : "h6"} color="text.secondary">
-                Phlegmatic 🟢
-              </Typography>
-              <Typography variant={isMobile ? "h4" : "h3"} sx={{ fontWeight: "bold", color: "green" }}>
-                {totalScores.phlegmatic.toLocaleString()}
-              </Typography>
-            </Paper>
-          </Box>
-
-          <Box>
-            <Paper 
-              elevation={1} 
-              sx={{ 
-                p: 2, 
-                textAlign: "center",
-                border: "2px solid",
-                borderColor: "gray"
-              }}
-            >
-              <Typography variant={isMobile ? "subtitle1" : "h6"} color="text.secondary">
-                Melancholic ⚫
-              </Typography>
-              <Typography variant={isMobile ? "h4" : "h3"} sx={{ fontWeight: "bold", color: "gray" }}>
-                {totalScores.melancholic.toLocaleString()}
-              </Typography>
-            </Paper>
-          </Box>
-
-          <Box>
-            <Paper 
-              elevation={1} 
-              sx={{ 
-                p: 2, 
-                textAlign: "center",
-                border: "2px solid",
-                borderColor: "crimson"
-              }}
-            >
-              <Typography variant={isMobile ? "subtitle1" : "h6"} color="text.secondary">
-                Sanguine 🔴
-              </Typography>
-              <Typography variant={isMobile ? "h4" : "h3"} sx={{ fontWeight: "bold", color: "crimson" }}>
-                {totalScores.sanguine.toLocaleString()}
-              </Typography>
-            </Paper>
-          </Box>
+          {HUMOUR_ORDER.map(humour => {
+            const config = HUMOUR_CONFIG[humour];
+            return (
+              <Box key={humour}>
+                <Paper 
+                  elevation={1} 
+                  sx={{ 
+                    p: 2, 
+                    textAlign: "center",
+                    border: "2px solid",
+                    borderColor: config.borderColor
+                  }}
+                >
+                  <Typography variant={isMobile ? "subtitle1" : "h6"} color="text.secondary">
+                    {config.label} {config.emoji}
+                  </Typography>
+                  <Typography variant={isMobile ? "h4" : "h3"} sx={{ fontWeight: "bold", color: config.color }}>
+                    {totalScores[humour].toLocaleString()}
+                  </Typography>
+                </Paper>
+              </Box>
+            );
+          })}
         </Box>
       </Paper>
 

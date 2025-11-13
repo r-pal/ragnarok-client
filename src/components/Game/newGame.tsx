@@ -20,6 +20,8 @@ import {
 import { useState } from "react";
 import { getHouses } from "mockAPI/getHouses";
 import { IGameScores } from "types/game";
+import { HUMOUR_CONFIG, HUMOUR_ORDER } from "config/humourConfig";
+import { Humours } from "types/shared";
 
 interface GameResult {
   gameName: string;
@@ -168,10 +170,14 @@ export const NewGame: React.FC = () => {
               <TableHead>
                 <TableRow>
                   <TableCell><strong>House</strong></TableCell>
-                  <TableCell align="center"><strong>Choleric 🟡</strong></TableCell>
-                  <TableCell align="center"><strong>Phlegmatic 🟢</strong></TableCell>
-                  <TableCell align="center"><strong>Melancholic ⚫</strong></TableCell>
-                  <TableCell align="center"><strong>Sanguine 🔴</strong></TableCell>
+                  {HUMOUR_ORDER.map(humour => {
+                    const config = HUMOUR_CONFIG[humour];
+                    return (
+                      <TableCell key={humour} align="center">
+                        <strong>{config.label} {config.emoji}</strong>
+                      </TableCell>
+                    );
+                  })}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -185,46 +191,18 @@ export const NewGame: React.FC = () => {
                   return (
                     <TableRow key={house.id}>
                       <TableCell>{house.name}</TableCell>
-                      <TableCell align="center">
-                        <TextField
-                          type="number"
-                          value={score.choleric}
-                          onChange={(e) => handleScoreChange(house.id, "choleric", Number(e.target.value))}
-                          inputProps={{ step: 1 }}
-                          size="small"
-                          sx={{ width: 80 }}
-                        />
-                      </TableCell>
-                      <TableCell align="center">
-                        <TextField
-                          type="number"
-                          value={score.phlegmatic}
-                          onChange={(e) => handleScoreChange(house.id, "phlegmatic", Number(e.target.value))}
-                          inputProps={{ step: 1 }}
-                          size="small"
-                          sx={{ width: 80 }}
-                        />
-                      </TableCell>
-                      <TableCell align="center">
-                        <TextField
-                          type="number"
-                          value={score.melancholic}
-                          onChange={(e) => handleScoreChange(house.id, "melancholic", Number(e.target.value))}
-                          inputProps={{ step: 1 }}
-                          size="small"
-                          sx={{ width: 80 }}
-                        />
-                      </TableCell>
-                      <TableCell align="center">
-                        <TextField
-                          type="number"
-                          value={score.sanguine}
-                          onChange={(e) => handleScoreChange(house.id, "sanguine", Number(e.target.value))}
-                          inputProps={{ step: 1 }}
-                          size="small"
-                          sx={{ width: 80 }}
-                        />
-                      </TableCell>
+                      {HUMOUR_ORDER.map(humour => (
+                        <TableCell key={humour} align="center">
+                          <TextField
+                            type="number"
+                            value={score[humour]}
+                            onChange={(e) => handleScoreChange(house.id, humour as Humours, Number(e.target.value))}
+                            inputProps={{ step: 1 }}
+                            size="small"
+                            sx={{ width: 80 }}
+                          />
+                        </TableCell>
+                      ))}
                     </TableRow>
                   );
                 })}

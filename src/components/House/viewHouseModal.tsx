@@ -1,9 +1,11 @@
-import { Box, Button, Modal } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import { IHouse, IPostHouse } from "types/house";
-import { IScore, Humours, humourOptions } from "types/shared";
+import { IScore } from "types/shared";
 import { getHouses } from "mockAPI/getHouses";
 import { HouseGameHistory } from "./houseGameHistory";
+import { CenteredModal } from "components/shared/CenteredModal";
+import { HumourSelect } from "components/shared/HumourSelect";
 
 interface ViewHouseModalProps {
   open: boolean;
@@ -86,25 +88,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
   };
   return (
     <>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          display: "flex",
-          flexDirection: "column"
-        }}
-      >
-        <Box
-          style={{
-            gap: 4,
-            height: 400,
-            width: 300
-          }}
-        >
+      <CenteredModal open={open} onClose={handleClose} width={400} height="auto">
           {isEditMode ? (
             <>
               <div>Edit House</div>
@@ -141,32 +125,24 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
                   <img src={editHouse.crestUrl} style={{ height: 48 }} />
                 </div>
               )}
-              <div>
-                <label>Strength: </label>
-                <select 
-                  value={editHouse.strength} 
-                  onChange={(e) => setEditHouse({...editHouse, strength: e.target.value as Humours})}
-                >
-                  {humourOptions.map((humour) => (
-                    <option key={humour} value={humour}>
-                      {humour.charAt(0).toUpperCase() + humour.slice(1)}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label>Weakness: </label>
-                <select 
-                  value={editHouse.weakness} 
-                  onChange={(e) => setEditHouse({...editHouse, weakness: e.target.value as Humours})}
-                >
-                  {humourOptions.map((humour) => (
-                    <option key={humour} value={humour}>
-                      {humour.charAt(0).toUpperCase() + humour.slice(1)}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <Box sx={{ mt: 2, mb: 2 }}>
+                <HumourSelect
+                  label="Strength"
+                  name="strength"
+                  value={editHouse.strength}
+                  onChange={(e) => setEditHouse({...editHouse, strength: e.target.value as any})}
+                  required
+                />
+              </Box>
+              <Box sx={{ mt: 2, mb: 2 }}>
+                <HumourSelect
+                  label="Weakness"
+                  name="weakness"
+                  value={editHouse.weakness}
+                  onChange={(e) => setEditHouse({...editHouse, weakness: e.target.value as any})}
+                  required
+                />
+              </Box>
               <Button onClick={handleCancelEdit}>CANCEL</Button>
               <Button onClick={handleSaveEdit}>SAVE</Button>
             </>
@@ -188,8 +164,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
               )}
             </>
           )}
-        </Box>
-      </Modal>
+      </CenteredModal>
       <HouseGameHistory
         open={openGameHistory}
         house={house}

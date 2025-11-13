@@ -1,9 +1,5 @@
 import {
   Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
   TextField,
   Typography,
   Box,
@@ -11,7 +7,7 @@ import {
 } from "@mui/material";
 import { Formik, Form } from "formik";
 import { IPostHouse } from "types/house";
-import { humourOptions } from "types/shared";
+import { HumourSelect } from "components/shared/HumourSelect";
 
 const initialValues: IPostHouse = {
   name: "",
@@ -81,39 +77,22 @@ export const AddHouse: React.FC = () => {
               />
 
               <Stack direction="row" spacing={2}>
-                <FormControl fullWidth required>
-                  <InputLabel>Blessed Affliction</InputLabel>
-                  <Select
-                    name="strength"
-                    value={values.strength}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    label="Blessed Affliction"
-                  >
-                    {humourOptions.map((humour) => (
-                      <MenuItem key={humour} value={humour}>
-                        {humour.charAt(0).toUpperCase() + humour.slice(1)}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-
-                <FormControl fullWidth required>
-                  <InputLabel>Sacred Weakness</InputLabel>
-                  <Select
-                    name="weakness"
-                    value={values.weakness}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    label="Sacred Weakness"
-                  >
-                    {humourOptions.map((humour) => (
-                      <MenuItem key={humour} value={humour}>
-                        {humour.charAt(0).toUpperCase() + humour.slice(1)}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                <HumourSelect
+                  label="Blessed Affliction"
+                  name="strength"
+                  value={values.strength}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  required
+                />
+                <HumourSelect
+                  label="Sacred Weakness"
+                  name="weakness"
+                  value={values.weakness}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  required
+                />
               </Stack>
 
               {values.crestUrl && (
