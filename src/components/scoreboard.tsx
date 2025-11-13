@@ -5,7 +5,9 @@ import {
   DialogActions,
   DialogTitle,
   Divider,
-  Grid
+  Grid,
+  useMediaQuery,
+  useTheme
 } from "@mui/material";
 import { getHouses } from "mockAPI/getHouses";
 import { getFactions } from "mockAPI/getFactions";
@@ -36,6 +38,11 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
   const [openHouseModal, setopenHouseModal] = useState(false);
   const [openFactionModal, setOpenFactionModal] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [selectedFactionName, setSelectedFactionName] = useState<string | undefined>(undefined);
+  
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
+  const fontScale = isDesktop ? 1.5 : 1;
 
   // Helper function to calculate balance
 
@@ -121,15 +128,17 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
       ranking: index + 1
     }));
 
-  const openModal = (houseIds: number[]) => {
+  const openModal = (houseIds: number[], factionName?: string) => {
     setOpenFactionModal(false);
     const selectedHouses = houseIds.map((id) => getHouses.find((house) => house.id === id)!);
     setHouse(selectedHouses);
     if (houseIds.length === 1) {
       setopenHouseModal(true);
+      setSelectedFactionName(undefined);
     } else {
       // Multiple houses = faction
       setOpenFactionModal(true);
+      setSelectedFactionName(factionName);
     }
   };
 
@@ -174,8 +183,10 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
       getHouses.find((house) => house.id === id)
     );
 
+    // Dynamic crest size: big if single house, smaller if multiple
+    const crestSize = teams.length === 1 ? 60 * fontScale : 32 * fontScale;
     const crests = teams.map((house) => (
-      <img src={house?.crestUrl} style={{ height: 24 }} key={house?.id} />
+      <img src={house?.crestUrl} style={{ height: crestSize }} key={house?.id} />
     ));
 
     return (
@@ -185,15 +196,23 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
           flexDirection: "row",
           gap: 4,
           justifyContent: "space-between",
-          alignItems: "last baseline",
-          width: "100%"
+          alignItems: "center",
+          width: "100%",
+          color: "#000000",
+          fontWeight: "bold",
+          fontFamily: "'Medieval Sharp Bold', serif"
         }}
         onClick={() => {
-          team.houseIds && openModal(team.houseIds);
+          team.houseIds && openModal(team.houseIds, team.name);
           console.log("1", team);
         }}
       >
-        <Grid style={{ fontSize: 60 }}>{team.ranking}</Grid>
+        <Grid style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          <Grid style={{ fontSize: 60, color: "#000000", fontWeight: "bold" }}>{team.ranking}</Grid>
+          <Grid style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            {crests}
+          </Grid>
+        </Grid>
         <Grid
           style={{
             display: "flex",
@@ -205,10 +224,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
             flexWrap: "wrap"
           }}
         >
-          <Grid style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            {crests}
-          </Grid>
-          <Grid style={{ minWidth: 200, textAlign: "right" }}>
+          <Grid style={{ minWidth: 200, textAlign: "right", fontSize: 16 * fontScale }}>
             {team.name}
           </Grid>
           <Grid style={{ display: "flex", gap: 4 }}>
@@ -219,7 +235,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
               display: "flex",
               flexDirection: "row",
               gap: 16,
-              fontSize: 14,
+              fontSize: 14 * fontScale,
               minWidth: 250
             }}
           >
@@ -271,6 +287,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
         <ViewFactionModal
           open={openFactionModal}
           houses={houses}
+          factionName={selectedFactionName}
           adminMode={adminMode}
           onClose={handleCloseFactionModal}
           onHouseClick={(houseId) => openModal([houseId])}

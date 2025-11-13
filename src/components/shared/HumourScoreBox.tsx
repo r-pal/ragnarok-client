@@ -21,7 +21,7 @@ export const HumourScoreBox: React.FC<HumourScoreBoxProps> = ({
     <Box
       sx={{
         border: isHighlighted ? 3 : 1,
-        backgroundColor: isHighlighted ? "rgba(255, 215, 0, 0.2)" : "transparent",
+        backgroundColor: isHighlighted ? "rgba(93, 64, 55, 0.3)" : "transparent",
         fontWeight: isHighlighted ? "bold" : "normal",
         borderColor: config.borderColor,
         minWidth: 48,

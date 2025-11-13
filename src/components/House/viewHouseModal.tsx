@@ -88,10 +88,10 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
   };
   return (
     <>
-      <CenteredModal open={open} onClose={handleClose} width={500} height="auto" backgroundColor="rgba(20, 20, 20, 0.98)">
+      <CenteredModal open={open} onClose={handleClose} width={500} height="auto" backgroundColor="rgba(255, 248, 240, 0.98)">
           {isEditMode ? (
             <Stack spacing={3}>
-              <Typography variant="h5" sx={{ color: "white" }}>Edit House</Typography>
+              <Typography variant="h5" sx={{ color: "#3e2723" }}>Edit House</Typography>
               
               <TextField
                 fullWidth
@@ -99,12 +99,12 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
                 value={editHouse.name}
                 onChange={(e) => setEditHouse({...editHouse, name: e.target.value})}
                 sx={{
-                  '& .MuiInputLabel-root': { color: 'rgba(255, 255, 255, 0.7)' },
+                  '& .MuiInputLabel-root': { color: 'rgba(62, 39, 35, 0.7)' },
                   '& .MuiOutlinedInput-root': {
-                    color: 'white',
-                    '& fieldset': { borderColor: 'rgba(255, 255, 255, 0.3)' },
-                    '&:hover fieldset': { borderColor: 'rgba(255, 255, 255, 0.5)' },
-                    '&.Mui-focused fieldset': { borderColor: 'white' }
+                    color: '#3e2723',
+                    '& fieldset': { borderColor: 'rgba(62, 39, 35, 0.3)' },
+                    '&:hover fieldset': { borderColor: 'rgba(62, 39, 35, 0.5)' },
+                    '&.Mui-focused fieldset': { borderColor: '#3e2723' }
                   }
                 }}
               />
@@ -115,12 +115,12 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
                 value={editHouse.motto}
                 onChange={(e) => setEditHouse({...editHouse, motto: e.target.value})}
                 sx={{
-                  '& .MuiInputLabel-root': { color: 'rgba(255, 255, 255, 0.7)' },
+                  '& .MuiInputLabel-root': { color: 'rgba(62, 39, 35, 0.7)' },
                   '& .MuiOutlinedInput-root': {
-                    color: 'white',
-                    '& fieldset': { borderColor: 'rgba(255, 255, 255, 0.3)' },
-                    '&:hover fieldset': { borderColor: 'rgba(255, 255, 255, 0.5)' },
-                    '&.Mui-focused fieldset': { borderColor: 'white' }
+                    color: '#3e2723',
+                    '& fieldset': { borderColor: 'rgba(62, 39, 35, 0.3)' },
+                    '&:hover fieldset': { borderColor: 'rgba(62, 39, 35, 0.5)' },
+                    '&.Mui-focused fieldset': { borderColor: '#3e2723' }
                   }
                 }}
               />
@@ -131,19 +131,19 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
                 value={editHouse.crestUrl}
                 onChange={(e) => setEditHouse({...editHouse, crestUrl: e.target.value})}
                 sx={{
-                  '& .MuiInputLabel-root': { color: 'rgba(255, 255, 255, 0.7)' },
+                  '& .MuiInputLabel-root': { color: 'rgba(62, 39, 35, 0.7)' },
                   '& .MuiOutlinedInput-root': {
-                    color: 'white',
-                    '& fieldset': { borderColor: 'rgba(255, 255, 255, 0.3)' },
-                    '&:hover fieldset': { borderColor: 'rgba(255, 255, 255, 0.5)' },
-                    '&.Mui-focused fieldset': { borderColor: 'white' }
+                    color: '#3e2723',
+                    '& fieldset': { borderColor: 'rgba(62, 39, 35, 0.3)' },
+                    '&:hover fieldset': { borderColor: 'rgba(62, 39, 35, 0.5)' },
+                    '&.Mui-focused fieldset': { borderColor: '#3e2723' }
                   }
                 }}
               />
               
               {editHouse.crestUrl && (
                 <Box>
-                  <Typography variant="subtitle2" sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 1 }}>Preview:</Typography>
+                  <Typography variant="subtitle2" sx={{ color: 'rgba(62, 39, 35, 0.7)', mb: 1 }}>Preview:</Typography>
                   <img src={editHouse.crestUrl} style={{ height: 64, borderRadius: 4 }} alt="Crest preview" />
                 </Box>
               )}
@@ -164,7 +164,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
               />
               
               <Stack direction="row" spacing={2} justifyContent="flex-end">
-                <Button onClick={handleCancelEdit} variant="outlined" sx={{ color: 'white', borderColor: 'rgba(255, 255, 255, 0.3)' }}>CANCEL</Button>
+                <Button onClick={handleCancelEdit} variant="outlined" sx={{ color: '#3e2723', borderColor: 'rgba(62, 39, 35, 0.3)' }}>CANCEL</Button>
                 <Button onClick={handleSaveEdit} variant="contained">SAVE</Button>
               </Stack>
             </Stack>
@@ -173,34 +173,34 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <img src={house.crestUrl} style={{ height: 64, borderRadius: 4 }} alt="House crest" />
                 <Box>
-                  <Typography variant="h5" sx={{ color: 'white', fontWeight: 'bold' }}>{house.name}</Typography>
-                  <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.6)', fontStyle: 'italic' }}>"{house.motto}"</Typography>
+                  <Typography variant="h5" sx={{ color: '#3e2723', fontWeight: 'bold' }}>{house.name}</Typography>
+                  <Typography variant="body2" sx={{ color: 'rgba(62, 39, 35, 0.6)', fontStyle: 'italic' }}>"{house.motto}"</Typography>
                 </Box>
               </Box>
               
-              <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
+              <Divider sx={{ borderColor: 'rgba(62, 39, 35, 0.1)' }} />
               
               <Box>
-                <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                  <strong style={{ color: 'gold' }}>Blessed Affliction:</strong> {house.strength?.charAt(0).toUpperCase() + house.strength?.slice(1)}
+                <Typography variant="body2" sx={{ color: 'rgba(62, 39, 35, 0.7)' }}>
+                  <strong style={{ color: '#8B4513' }}>Blessed Affliction:</strong> {house.strength?.charAt(0).toUpperCase() + house.strength?.slice(1)}
                 </Typography>
-                <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)', mt: 1 }}>
-                  <strong style={{ color: 'silver' }}>Sacred Weakness:</strong> {house.weakness?.charAt(0).toUpperCase() + house.weakness?.slice(1)}
+                <Typography variant="body2" sx={{ color: 'rgba(62, 39, 35, 0.7)', mt: 1 }}>
+                  <strong style={{ color: '#5d4037' }}>Sacred Weakness:</strong> {house.weakness?.charAt(0).toUpperCase() + house.weakness?.slice(1)}
                 </Typography>
               </Box>
               
               {house.score && (
                 <Box>
-                  <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 1 }}>Humour Scores:</Typography>
+                  <Typography variant="body2" sx={{ color: 'rgba(62, 39, 35, 0.7)', mb: 1 }}>Humour Scores:</Typography>
                   {humourScores(house.score)}
                 </Box>
               )}
               
-              <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
+              <Divider sx={{ borderColor: 'rgba(62, 39, 35, 0.1)' }} />
               
               <Stack direction="row" spacing={2} flexWrap="wrap">
-                <Button onClick={() => setOpenGameHistory(true)} variant="outlined" sx={{ color: 'white', borderColor: 'rgba(255, 255, 255, 0.3)' }}>VIEW GAME HISTORY</Button>
-                <Button onClick={handleClose} variant="outlined" sx={{ color: 'white', borderColor: 'rgba(255, 255, 255, 0.3)' }}>CLOSE</Button>
+                <Button onClick={() => setOpenGameHistory(true)} variant="outlined" sx={{ color: '#3e2723', borderColor: 'rgba(62, 39, 35, 0.3)' }}>VIEW GAME HISTORY</Button>
+                <Button onClick={handleClose} variant="outlined" sx={{ color: '#3e2723', borderColor: 'rgba(62, 39, 35, 0.3)' }}>CLOSE</Button>
                 {adminMode && (
                   <Button onClick={handleEditClick} variant="contained" color="primary">EDIT</Button>
                 )}

@@ -73,8 +73,18 @@ export function ThemeProviderWrapper({ children }: ThemeProviderWrapperProps) {
       const defaultFont = AVAILABLE_FONTS[0];
       await loadFont(defaultFont.fontFamily, defaultFont.fileName);
       
+      // Also load the bold variant for scoreboard
+      await loadFont("'Medieval Sharp Bold'", "MedievalSharp-Bold.ttf");
+      
       // Then load the theme with the font
-      await switchTheme("dark");
+      await switchTheme("light");
+      
+      // Add parchment background to body
+      document.body.style.backgroundImage = "url(/assets/images/Parchment-Background-HQ-Desktop-Wallpaper-14482.jpg)";
+      document.body.style.backgroundSize = "cover";
+      document.body.style.backgroundAttachment = "fixed";
+      document.body.style.backgroundPosition = "center";
+      document.body.style.backgroundRepeat = "no-repeat";
     };
     
     initializeApp();

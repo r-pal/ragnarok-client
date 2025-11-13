@@ -64,6 +64,11 @@ export async function loadTheme(themeName: string, customFontFamily?: string): P
           }
           body {
             font-family: ${fontFamily} !important;
+            background-image: url(/assets/images/Parchment-Background-HQ-Desktop-Wallpaper-14482.jpg);
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
           }
         `
       }

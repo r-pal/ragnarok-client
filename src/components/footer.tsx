@@ -24,7 +24,6 @@ import { NewGame } from "./Game/newGame";
 import { Explainer } from "./explainer";
 import { FestivalBalance } from "./festivalBalance";
 import { SortBy } from "./header";
-import { useThemeContext } from "../ThemeProviderWrapper";
 
 interface IFooter {
   adminMode: boolean;
@@ -49,7 +48,6 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   
   const theme = useTheme();
-  const { toggleFont, currentFont } = useThemeContext();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -264,22 +262,6 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
             {isAutoCycling ? "⏸" : "▶"}
           </IconButton>
         </Box>
-
-        <Button
-          onClick={toggleFont}
-          sx={{ 
-            color: "white",
-            minWidth: isMobile ? "auto" : "140px",
-            border: "1px solid rgba(255, 255, 255, 0.3)",
-            "&:hover": {
-              border: "1px solid rgba(255, 255, 255, 0.5)",
-              backgroundColor: "rgba(255, 255, 255, 0.1)"
-            }
-          }}
-          title="Toggle between Medieval Sharp and Free Medieval fonts"
-        >
-          {currentFont === "'Medieval Sharp'" ? "🗡️ Sharp" : "📜 Medieval"}
-        </Button>
 
         {!isMobile && (
           <Button

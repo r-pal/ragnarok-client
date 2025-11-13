@@ -10,6 +10,7 @@ import { CenteredModal } from "components/shared/CenteredModal";
 interface ViewFactionModalProps {
   open: boolean;
   houses: IHouse[];
+  factionName?: string;
   adminMode: boolean;
   onClose: () => void;
   onHouseClick: (houseId: number) => void;
@@ -19,6 +20,7 @@ interface ViewFactionModalProps {
 export const ViewFactionModal: React.FC<ViewFactionModalProps> = ({
   open,
   houses,
+  factionName,
   adminMode,
   onClose,
   onHouseClick,
@@ -30,7 +32,7 @@ export const ViewFactionModal: React.FC<ViewFactionModalProps> = ({
       onClose={onClose}
       width={400}
       height="auto"
-      backgroundColor="brown"
+      backgroundColor="rgba(255, 248, 240, 0.98)"
     >
       <List>
         {houses?.map((house) => (
@@ -45,7 +47,7 @@ export const ViewFactionModal: React.FC<ViewFactionModalProps> = ({
         ))}
         {adminMode && (
           <ListItemButton onClick={onDelete}>
-            {`delete faction of ${houses?.map((h) => h.name).join(" + ")}?`}
+            {`Delete ${factionName || 'faction'}?`}
           </ListItemButton>
         )}
       </List>

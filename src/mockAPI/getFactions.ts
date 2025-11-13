@@ -12,5 +12,11 @@ export const getFactions: Array<IFaction & { id: number }> = [
     name: "The Steel Alliance",
     motto: "Strength through unity",
     houseIds: [5, 6]
+  },
+  {
+    id: 3,
+    name: "The Grand Coalition",
+    motto: "Many houses, one destiny",
+    houseIds: [1, 4, 7, 8, 9, 10]
   }
 ];
