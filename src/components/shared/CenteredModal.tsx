@@ -1,4 +1,4 @@
-import { Modal, Box } from "@mui/material";
+import { Modal, Box, useTheme } from "@mui/material";
 import { ReactNode } from "react";
 
 interface CenteredModalProps {
@@ -18,8 +18,9 @@ export const CenteredModal: React.FC<CenteredModalProps> = ({
   width = 300,
   height = 400,
   maxWidth,
-  backgroundColor = "white"
+  backgroundColor
 }) => {
+  const theme = useTheme();
   return (
     <Modal
       open={open}
@@ -35,7 +36,8 @@ export const CenteredModal: React.FC<CenteredModalProps> = ({
           width,
           height,
           maxWidth,
-          backgroundColor,
+          backgroundColor: backgroundColor || theme.palette.background.paper,
+          color: theme.palette.text.primary,
           borderRadius: 2,
           boxShadow: 24,
           p: 3,

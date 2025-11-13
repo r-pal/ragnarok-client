@@ -24,6 +24,7 @@ import { NewGame } from "./Game/newGame";
 import { Explainer } from "./explainer";
 import { FestivalBalance } from "./festivalBalance";
 import { SortBy } from "./header";
+import { useThemeContext } from "../ThemeProviderWrapper";
 
 interface IFooter {
   adminMode: boolean;
@@ -48,6 +49,7 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   
   const theme = useTheme();
+  const { toggleTheme, currentTheme } = useThemeContext();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -178,6 +180,9 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
                 <MenuItem onClick={() => { setOpenExplainer(true); handleMobileMenuClose(); }}>
                   THE SACRED RULES
                 </MenuItem>
+                <MenuItem onClick={() => { toggleTheme(); handleMobileMenuClose(); }}>
+                  {currentTheme === "light" ? "🌙 DARK MODE" : "☀️ LIGHT MODE"}
+                </MenuItem>
               </Menu>
             </>
           ) : (
@@ -264,12 +269,29 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         </Box>
 
         {!isMobile && (
-          <Button
-            onClick={() => setOpenExplainer(true)}
-            sx={{ color: "white", minWidth: "120px" }}
-          >
-            THE SACRED RULES OF ASCENSION
-          </Button>
+          <>
+            <IconButton
+              onClick={toggleTheme}
+              sx={{
+                color: "white",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+                borderRadius: "4px",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 0.1)"
+                }
+              }}
+              title={`Switch to ${currentTheme === "light" ? "dark" : "light"} mode`}
+            >
+              {currentTheme === "light" ? "🌙" : "☀️"}
+            </IconButton>
+            
+            <Button
+              onClick={() => setOpenExplainer(true)}
+              sx={{ color: "white", minWidth: "120px" }}
+            >
+              THE SACRED RULES OF ASCENSION
+            </Button>
+          </>
         )}
       </div>
       <Dialog
@@ -277,6 +299,7 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         onClose={handleClose}
         fullWidth
         maxWidth="xs"
+        PaperProps={{ sx: { backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary } }}
       >
         <DialogTitle>Enter Password</DialogTitle>
         <DialogContent>
@@ -304,6 +327,7 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         onClose={handleCloseNewHouse}
         fullWidth
         maxWidth="md"
+        PaperProps={{ sx: { backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary } }}
       >
         <DialogContent>
           <AddHouse />
@@ -318,6 +342,7 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         onClose={handleCloseNewFaction}
         fullWidth
         maxWidth="md"
+        PaperProps={{ sx: { backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary } }}
       >
         <DialogContent>
           <AddFaction />
@@ -332,6 +357,7 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         onClose={handleCloseNewGame}
         fullWidth
         maxWidth="md"
+        PaperProps={{ sx: { backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary } }}
       >
         <DialogContent>
           <NewGame />
@@ -346,6 +372,7 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         onClose={handleCloseGameHistory}
         fullWidth
         maxWidth="lg"
+        PaperProps={{ sx: { backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary } }}
       >
         <DialogContent>
           <GameHistory />
@@ -360,6 +387,7 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         onClose={() => setOpenExplainer(false)}
         maxWidth="md"
         fullWidth
+        PaperProps={{ sx: { backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary } }}
       >
         <Explainer />
       </Dialog>
@@ -369,6 +397,7 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         onClose={() => setOpenFestivalBalance(false)}
         maxWidth="md"
         fullWidth
+        PaperProps={{ sx: { backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary } }}
       >
         <FestivalBalance />
       </Dialog>

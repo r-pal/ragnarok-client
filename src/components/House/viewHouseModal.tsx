@@ -88,7 +88,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
   };
   return (
     <>
-      <CenteredModal open={open} onClose={handleClose} width={500} height="auto" backgroundColor="rgba(255, 248, 240, 0.98)">
+      <CenteredModal open={open} onClose={handleClose} width={500} height="auto">
           {isEditMode ? (
             <Stack spacing={3}>
               <Typography variant="h5" sx={{ color: "#3e2723" }}>Edit House</Typography>

@@ -207,9 +207,15 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
           console.log("1", team);
         }}
       >
-        <Grid style={{ display: "flex", gap: 8, alignItems: "center" }}>
+        <Grid style={{ display: "flex", gap: 8, alignItems: "center", flexShrink: 0 }}>
           <Grid style={{ fontSize: 60, color: "#000000", fontWeight: "bold" }}>{team.ranking}</Grid>
-          <Grid style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          <Grid style={{ 
+            display: "flex", 
+            gap: 4, 
+            alignItems: "center",
+            flexWrap: "wrap",
+            maxWidth: "100px"
+          }}>
             {crests}
           </Grid>
         </Grid>
@@ -221,13 +227,14 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
             alignItems: "center",
             flex: 1,
             justifyContent: "flex-end",
-            flexWrap: "wrap"
+            flexWrap: "wrap",
+            minWidth: 0
           }}
         >
-          <Grid style={{ minWidth: 200, textAlign: "right", fontSize: 16 * fontScale }}>
+          <Grid style={{ minWidth: "auto", textAlign: "right", fontSize: 16 * fontScale }}>
             {team.name}
           </Grid>
-          <Grid style={{ display: "flex", gap: 4 }}>
+          <Grid style={{ display: "flex", gap: 4, flexShrink: 0 }}>
             {humourScores(team.score)}
           </Grid>
           <Grid
@@ -236,7 +243,8 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
               flexDirection: "row",
               gap: 16,
               fontSize: 14 * fontScale,
-              minWidth: 250
+              minWidth: "auto",
+              flexShrink: 0
             }}
           >
             <HighlightedMetric
@@ -294,7 +302,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
           onDelete={handleDeleteFaction}
         />
       )}
-      <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
+      <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog} PaperProps={{ sx: { backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary } }}>
         <DialogTitle>{`Are you sure - delete ${houses && houses[0].name}?`}</DialogTitle>
         <DialogActions>
           <Button onClick={handleCloseDeleteDialog}>No</Button>

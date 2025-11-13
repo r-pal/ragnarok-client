@@ -1,13 +1,16 @@
 {
   "palette": {
     "mode": "dark",
-    "primary": { "main": "#90caf9" },
-    "secondary": { "main": "#ce93d8" },
+    "primary": { "main": "#d7ccc8" },
+    "secondary": { "main": "#a1887f" },
     "background": {
-      "default": "#121212",
-      "paper": "#1e1e1e"
+      "default": "#1a1410",
+      "paper": "rgba(20, 20, 20, 0.98)"
     },
-    "text": { "primary": "#ffffff" }
+    "text": { 
+      "primary": "#f5e6d3",
+      "secondary": "#d7ccc8"
+    }
   },
   "typography": {
     "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif"

@@ -9,7 +9,9 @@ interface ThemeContextType {
   switchTheme: (themeName: string) => Promise<void>;
   switchFont: (fontFamily: string, fileName: string) => Promise<void>;
   toggleFont: () => Promise<void>;
+  toggleTheme: () => Promise<void>;
   currentFont: string;
+  currentTheme: string;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -29,10 +31,12 @@ interface ThemeProviderWrapperProps {
 export function ThemeProviderWrapper({ children }: ThemeProviderWrapperProps) {
   const [theme, setTheme] = useState<Theme | null>(null);
   const [currentFont, setCurrentFont] = useState(AVAILABLE_FONTS[0].fontFamily);
+  const [currentTheme, setCurrentTheme] = useState("light");
 
   const switchTheme = async (themeName: string) => {
     const newTheme = await loadTheme(themeName, currentFont);
     setTheme(newTheme);
+    setCurrentTheme(themeName);
   };
 
   const switchFont = async (fontFamily: string, fileName: string) => {
@@ -67,6 +71,11 @@ export function ThemeProviderWrapper({ children }: ThemeProviderWrapperProps) {
     await switchFont(nextFont.fontFamily, nextFont.fileName);
   };
 
+  const toggleTheme = async () => {
+    const newThemeName = currentTheme === "light" ? "dark" : "light";
+    await switchTheme(newThemeName);
+  };
+
   useEffect(() => {
     const initializeApp = async () => {
       // Load the default font first
@@ -93,7 +102,7 @@ export function ThemeProviderWrapper({ children }: ThemeProviderWrapperProps) {
   if (!theme) return null;
 
   return (
-    <ThemeContext.Provider value={{ switchTheme, switchFont, toggleFont, currentFont }}>
+    <ThemeContext.Provider value={{ switchTheme, switchFont, toggleFont, toggleTheme, currentFont, currentTheme }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {children}

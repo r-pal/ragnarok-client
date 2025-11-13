@@ -32,7 +32,6 @@ export const ViewFactionModal: React.FC<ViewFactionModalProps> = ({
       onClose={onClose}
       width={400}
       height="auto"
-      backgroundColor="rgba(255, 248, 240, 0.98)"
     >
       <List>
         {houses?.map((house) => (
