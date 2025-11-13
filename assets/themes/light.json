@@ -1,0 +1,18 @@
+{
+  "palette": {
+    "mode": "light",
+    "primary": { "main": "#5d4037" },
+    "secondary": { "main": "#8d6e63" },
+    "background": {
+      "default": "#f5e6d3",
+      "paper": "rgba(255, 248, 240, 0.9)"
+    },
+    "text": { 
+      "primary": "#3e2723",
+      "secondary": "#5d4037"
+    }
+  },
+  "typography": {
+    "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/ragnarok-client/static/js/main.712214bb.js",
+    "index.html": "/ragnarok-client/index.html",
+    "main.712214bb.js.map": "/ragnarok-client/static/js/main.712214bb.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.712214bb.js"
+  ]
+}
