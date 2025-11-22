@@ -1,4 +1,4 @@
-import { Box, Button, Typography, Stack, TextField, Divider, Collapse, useTheme } from "@mui/material";
+import { Box, Button, Typography, Stack, TextField, Divider, Collapse, useTheme, Link } from "@mui/material";
 import { useState, useEffect } from "react";
 import { IHouse, IPostHouse } from "types/house";
 import { IScore } from "types/shared";
@@ -7,6 +7,7 @@ import { HouseGameHistory } from "./houseGameHistory";
 import { CenteredModal } from "components/shared/CenteredModal";
 import { HumourSelect } from "components/shared/HumourSelect";
 import { CrestSearch } from "components/shared/CrestSearch";
+import { UnitType } from "../../App";
 
 interface ViewHouseModalProps {
   open: boolean;
@@ -15,6 +16,7 @@ interface ViewHouseModalProps {
   onClose: () => void;
   onDelete: () => void;
   humourScores: (score: IScore) => React.ReactElement;
+  unitType: UnitType;
 }
 
 export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
@@ -24,6 +26,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
   onClose,
   onDelete,
   humourScores,
+  unitType,
 }) => {
   const theme = useTheme();
   const [isEditMode, setIsEditMode] = useState(false);
@@ -115,7 +118,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
   };
   return (
     <>
-      <CenteredModal open={open} onClose={handleClose} width={500} height="auto" maxHeight="90vh">
+      <CenteredModal open={open} onClose={handleClose} width={500} height="auto" maxHeight="90vh" backgroundColor={theme.palette.mode === 'dark' ? '#1a1a1a' : '#ffffff'}>
           {isEditMode ? (
             <Stack spacing={3}>
               <Typography variant="h5" sx={{ color: theme.palette.text.primary }}>Edit House</Typography>
@@ -266,10 +269,44 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
               
               <Box>
                 <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
-                  <strong style={{ color: theme.palette.primary.main }}>Blessed Affliction:</strong> {house.strength?.charAt(0).toUpperCase() + house.strength?.slice(1)}
+                  <strong style={{ color: theme.palette.primary.main }}>Blessed Affliction:</strong> {house.strength?.charAt(0).toUpperCase() + house.strength?.slice(1)}{' '}
+                  <Link
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const event = new CustomEvent('openSacredRules', { detail: { scrollTo: 'afflictions-and-weaknesses' } });
+                      window.dispatchEvent(event);
+                    }}
+                    sx={{ 
+                      fontSize: '0.75rem',
+                      color: theme.palette.primary.main,
+                      textDecoration: 'underline',
+                      cursor: 'pointer',
+                      '&:hover': { color: theme.palette.primary.dark }
+                    }}
+                  >
+                    (what's this?)
+                  </Link>
                 </Typography>
                 <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mt: 1 }}>
-                  <strong style={{ color: theme.palette.secondary.main }}>Sacred Weakness:</strong> {house.weakness?.charAt(0).toUpperCase() + house.weakness?.slice(1)}
+                  <strong style={{ color: theme.palette.secondary.main }}>Sacred Weakness:</strong> {house.weakness?.charAt(0).toUpperCase() + house.weakness?.slice(1)}{' '}
+                  <Link
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const event = new CustomEvent('openSacredRules', { detail: { scrollTo: 'afflictions-and-weaknesses' } });
+                      window.dispatchEvent(event);
+                    }}
+                    sx={{ 
+                      fontSize: '0.75rem',
+                      color: theme.palette.secondary.main,
+                      textDecoration: 'underline',
+                      cursor: 'pointer',
+                      '&:hover': { color: theme.palette.secondary.dark }
+                    }}
+                  >
+                    (what's this?)
+                  </Link>
                 </Typography>
               </Box>
               
@@ -282,10 +319,10 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
               
               <Divider sx={{ borderColor: theme.palette.divider }} />
               
-              <Stack direction="row" spacing={2} flexWrap="wrap">
+              <Stack direction="row" spacing={0} gap={2} flexWrap="wrap" sx={{ '& > button': { flex: { xs: '1 1 100%', sm: '1 1 0' } } }}>
                 <Button onClick={() => setOpenGameHistory(true)} variant="outlined" sx={{ color: theme.palette.text.primary, borderColor: theme.palette.divider }}>VIEW GAME HISTORY</Button>
-                <Button onClick={handleClose} variant="outlined" sx={{ color: theme.palette.text.primary, borderColor: theme.palette.divider }}>CLOSE</Button>
                 <Button onClick={handleEditClick} variant="contained" color="primary">EDIT</Button>
+                <Button onClick={handleClose} variant="outlined" sx={{ color: theme.palette.text.primary, borderColor: theme.palette.divider }}>CLOSE</Button>
                 {adminMode && (
                   <Button onClick={onDelete} variant="contained" color="error">DELETE</Button>
                 )}
@@ -321,6 +358,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
         open={openGameHistory}
         house={house}
         onClose={() => setOpenGameHistory(false)}
+        unitType={unitType}
       />
     </>
   );

@@ -33,7 +33,7 @@ export const HUMOUR_CONFIG: Record<Humours, HumourConfig> = {
     label: "Choleric",
     emoji: "🟡",
     color: "goldenrod",
-    borderColor: "yellow",
+    borderColor: "gold",
     properties: ["hot", "dry"]
   },
   melancholic: {

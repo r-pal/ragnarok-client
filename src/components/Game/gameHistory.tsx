@@ -17,8 +17,14 @@ import {
 import { useState } from "react";
 import { getGames } from "mockAPI/getGames";
 import { IGame } from "types/game";
+import { UnitType } from "../../App";
+import { convertValue } from "helpers/scoreHelpers";
 
-export const GameHistory: React.FC = () => {
+interface GameHistoryProps {
+  unitType: UnitType;
+}
+
+export const GameHistory: React.FC<GameHistoryProps> = ({ unitType }) => {
   const [selectedGameId, setSelectedGameId] = useState<number | "">("");
 
   const selectedGame = selectedGameId
@@ -103,19 +109,19 @@ export const GameHistory: React.FC = () => {
                           {houseScore.houseName || `House ${houseScore.houseId}`}
                         </TableCell>
                         <TableCell align="right">
-                          {houseScore.score.choleric}
+                          {Math.round(convertValue(houseScore.score.choleric, unitType))}
                         </TableCell>
                         <TableCell align="right">
-                          {houseScore.score.phlegmatic}
+                          {Math.round(convertValue(houseScore.score.phlegmatic, unitType))}
                         </TableCell>
                         <TableCell align="right">
-                          {houseScore.score.melancholic}
+                          {Math.round(convertValue(houseScore.score.melancholic, unitType))}
                         </TableCell>
                         <TableCell align="right">
-                          {houseScore.score.sanguine}
+                          {Math.round(convertValue(houseScore.score.sanguine, unitType))}
                         </TableCell>
                         <TableCell align="right">
-                          <strong>{total}</strong>
+                          <strong>{Math.round(convertValue(total, unitType))}</strong>
                         </TableCell>
                       </TableRow>
                     );

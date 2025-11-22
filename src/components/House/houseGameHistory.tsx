@@ -15,17 +15,21 @@ import {
 } from "@mui/material";
 import { getGames } from "mockAPI/getGames";
 import { IHouse } from "types/house";
+import { UnitType } from "../../App";
+import { convertValue } from "helpers/scoreHelpers";
 
 interface HouseGameHistoryProps {
   open: boolean;
   house: IHouse;
   onClose: () => void;
+  unitType: UnitType;
 }
 
 export const HouseGameHistory: React.FC<HouseGameHistoryProps> = ({
   open,
   house,
   onClose,
+  unitType,
 }) => {
   // Filter games where this house participated
   const houseGames = getGames
@@ -75,12 +79,12 @@ export const HouseGameHistory: React.FC<HouseGameHistoryProps> = ({
                     <TableCell component="th" scope="row">
                       {game!.gameName}
                     </TableCell>
-                    <TableCell align="right">{game!.score.choleric}</TableCell>
-                    <TableCell align="right">{game!.score.phlegmatic}</TableCell>
-                    <TableCell align="right">{game!.score.melancholic}</TableCell>
-                    <TableCell align="right">{game!.score.sanguine}</TableCell>
+                    <TableCell align="right">{Math.round(convertValue(game!.score.choleric, unitType))}</TableCell>
+                    <TableCell align="right">{Math.round(convertValue(game!.score.phlegmatic, unitType))}</TableCell>
+                    <TableCell align="right">{Math.round(convertValue(game!.score.melancholic, unitType))}</TableCell>
+                    <TableCell align="right">{Math.round(convertValue(game!.score.sanguine, unitType))}</TableCell>
                     <TableCell align="right">
-                      <strong>{game!.total}</strong>
+                      <strong>{Math.round(convertValue(game!.total, unitType))}</strong>
                     </TableCell>
                   </TableRow>
                 ))}

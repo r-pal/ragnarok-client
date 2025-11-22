@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 
 export const Explainer: React.FC = () => {
+
   return (
     <Box
       sx={{
@@ -27,8 +28,9 @@ export const Explainer: React.FC = () => {
 
       {/* Section A: Points Calculation */}
       <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
-        <Typography variant="h5" gutterBottom color="primary">
-          A. The Sacred Humours & Their Reckoning
+        <Typography variant="h4" gutterBottom color="error">
+        <img src={`${process.env.PUBLIC_URL}/assets/images/A.png`} alt="A"/>
+        The Sacred Humours & Their Reckoning
         </Typography>
         <Divider sx={{ mb: 2 }} />
         
@@ -142,8 +144,8 @@ export const Explainer: React.FC = () => {
 
       {/* Section B: Factions */}
       <Paper elevation={3} sx={{ p: 3, mb: 3 }} id="factions">
-        <Typography variant="h5" gutterBottom color="primary">
-          B. The Binding of Houses
+        <Typography variant="h4" gutterBottom color="error">
+          <img src={`${process.env.PUBLIC_URL}/assets/images/B.png`} alt="B" /> The Binding of Houses
         </Typography>
         <Divider sx={{ mb: 2 }} />
         
@@ -231,8 +233,8 @@ export const Explainer: React.FC = () => {
 
       {/* Section C: Special Clemency */}
       <Paper elevation={3} sx={{ p: 3, mb: 3 }} id="divine-clemency">
-        <Typography variant="h5" gutterBottom color="primary">
-          C. Divine Clemency
+        <Typography variant="h4" gutterBottom color="error">
+          <img src={`${process.env.PUBLIC_URL}/assets/images/C.png`} alt="C" /> Divine Clemency
         </Typography>
         <Divider sx={{ mb: 2 }} />
         
@@ -283,7 +285,7 @@ export const Explainer: React.FC = () => {
 
       {/* Summary */}
       <Paper elevation={3} sx={{ p: 3, bgcolor: "rgba(0,0,0,0.02)" }}>
-        <Typography variant="h6" gutterBottom>
+        <Typography variant="h4" color="error" gutterBottom>
           Thus Speaks the Sacred Order
         </Typography>
         <Typography paragraph>

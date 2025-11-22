@@ -1,6 +1,7 @@
 import { IScore, Humours } from "types/shared";
 import { IHouse } from "types/house";
 import { HUMOUR_ORDER, HUMOUR_CONFIG, HumourProperty } from "config/humourConfig";
+import { UnitType } from "../App";
 
 /**
  * Apply strength (×2) and weakness (÷2) multipliers to a house's score
@@ -44,13 +45,23 @@ export const calculateTotal = (score: IScore): number => {
 };
 
 /**
- * Format a number with locale string and dynamic font size
+ * Convert a value from fluid ounces to the specified unit type
+ * 1 pint = 16 fluid ounces
  */
-export const formatScoreDisplay = (value: number): { 
+export const convertValue = (value: number, unitType: UnitType): number => {
+  return unitType === "pints" ? value / 16 : value;
+};
+
+/**
+ * Format a number with locale string and dynamic font size
+ * Converts from fluid ounces to pints if unitType is "pints" (1 pint = 16 fl oz)
+ */
+export const formatScoreDisplay = (value: number, unitType: UnitType): { 
   display: string; 
   fontSize: string;
 } => {
-  const display = value.toLocaleString();
+  const convertedValue = convertValue(value, unitType);
+  const display = Math.round(convertedValue).toLocaleString();
   const fontSize = display.length > 4 ? "0.75rem" : "1rem";
   return { display, fontSize };
 };

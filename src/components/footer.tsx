@@ -25,17 +25,20 @@ import { Explainer } from "./explainer";
 import { FestivalBalance } from "./festivalBalance";
 import { SortBy } from "./header";
 import { useThemeContext } from "../ThemeProviderWrapper";
+import { UnitType } from "../App";
 
 interface IFooter {
   adminMode: boolean;
   setAdminMode: (x: boolean) => void;
   sortBy: SortBy;
   onSortChange: (sortBy: SortBy) => void;
+  unitType: UnitType;
+  onUnitTypeChange: (unitType: UnitType) => void;
 }
 
 const SECRET_PASSWORD = "1234";
 
-export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onSortChange }) => {
+export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onSortChange, unitType, onUnitTypeChange }) => {
   const [openAdminModeModal, setOpenAdminModeModal] = useState(false);
   const [openNewHouseModal, setOpenNewHouseModal] = useState(false);
   const [openNewFactionModal, setOpenNewFactionModal] = useState(false);
@@ -200,6 +203,9 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
                 <MenuItem onClick={() => { toggleTheme(); handleMobileMenuClose(); }}>
                   {currentTheme === "light" ? "🌙 DARK MODE" : "☀️ LIGHT MODE"}
                 </MenuItem>
+                <MenuItem onClick={() => { toggleAutoCycle(); handleMobileMenuClose(); }}>
+                  {isAutoCycling ? "⏸ STOP SLIDESHOW" : "▶ START SLIDESHOW"}
+                </MenuItem>
               </Menu>
             </>
           ) : (
@@ -269,20 +275,39 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
             </Select>
           </FormControl>
           
-          <IconButton
-            onClick={toggleAutoCycle}
-            sx={{
-              color: "white",
-              backgroundColor: isAutoCycling ? "rgba(255, 215, 0, 0.3)" : "transparent",
-              border: isAutoCycling ? "2px solid gold" : "2px solid rgba(255, 255, 255, 0.3)",
-              "&:hover": {
-                backgroundColor: isAutoCycling ? "rgba(255, 215, 0, 0.4)" : "rgba(255, 255, 255, 0.1)"
-              }
-            }}
-            title={isAutoCycling ? "Stop auto-cycle" : "Auto-cycle rankings (15s each)"}
-          >
-            {isAutoCycling ? "⏸" : "▶"}
-          </IconButton>
+          {isMobile && (
+            <IconButton
+              onClick={() => onUnitTypeChange(unitType === "fluidOunces" ? "pints" : "fluidOunces")}
+              sx={{
+                color: "white",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+                borderRadius: "4px",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 0.1)"
+                }
+              }}
+              title={unitType === "fluidOunces" ? "Switch to pints" : "Switch to fluid ounces"}
+            >
+              {unitType === "fluidOunces" ? "💧" : "🍺"}
+            </IconButton>
+          )}
+          
+          {!isMobile && (
+            <IconButton
+              onClick={toggleAutoCycle}
+              sx={{
+                color: "white",
+                backgroundColor: isAutoCycling ? "rgba(255, 215, 0, 0.3)" : "transparent",
+                border: isAutoCycling ? "2px solid gold" : "2px solid rgba(255, 255, 255, 0.3)",
+                "&:hover": {
+                  backgroundColor: isAutoCycling ? "rgba(255, 215, 0, 0.4)" : "rgba(255, 255, 255, 0.1)"
+                }
+              }}
+              title={isAutoCycling ? "Stop auto-cycle" : "Auto-cycle rankings (15s each)"}
+            >
+              {isAutoCycling ? "⏸" : "▶"}
+            </IconButton>
+          )}
         </Box>
 
         {!isMobile && (
@@ -300,6 +325,21 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
               title={`Switch to ${currentTheme === "light" ? "dark" : "light"} mode`}
             >
               {currentTheme === "light" ? "🌙" : "☀️"}
+            </IconButton>
+            
+            <IconButton
+              onClick={() => onUnitTypeChange(unitType === "fluidOunces" ? "pints" : "fluidOunces")}
+              sx={{
+                color: "white",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+                borderRadius: "4px",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 0.1)"
+                }
+              }}
+              title={`Switch to ${unitType === "fluidOunces" ? "pints" : "fluid ounces"}`}
+            >
+              {unitType === "fluidOunces" ? "fl oz" : "pt"}
             </IconButton>
             
             <Button
@@ -392,7 +432,7 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         PaperProps={{ sx: { backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary } }}
       >
         <DialogContent>
-          <GameHistory />
+          <GameHistory unitType={unitType} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseGameHistory}>Close</Button>

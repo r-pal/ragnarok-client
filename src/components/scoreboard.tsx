@@ -17,14 +17,16 @@ import { IScore } from "types/shared";
 import { ViewHouseModal } from "./House/viewHouseModal";
 import { ViewFactionModal } from "./Faction/viewFactionModal";
 import { SortBy } from "./header";
-import { applyMultipliers, aggregateScores, calculateTotal, calculatePropertyScore, getStandardDeviation, getHumoursWithProperty } from "helpers/scoreHelpers";
+import { applyMultipliers, aggregateScores, calculateTotal, calculatePropertyScore, getStandardDeviation, getHumoursWithProperty, convertValue } from "helpers/scoreHelpers";
 import { HUMOUR_ORDER, HumourProperty } from "config/humourConfig";
 import { HumourScoreBox } from "./shared/HumourScoreBox";
 import { HighlightedMetric } from "./shared/HighlightedMetric";
+import { UnitType } from "../App";
 
 interface Scoreboard {
   adminMode: boolean;
   sortBy: SortBy;
+  unitType: UnitType;
 }
 
 interface ScoreboardItem {
@@ -33,7 +35,7 @@ interface ScoreboardItem {
   houseIds: number[];
 }
 
-export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
+export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }) => {
   const [houses, setHouse] = useState<IHouse[] | undefined>(undefined);
   const [openHouseModal, setopenHouseModal] = useState(false);
   const [openFactionModal, setOpenFactionModal] = useState(false);
@@ -166,7 +168,11 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
       : [];
     
     return (
-      <Grid style={{ display: "flex", gap: 4 }}>
+      <Grid style={{ 
+        display: "grid", 
+        gridTemplateColumns: isDesktop ? "repeat(4, 1fr)" : "repeat(2, 1fr)",
+        gap: isDesktop ? 4 : 0
+      }}>
         {HUMOUR_ORDER.map(humour => {
           // Highlight if:
           // 1. sortBy matches the humour directly, OR
@@ -179,6 +185,8 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
               humour={humour}
               value={score[humour]}
               isHighlighted={isHighlighted}
+              unitType={unitType}
+              isMobile={!isDesktop}
             />
           );
         })}
@@ -284,7 +292,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
           <Grid style={{ 
             minWidth: "auto", 
             textAlign: "right", 
-            fontSize: 16 * fontScale,
+            fontSize: 20 * fontScale,
             textShadow: theme.palette.mode === 'dark' ? '2px 2px 4px rgba(0, 0, 0, 0.8)' : 'none'
           }}>
             {team.name}
@@ -305,12 +313,12 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
           >
             <HighlightedMetric
               label="Total"
-              value={calculateTotal(team.score)}
+              value={Math.round(convertValue(calculateTotal(team.score), unitType))}
               isHighlighted={sortBy === "total"}
             />
             <HighlightedMetric
               label="Balance"
-              value={calculateBalance(team.score).toFixed(2)}
+              value={Math.round(calculateBalance(team.score))}
               isHighlighted={sortBy === "balance"}
             />
           </Grid>
@@ -345,6 +353,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy }) => {
           onClose={handleCloseHouseModal}
           onDelete={() => setOpenDeleteDialog(true)}
           humourScores={humourScores}
+          unitType={unitType}
         />
       )}
       {houses && houses.length > 1 && (
