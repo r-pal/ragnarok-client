@@ -1,6 +1,7 @@
 import {
   Box,
   Divider,
+  Grid,
   List,
   ListItem,
   ListItemText,
@@ -376,47 +377,126 @@ export const Explainer: React.FC = () => {
 
         <Typography paragraph>
           In rarest circumstance, a house may receive{" "}
-          <strong>divine clemency</strong> from the Sacred Order—a miraculous
+          <strong>divine clemency</strong> from the Sacred Order—through{" "}
+          <strong>pardons, grants, miracles, or spells</strong>—a supernatural
           intervention that reshapes the very humours of one's being.
         </Typography>
 
         <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-          The Miracle of Transformation
+          The Nature of Strengths & Weaknesses
         </Typography>
         <Typography paragraph>
-          Through divine clemency, a house may transmute the very essence of its
-          humours:
+          Upon formation, each house is blessed with one <strong>humour strength</strong>{" "}
+          and cursed with one <strong>humour weakness</strong>. These divine marks
+          shape all competitions:
         </Typography>
+        <Box sx={{ pl: 2, mb: 2 }}>
+          <Typography paragraph>
+            • <strong>Strength (×2):</strong> Points won in thy strong humour are doubled—a divine gift
+          </Typography>
+          <Typography paragraph>
+            • <strong>Weakness (÷2):</strong> Points won in thy weak humour are halved—a holy burden
+          </Typography>
+        </Box>
+
+        <Typography
+          variant="body2"
+          sx={{
+            fontStyle: "italic",
+            bgcolor: "rgba(0,0,0,0.05)",
+            p: 2,
+            borderRadius: 1,
+            mb: 2
+          }}
+        >
+          <strong>Example:</strong> The House of Miasma has weakness in Choleric and strength in Melancholic.
+          <br />
+          They compete in the Dancing Plague and win 20 fluid ounces of Yellow Bile.
+          <br />
+          As this is their weakness, only <strong>10 fluid ounces</strong> appear on their scoreboard (20 ÷ 2).
+        </Typography>
+
+        <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
+          Pardons, Grants, Miracles & Spells
+        </Typography>
+        <Typography paragraph>
+          Through divine clemency, a house may shift the very essence of its humours.
+          Each form of clemency works differently:
+        </Typography>
+        <Grid sx={{ display: "grid", alignItems: "center", gridTemplateColumns: "1fr 3fr" }}>
+          <img src={`${process.env.PUBLIC_URL}/assets/images/yolande.jpg`}/>
         <List>
           <ListItem>
             <ListItemText
-              primary="Transmute Thy Blessed Affliction"
-              secondary="Shift thy divine gift (×2) to a different humour"
-            />
+              primary="Pardon (Mercy Granted)"
+              secondary="Thy weakness is forgiven—shift thy holy burden (÷2) to a different humour of thy choosing"
+              />
           </ListItem>
           <ListItem>
             <ListItemText
-              primary="Redirect Thy Sacred Burden"
-              secondary="Move thy holy weakness (÷2) to a different humour"
-            />
+              primary="Grant (Gift Bestowed)"
+              secondary="Thy strength is enhanced—shift thy divine gift (×2) to a different humour of thy choosing"
+              />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Miracle (Divine Intervention)"
+              secondary="The Sacred Order intervenes—shift both thy strength and weakness to new humours of thy choosing"
+              />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Spell (Bewitched Transmutation)"
+              secondary="A curse is cast upon thee—thy weakness or strength is declared to be a specific humour, not of thy choosing"
+              />
           </ListItem>
         </List>
+      </Grid>
+        <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
+          The Power of Retroactive Transformation
+        </Typography>
+        <Typography paragraph>
+          When divine clemency strikes, <strong>all past scores are recalculated</strong>{" "}
+          with the new strength and weakness applied. The transformation is absolute
+          and immediate.
+        </Typography>
+
+        <Typography
+          variant="body2"
+          sx={{
+            fontStyle: "italic",
+            bgcolor: "rgba(138,43,226,0.05)",
+            p: 2,
+            borderRadius: 1,
+            mb: 2,
+            border: "1px solid rgba(138,43,226,0.2)"
+          }}
+        >
+          <strong>Continuing the Example:</strong> If the House of Miasma receives
+          a pardon to shift their weakness from Choleric to Sanguine:
+          <br />
+          • Their 10 fluid ounces of Yellow Bile from the Dancing Plague instantly become <strong>20 fluid ounces</strong>
+          <br />
+          • The weakness handicap is removed from Choleric
+          <br />
+          • Future Sanguine points will now be halved instead
+        </Typography>
 
         <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
           Sacred Edicts
         </Typography>
         <Box sx={{ pl: 2 }}>
           <Typography paragraph>
-            • Thy blessed affliction and sacred weakness{" "}
+            • Thy strength and weakness{" "}
             <strong>cannot dwell in the same humour</strong>—such is forbidden
           </Typography>
           <Typography paragraph>
-            • Divine clemency is <strong>granted most rarely</strong> and must
-            be earned through deeds most exceptional
+            • Divine clemency may be <strong>granted as reward</strong> or{" "}
+            <strong>forced as curse</strong>—the Sacred Order giveth and taketh away
           </Typography>
           <Typography paragraph>
-            • Transformation takes effect at once, reshaping all future
-            reckonings of thy humours
+            • Transformation takes effect at once, <strong>reshaping all past
+            and future reckonings</strong> of thy humours
           </Typography>
         </Box>
 
@@ -431,9 +511,9 @@ export const Explainer: React.FC = () => {
             border: "1px solid rgba(255,215,0,0.3)"
           }}
         >
-          <strong>Beware:</strong> This divine gift wields great power to shift
-          the balance of all things. Wield it with wisdom, lest it bring thy
-          undoing!
+          <strong>⚠️ Beware:</strong> This divine gift wields great power to shift
+          the balance of all things. A well-timed clemency can elevate a house
+          to glory—or a forced spell can bring ruin. Wield it with wisdom!
         </Typography>
       </Paper>
 

@@ -109,7 +109,7 @@ export const FestivalBalance: React.FC = () => {
                   color: overallBalance < 100 ? "green" : overallBalance < 200 ? "orange" : "red"
                 }}
               >
-                {overallBalance.toFixed(2)}
+                {overallBalance.toFixed()}
               </Typography>
             </Box>
           </Box>
