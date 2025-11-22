@@ -262,12 +262,12 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
                 }
               }}
             >
-              <MenuItem value="balance">Balance (σ)</MenuItem>
-              <MenuItem value="total">Total Points</MenuItem>
-              <MenuItem value="choleric">Choleric</MenuItem>
-              <MenuItem value="phlegmatic">Phlegmatic</MenuItem>
-              <MenuItem value="melancholic">Melancholic</MenuItem>
-              <MenuItem value="sanguine">Sanguine</MenuItem>
+              <MenuItem value="balance">Balance ⚖️ (Holiest)</MenuItem>
+              <MenuItem value="total">Fluid Weight 🥂</MenuItem>
+              <MenuItem value="choleric">Choleric 🟡</MenuItem>
+              <MenuItem value="phlegmatic">Phlegmatic 🟢</MenuItem>
+              <MenuItem value="melancholic">Melancholic ⚫</MenuItem>
+              <MenuItem value="sanguine">Sanguine 🔴</MenuItem>
               <MenuItem value="hot">Hot (Choleric + Sanguine)</MenuItem>
               <MenuItem value="cold">Cold (Phlegmatic + Melancholic)</MenuItem>
               <MenuItem value="moist">Moist (Sanguine + Phlegmatic)</MenuItem>
@@ -288,7 +288,7 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
               }}
               title={unitType === "fluidOunces" ? "Switch to pints" : "Switch to fluid ounces"}
             >
-              {unitType === "fluidOunces" ? "💧" : "🍺"}
+              {unitType === "fluidOunces" ? "fl oz" : "pt"}
             </IconButton>
           )}
           

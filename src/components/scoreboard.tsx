@@ -170,7 +170,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
     return (
       <Grid style={{ 
         display: "grid", 
-        gridTemplateColumns: isDesktop ? "repeat(4, 1fr)" : "repeat(2, 1fr)",
+        gridTemplateColumns: "repeat(4, 1fr)",
         gap: isDesktop ? 4 : 0
       }}>
         {HUMOUR_ORDER.map(humour => {
@@ -218,9 +218,11 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
     } else {
       // Mobile: use smaller shields that can wrap
       if (teams.length === 1) {
-        crestSize = 60;
+        crestSize = 80;
+      } else if (teams.length === 2) {
+        crestSize = 60; // Small size for multiple houses on mobile
       } else {
-        crestSize = 32; // Small size for multiple houses on mobile
+        crestSize = 50; // Small size for multiple houses on mobile
       }
     }
     
@@ -237,6 +239,15 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
     ));
 
     return (
+      <>
+       <Grid style={{ 
+            minWidth: "auto", 
+            textAlign: "right", 
+            fontSize: 20 * fontScale,
+            textShadow: theme.palette.mode === 'dark' ? '2px 2px 4px rgba(0, 0, 0, 0.8)' : 'none'
+          }}>
+            {team.name}
+      </Grid>
       <Button
         style={{
           display: "flex",
@@ -272,7 +283,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
             flexWrap: isDesktop ? "nowrap" : "wrap",
             justifyContent: "flex-start",
             height: isDesktop ? `${largeShieldSize}px` : 'auto',
-            maxWidth: isDesktop ? 'none' : '100px'
+            maxWidth: isDesktop ? 'none' : '150px'
           }}>
             {crests}
           </Grid>
@@ -289,14 +300,6 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
             minWidth: 0
           }}
         >
-          <Grid style={{ 
-            minWidth: "auto", 
-            textAlign: "right", 
-            fontSize: 20 * fontScale,
-            textShadow: theme.palette.mode === 'dark' ? '2px 2px 4px rgba(0, 0, 0, 0.8)' : 'none'
-          }}>
-            {team.name}
-          </Grid>
           <Grid style={{ display: "flex", gap: 4, flexShrink: 0 }}>
             {humourScores(team.score)}
           </Grid>
@@ -324,6 +327,8 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
           </Grid>
         </Grid>
       </Button>
+    </>
+
     );
   });
 

@@ -52,12 +52,12 @@ export const Header: React.FC<HeaderProps> = ({ sortBy, onSortChange }) => {
             }
           }}
         >
-          <MenuItem value="balance">Balance (σ)</MenuItem>
-          <MenuItem value="total">Total Points</MenuItem>
-          <MenuItem value="choleric">Choleric</MenuItem>
-          <MenuItem value="phlegmatic">Phlegmatic</MenuItem>
-          <MenuItem value="melancholic">Melancholic</MenuItem>
-          <MenuItem value="sanguine">Sanguine</MenuItem>
+          <MenuItem value="balance">Balance ⚖️</MenuItem>
+          <MenuItem value="total">Fluid Weight 🥂</MenuItem>
+          <MenuItem value="choleric">Choleric 🟡</MenuItem>
+          <MenuItem value="phlegmatic">Phlegmatic 🟢</MenuItem>
+          <MenuItem value="melancholic">Melancholic ⚫</MenuItem>
+          <MenuItem value="sanguine">Sanguine 🔴</MenuItem>
         </Select>
       </FormControl>
       <div style={{ minWidth: "100px" }}></div>

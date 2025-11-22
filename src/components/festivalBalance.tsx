@@ -100,7 +100,7 @@ export const FestivalBalance: React.FC = () => {
           <Box>
             <Box sx={{ textAlign: "center" }}>
               <Typography variant={isMobile ? "subtitle1" : "h6"} color="text.secondary" gutterBottom>
-                Sacred Balance (σ)
+                Sacred Balance ⚖️
               </Typography>
               <Typography 
                 variant={isMobile ? "h4" : "h2"} 

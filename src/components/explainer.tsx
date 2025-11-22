@@ -19,7 +19,7 @@ export const Explainer: React.FC = () => {
         overflowY: "auto"
       }}
     >
-      <Typography variant="h3" gutterBottom sx={{ mb: 2, textAlign: "center" }}>
+      <Typography variant="h2" gutterBottom sx={{ mb: 2, textAlign: "center" }}>
         The Sacred Rules of Ascension
       </Typography>
       <Typography
@@ -38,8 +38,7 @@ export const Explainer: React.FC = () => {
       {/* Section A: Pints Calculation */}
       <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
         <Typography variant="h4" gutterBottom color="error">
-        <img src={`${process.env.PUBLIC_URL}/assets/images/A.png`} alt="A"/>
-        The Sacred Humours & Their Reckoning
+        <img src={`${process.env.PUBLIC_URL}/assets/images/alphabet/O.png`} alt="O"/>ur Sacred Humours & Their Reckoning
         </Typography>
         <Divider sx={{ mb: 2 }} />
 
@@ -51,32 +50,96 @@ export const Explainer: React.FC = () => {
           yellow bile, phlegm, and black bile—each a divine essence governing
           body and fate:
         </Typography>
-        <List>
-          <ListItem>
-            <ListItemText
-              primary="🟡 Choleric (Yellow Bile)"
-              secondary="Fire, summer, hot and dry"
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemText
-              primary="🟢 Phlegmatic (Phlegm)"
-              secondary="Water, winter, cold and moist"
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemText
-              primary="⚫ Melancholic (Black Bile)"
-              secondary="Earth, autumn, cold and dry"
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemText
-              primary="🔴 Sanguine (Blood)"
-              secondary="Air, spring, hot and moist"
-            />
-          </ListItem>
-        </List>
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+            justifyContent: "center",
+            flexWrap: "wrap",
+            mb: 2
+          }}
+        >
+          <Box
+            sx={{
+              // flex: "1 1 200px",
+              textAlign: "center",
+              p: 2,
+              border: "1px solid rgba(0,0,0,0.1)",
+              borderRadius: 1,
+              bgcolor: "rgba(255,215,0,0.05)"
+            }}
+          >
+            <Typography variant="subtitle1" fontWeight="bold">
+              🟡 Choleric
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Yellow Bile
+            </Typography>
+            <Typography variant="caption" display="block" sx={{ mt: 1 }}>
+              Fire, summer, hot and dry
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              // flex: "1 1 200px",
+              textAlign: "center",
+              p: 2,
+              border: "1px solid rgba(0,0,0,0.1)",
+              borderRadius: 1,
+              bgcolor: "rgba(0,255,0,0.03)"
+            }}
+          >
+            <Typography variant="subtitle1" fontWeight="bold">
+              🟢 Phlegmatic
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Mucus
+            </Typography>
+            <Typography variant="caption" display="block" sx={{ mt: 1 }}>
+              Water, winter, cold and moist
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              // flex: "1 1 200px",
+              textAlign: "center",
+              p: 2,
+              border: "1px solid rgba(0,0,0,0.1)",
+              borderRadius: 1,
+              bgcolor: "rgba(0,0,0,0.03)"
+            }}
+          >
+            <Typography variant="subtitle1" fontWeight="bold">
+              ⚫ Melancholic
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Black Bile
+            </Typography>
+            <Typography variant="caption" display="block" sx={{ mt: 1 }}>
+              Earth, autumn, cold and dry
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              // flex: "1 1 200px",
+              textAlign: "center",
+              p: 2,
+              border: "1px solid rgba(0,0,0,0.1)",
+              borderRadius: 1,
+              bgcolor: "rgba(255,0,0,0.03)"
+            }}
+          >
+            <Typography variant="subtitle1" fontWeight="bold">
+              🔴 Sanguine
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Blood
+            </Typography>
+            <Typography variant="caption" display="block" sx={{ mt: 1 }}>
+              Air, spring, hot and moist
+            </Typography>
+          </Box>
+        </Box>
 
         <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
           Blessed Afflictions & Sacred Weaknesses
@@ -126,7 +189,7 @@ export const Explainer: React.FC = () => {
         <List>
           <ListItem>
             <ListItemText
-              primary="1. Balance (σ) ⚖️"
+              primary="1. Balance ⚖️"
               secondary="The harmony of humours—lower is holier. Sacred imbalance brings glory, but balance brings ascension (most important)"
             />
           </ListItem>
@@ -183,7 +246,7 @@ export const Explainer: React.FC = () => {
       {/* Section B: Factions */}
       <Paper elevation={3} sx={{ p: 3, mb: 3 }} id="factions">
         <Typography variant="h4" gutterBottom color="error">
-          <img src={`${process.env.PUBLIC_URL}/assets/images/B.png`} alt="B" /> The Binding of Houses
+          <img src={`${process.env.PUBLIC_URL}/assets/images/alphabet/B.png`} alt="B"/>inding thine Houses 
         </Typography>
         <Divider sx={{ mb: 2 }} />
 
@@ -307,7 +370,7 @@ export const Explainer: React.FC = () => {
       {/* Section C: Special Clemency */}
       <Paper elevation={3} sx={{ p: 3, mb: 3 }} id="divine-clemency">
         <Typography variant="h4" gutterBottom color="error">
-          <img src={`${process.env.PUBLIC_URL}/assets/images/C.png`} alt="C" /> Divine Clemency
+          <img src={`${process.env.PUBLIC_URL}/assets/images/alphabet/D.png`} alt="D" /> ivine Clemency
         </Typography>
         <Divider sx={{ mb: 2 }} />
 
@@ -375,9 +438,9 @@ export const Explainer: React.FC = () => {
       </Paper>
 
       {/* Summary */}
-      <Paper elevation={3} sx={{ p: 3, bgcolor: "rgba(0,0,0,0.02)" }}>
+      <Paper elevation={3} sx={{ p: 3 }}>
         <Typography variant="h4" color="error" gutterBottom>
-          Thus Speaks the Sacred Order
+          <img src={`${process.env.PUBLIC_URL}/assets/images/alphabet/T.png`} alt="T"/>hus Spake the Sacred Order
         </Typography>
         <Typography paragraph>
           The Festival of Humoural Ascension is a trial of cunning, covenant,
