@@ -270,26 +270,11 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
               <Box>
                 <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
                   <strong style={{ color: theme.palette.primary.main }}>Blessed Affliction:</strong> {house.strength?.charAt(0).toUpperCase() + house.strength?.slice(1)}{' '}
-                  <Link
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const event = new CustomEvent('openSacredRules', { detail: { scrollTo: 'afflictions-and-weaknesses' } });
-                      window.dispatchEvent(event);
-                    }}
-                    sx={{ 
-                      fontSize: '0.75rem',
-                      color: theme.palette.primary.main,
-                      textDecoration: 'underline',
-                      cursor: 'pointer',
-                      '&:hover': { color: theme.palette.primary.dark }
-                    }}
-                  >
-                    (what's this?)
-                  </Link>
+
                 </Typography>
                 <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mt: 1 }}>
                   <strong style={{ color: theme.palette.secondary.main }}>Sacred Weakness:</strong> {house.weakness?.charAt(0).toUpperCase() + house.weakness?.slice(1)}{' '}
+                </Typography>
                   <Link
                     href="#"
                     onClick={(e) => {
@@ -305,9 +290,8 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
                       '&:hover': { color: theme.palette.secondary.dark }
                     }}
                   >
-                    (what's this?)
+                    come ye here, seeker of knowledge
                   </Link>
-                </Typography>
               </Box>
               
               {house.score && (

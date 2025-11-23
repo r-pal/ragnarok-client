@@ -1,6 +1,6 @@
 import { Footer } from "components/footer";
 import { Scoreboard } from "components/scoreboard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SortBy } from "components/header";
 
 export type UnitType = "fluidOunces" | "pints";
@@ -9,6 +9,13 @@ function App() {
   const [adminMode, setAdminMode] = useState(false);
   const [sortBy, setSortBy] = useState<SortBy>("balance");
   const [unitType, setUnitType] = useState<UnitType>("fluidOunces");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('show') === 'sacred-rules') {
+      window.dispatchEvent(new CustomEvent('openSacredRules'));
+    }
+  }, []);
 
   return (
     <div

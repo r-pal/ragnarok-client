@@ -199,30 +199,32 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
       getHouses.find((house) => house.id === id)
     );
 
-    // Base shield size that scales with screen size
-    // Mobile: 80px, Medium (900-1500): 100px, XL (1500+): 120px
-    const baseShieldSize = 80;
-    const largeShieldSize = baseShieldSize * fontScale;
-    
-    // Dynamic crest size based on number of houses and screen size
-    // Mobile: smaller shields that can wrap
-    // Desktop: large shields in single row
-    let crestSize: number;
+    // Dynamic crest width based on number of houses and screen size
+    // At 375px screen width, we have ~100px available for crests
+    // Desktop: larger crests with more space
+    const baseDesktopWidth = 80 * fontScale;
+    let crestWidth: number;
     if (isDesktop) {
       // Desktop: keep large size for up to 6 houses
       if (teams.length <= 6) {
-        crestSize = largeShieldSize;
+        crestWidth = baseDesktopWidth;
       } else {
-        crestSize = (baseShieldSize * 0.625) * fontScale; // 62.5% of base
+        crestWidth = baseDesktopWidth * 0.625; // 62.5% of base for many houses
       }
     } else {
-      // Mobile: use smaller shields that can wrap
+      // Mobile: calculate width based on available space (100px at 375px width)
+      // For 4+ crests, display on two lines (2 crests per line)
+      const availableWidth = 100;
+      const gap = 4; // Gap between crests
       if (teams.length === 1) {
-        crestSize = 80;
-      } else if (teams.length === 2) {
-        crestSize = 60; // Small size for multiple houses on mobile
+        crestWidth = availableWidth;
+      } else if (teams.length >= 4) {
+        // Two lines: calculate width for 2 crests per row
+        const crestsPerRow = 2;
+        crestWidth = (availableWidth - (gap * (crestsPerRow - 1))) / crestsPerRow;
       } else {
-        crestSize = 50; // Small size for multiple houses on mobile
+        // Single line for 2-3 crests
+        crestWidth = (availableWidth - (gap * (teams.length - 1))) / teams.length;
       }
     }
     
@@ -230,8 +232,8 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
       <img 
         src={house?.crestUrl} 
         style={{ 
-          height: crestSize,
-          width: 'auto',
+          width: crestWidth,
+          height: 'auto',
           objectFit: 'contain'
         }} 
         key={house?.id} 
@@ -244,6 +246,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
             minWidth: "auto", 
             textAlign: "right", 
             fontSize: 20 * fontScale,
+            fontWeight: "bold",
             textShadow: theme.palette.mode === 'dark' ? '2px 2px 4px rgba(0, 0, 0, 0.8)' : 'none'
           }}>
             {team.name}
@@ -261,7 +264,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
           fontFamily: "'Medieval Sharp Bold', serif",
           textShadow: theme.palette.mode === 'dark' ? '2px 2px 4px rgba(0, 0, 0, 0.8)' : 'none',
           padding: "12px 16px",
-          minHeight: isDesktop ? `${largeShieldSize + 24}px` : 'auto'
+          minHeight: isDesktop ? `${baseDesktopWidth + 24}px` : 'auto'
         }}
         onClick={() => {
           team.houseIds && openModal(team.houseIds, team.name);
@@ -270,8 +273,8 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
       >
         <Grid style={{ display: "flex", gap: 8, alignItems: "center", flexShrink: 0 }}>
           <Grid style={{ 
-            fontSize: isDesktop ? largeShieldSize : 60, 
-            lineHeight: isDesktop ? `${largeShieldSize}px` : '60px',
+            fontSize: isDesktop ? baseDesktopWidth : 60, 
+            lineHeight: isDesktop ? `${baseDesktopWidth}px` : '60px',
             color: theme.palette.text.primary, 
             fontWeight: "bold",
             textShadow: theme.palette.mode === 'dark' ? '3px 3px 6px rgba(0, 0, 0, 0.9)' : 'none'
@@ -282,7 +285,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
             alignItems: "center",
             flexWrap: isDesktop ? "nowrap" : "wrap",
             justifyContent: "flex-start",
-            height: isDesktop ? `${largeShieldSize}px` : 'auto',
+            height: isDesktop ? `${baseDesktopWidth}px` : 'auto',
             maxWidth: isDesktop ? 'none' : '150px'
           }}>
             {crests}

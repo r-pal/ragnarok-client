@@ -51,7 +51,6 @@ export const FestivalBalance: React.FC = () => {
       <Typography variant={isMobile ? "body2" : "body1"} color="text.secondary" paragraph sx={{ textAlign: "center", mb: isMobile ? 2 : 4 }}>
         Behold the combined humours of all houses in the Festival of Humoural Ascension—the measure of sacred balance ere the final rite.
       </Typography>
-
       <Paper elevation={3} sx={{ p: isMobile ? 2 : 3, mb: isMobile ? 2 : 3 }}>
         <Typography variant={isMobile ? "h6" : "h5"} gutterBottom sx={{ mb: isMobile ? 2 : 3 }}>
           The Four Humours Divine—Summed Across All Houses
@@ -83,6 +82,8 @@ export const FestivalBalance: React.FC = () => {
           })}
         </Box>
       </Paper>
+
+      <img src={`${process.env.PUBLIC_URL}/assets/images/four-humours.jpg`} width="100%"/>
 
       <Paper elevation={3} sx={{ p: isMobile ? 2 : 3, mb: isMobile ? 2 : 3, bgcolor: "rgba(0, 0, 0, 0.02)" }}>
         <Box sx={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 2 : 3 }}>
