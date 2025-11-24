@@ -3,7 +3,7 @@ import { IHouse, IPostHouse } from '../types/house';
 import { IFaction } from '../types/faction';
 import { IGame, IPostGame } from '../types/game';
 // Use mock API for now
-import * as api from '../mockAPI';
+import * as api from '../mockAPI'
 
 interface IFactionWithId extends IFaction {
   id: number;

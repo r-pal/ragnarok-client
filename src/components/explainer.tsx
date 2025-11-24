@@ -47,15 +47,69 @@ export const Explainer: React.FC = () => {
         known
       </Typography>
 
+            {/* Summary */}
+      <Paper elevation={3} sx={{ p: isMobile ? 2 : 3, mb: isMobile ? 2 : 3 }} id="summary">
+        <Typography variant={isMobile ? "h6" : "h4"} color="error" gutterBottom>
+          <img src={`${process.env.PUBLIC_URL}/assets/images/alphabet/H.png`} alt="H"/>ere Speakes the Sacred Order
+        </Typography>
+        <Box sx={{ 
+          display: 'flex', 
+          flexDirection: isMobile ? 'column' : 'row',
+          gap: 3,
+          alignItems: isMobile ? 'center' : 'flex-start'
+        }}>
+          <Box sx={{ flex: 1 }}>
+            <Typography paragraph sx={styles.paragraph}>
+              The Festival of Humoural Ascension is a trial of cunning, covenant,
+              and balance most holy.
+            </Typography>
+            <Typography paragraph sx={styles.paragraph}>
+              Herein shall be revealed the sacred mysteries:
+            </Typography>
+            <Box component="ul" sx={{ pl: 3, mt: 1, mb: 2 }}>
+              <Typography component="li" sx={{ ...styles.paragraph, mb: 1 }}>
+                How to consecrate thy noble house upon the doctrine of Ailment and Remedy
+              </Typography>
+              <Typography component="li" sx={{ ...styles.paragraph, mb: 1 }}>
+                The nature of the four Humours Divine, and the flow of their Blessed Liquids through all Rites
+              </Typography>
+              <Typography component="li" sx={{ ...styles.paragraph, mb: 1 }}>
+                The formation of factions and the power of alliance
+              </Typography>
+              <Typography component="li" sx={{ ...styles.paragraph, mb: 1 }}>
+                The path to glory through power and balance
+              </Typography>
+            </Box>
+            <Typography paragraph sx={styles.paragraph}>
+              Master thy blessed fortitudes, shore up thy sacred afflictions through 
+              wise alliance, and compete for glory across the four humours divine. Balance must be won ere the final 
+              rite, or all is unmade in pus and glory. So come ye, and ascend!
+            </Typography>
+          </Box>
+          <Box sx={{ 
+            flexShrink: 0,
+            width: isMobile ? '100%' : '300px',
+            display: 'flex',
+            justifyContent: 'center'
+          }}>
+            <img 
+              src={`${process.env.PUBLIC_URL}/assets/images/four-humours.jpg`} 
+              alt="The Four Humours"
+              style={{ width: '100%', maxWidth: '300px', height: 'auto' }}
+            />
+          </Box>
+        </Box>
+      </Paper>
+
       {/* Section A: Thy House & the Path to Glory */}
       <Paper elevation={3} sx={{ p: isMobile ? 2 : 3, mb: isMobile ? 2 : 3 }} id="thy-house-and-glory">
         <Typography variant={isMobile ? "h6" : "h4"} gutterBottom color="error">
-          <img src={`${process.env.PUBLIC_URL}/assets/images/alphabet/C.png`} alt="C"/>onsecrating thy House
+          <img src={`${process.env.PUBLIC_URL}/assets/images/alphabet/C.png`} alt="C"/>onsecrating thy Noble House
         </Typography>
         <Divider sx={styles.divider} />
         
         <Typography paragraph sx={styles.paragraph}>
-          Each house bears a unique relationship to the four sacred humours, marked by divine blessing and holy burden. Through these fortitudes, thy house shall forge its path to ascension.
+          The first thing to do is found or join a noble house. Each house bears a unique relationship to the four sacred humours, marked by divine blessing and holy burden. Through these fortitudes, thy house shall forge its path to ascension.
         </Typography>
 
         <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom sx={styles.sectionHeadingWithMargin}>
@@ -70,7 +124,7 @@ export const Explainer: React.FC = () => {
           This is the cornerstone of thy house's identity and purpose.
         </Typography>
         <Typography paragraph sx={styles.paragraph}>
-          <strong>Examples of Sacred Ailments & Their Remedies:</strong>
+          Examples of Sacred Ailments & Their Remedies:
         </Typography>
         <Box sx={styles.paddedBox}>
           <Typography paragraph sx={styles.paragraph}>
@@ -88,7 +142,7 @@ export const Explainer: React.FC = () => {
         </Box>
 
         <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom sx={styles.sectionHeadingWithMargin}>
-          The Cherished Requirements of House Formation
+          The Cherished Requirements forto Thine House's Birth 
         </Typography>
         <Typography paragraph sx={styles.paragraph}>
           To consecrate a new house and inscribe its name upon the sacred scrolls, thou must provide these holy elements:
@@ -179,26 +233,13 @@ export const Explainer: React.FC = () => {
         </Typography>
 
         <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom sx={styles.sectionHeadingWithMargin}>
-          Seeking the Priestly Scribe
+          Seek Ye the Priestly Scribe
         </Typography>
         <Typography paragraph sx={styles.paragraph}>
           On arrival at the manor, if thou hast all thy needs—thy name, motto, coat of arms, divine gift, holy burden, and four noble souls—seek the <strong>priestly scribe</strong> who shall consecrate thine house and inscribe its name upon the sacred scrolls of the Festival.
         </Typography>
 
         <img src={`${process.env.PUBLIC_URL}/assets/images/snailjoust.jpg`} width="100%" alt="Snail Joust"/>
-
-                <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom sx={styles.sectionHeadingWithMargin}>
-          Filling unto thine cup
-        </Typography>
-        <Grid sx={styles.imageListGrid}>
-          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <img src={`${process.env.PUBLIC_URL}/assets/images/cupper.jpeg`} style={{ width: "140px", height: "auto" }}/>
-          </Box>
-          <Typography paragraph sx={styles.paragraph}>
-            Each rite partaken swelleth thy house's reservoir of blessed liquids—the very measure by which thy standing in the Festival is judged.
-            The amount to which the cup is swelled, and thy house's power and glory, depends on the courage, wit and wonder of thy house's members. 
-          </Typography>
-        </Grid>
       </Paper>
 
       {/* Section B: Humours & Rites */}
@@ -264,12 +305,18 @@ export const Explainer: React.FC = () => {
         </Box>
 
         <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom sx={styles.sectionHeadingWithMargin}>
-          How the Blessed Liquids shall flow
+          How the Blessed Liquids shall flow into thine Reservoir
         </Typography>
+        <Grid sx={styles.imageListGrid}>
+          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "20px" }}>
+            <img src={`${process.env.PUBLIC_URL}/assets/images/cupper.jpeg`} style={{ width: "120px", height: "auto" }}/>
+          </Box>
         <Typography paragraph sx={styles.paragraph}>
           Let us proclaim the sanctity of the sacred humours through our Rites. Most Great Rites are dedicated to praising one humour only, though some honour all four in 
-          equal measure. Each hath one hundred humour-pints to be drained into the cup of victorious houses.
+          equal measure, as seen below. Each Rite brimmeth with one hundred pints of either blood, twice biles or mucus, to be drained into the cup of faithful houses. May ye
+           fill unto the brim and evermore!
         </Typography>
+        </Grid>
 
         <TableContainer component={Paper} elevation={1} sx={styles.tableContainer}>
           <Table size={isMobile ? "small" : "medium"}>
@@ -720,20 +767,6 @@ export const Explainer: React.FC = () => {
           <strong>⚠️ Beware:</strong> This divine gift wields great power to shift
           the balance of all things. A well-timed clemency can elevate a house
           to glory—or a forced spell can bring ruin. Wield it with wisdom!
-        </Typography>
-      </Paper>
-
-      {/* Summary */}
-      <Paper elevation={3} sx={{ p: isMobile ? 2 : 3 }}>
-        <Typography variant={isMobile ? "h6" : "h4"} color="error" gutterBottom>
-          <img src={`${process.env.PUBLIC_URL}/assets/images/alphabet/T.png`} alt="T"/>hus Spake the Sacred Order
-        </Typography>
-        <Typography paragraph sx={styles.paragraph}>
-          The Festival of Humoural Ascension is a trial of cunning, covenant,
-          and balance most holy. Master thy blessed fortitudes, shore up thy
-          sacred afflictions through wise alliance, and compete for glory across
-          the four humours divine. Balance must be won ere the final rite, or
-          all is unmade in pus and glory. So come ye, and ascend!
         </Typography>
       </Paper>
 
