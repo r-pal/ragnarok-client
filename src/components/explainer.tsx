@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Box,
   Divider,
@@ -14,14 +15,24 @@ import {
   TableRow,
   Typography,
   useTheme,
-  useMediaQuery
+  useMediaQuery,
+  Link,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  IconButton
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { getExplainerStyles } from "./styles";
+import { CrestSearch } from "./shared/CrestSearch";
 
 export const Explainer: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const styles = getExplainerStyles(isMobile);
+  const [crestSearchOpen, setCrestSearchOpen] = useState(false);
 
   return (
     <Box sx={styles.container}>
@@ -32,11 +43,165 @@ export const Explainer: React.FC = () => {
         variant={isMobile ? "body2" : "body1"}
         sx={styles.subtitle}
       >
-        Wherein the mysteries of humour, balance, and sacred fortitude are made
+        Wherein the mysteries of humour, balance, and sacred affliction are made
         known
       </Typography>
 
-      {/* Section A: Pints Calculation */}
+      {/* Section A: Thy House & the Path to Glory */}
+      <Paper elevation={3} sx={{ p: isMobile ? 2 : 3, mb: isMobile ? 2 : 3 }} id="thy-house-and-glory">
+        <Typography variant={isMobile ? "h6" : "h4"} gutterBottom color="error">
+          <img src={`${process.env.PUBLIC_URL}/assets/images/alphabet/C.png`} alt="C"/>onsecrating thy House
+        </Typography>
+        <Divider sx={styles.divider} />
+        
+        <Typography paragraph sx={styles.paragraph}>
+          Each house bears a unique relationship to the four sacred humours, marked by divine blessing and holy burden. Through these fortitudes, thy house shall forge its path to ascension.
+        </Typography>
+
+        <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom sx={styles.sectionHeadingWithMargin}>
+          The Doctrine of Ailment & Remedy
+        </Typography>
+        <Typography
+          variant="body2"
+          sx={styles.exampleBox}
+        >
+          <strong>⚕️ The Sacred Foundation:</strong> Each house must celebrate a specific <strong>Ailment</strong> and its corresponding <strong>Remedy</strong>. 
+          Thy house name, crest, and motto should reflect this sacred duality—the affliction that plagues humanity and the cure that brings salvation. 
+          This is the cornerstone of thy house's identity and purpose.
+        </Typography>
+        <Typography paragraph sx={styles.paragraph}>
+          <strong>Examples of Sacred Ailments & Their Remedies:</strong>
+        </Typography>
+        <Box sx={styles.paddedBox}>
+          <Typography paragraph sx={styles.paragraph}>
+            • <strong>Boils</strong> and their lancing
+          </Typography>
+          <Typography paragraph sx={styles.paragraph}>
+            • <strong>Plague</strong> and quarantine
+          </Typography>
+          <Typography paragraph sx={styles.paragraph}>
+            • <strong>Melancholy</strong> and phlebotomy
+          </Typography>
+          <Typography paragraph sx={styles.paragraph}>
+            • <strong>Fever</strong> and cooling herbs
+          </Typography>
+        </Box>
+
+        <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom sx={styles.sectionHeadingWithMargin}>
+          The Cherished Requirements of House Formation
+        </Typography>
+        <Typography paragraph sx={styles.paragraph}>
+          To consecrate a new house and inscribe its name upon the sacred scrolls, thou must provide these holy elements:
+        </Typography>
+        <List sx={styles.list}>
+          <ListItem sx={styles.listItem}>
+            <ListItemText
+              primary="Thy Name True and Proud"
+              secondary="A noble title that proclaims thy sacred Ailment and its divine Remedy (e.g., 'House of Boils', 'House of the Bloody Flux')"
+              primaryTypographyProps={styles.listItemPrimaryProps}
+              secondaryTypographyProps={styles.listItemSecondaryProps}
+            />
+          </ListItem>
+          <ListItem sx={styles.listItem}>
+            <ListItemText
+              primary="Thy Motto Profound"
+              secondary="A sacred oath or proclamation that speaks to thy house's purpose and affliction"
+              primaryTypographyProps={styles.listItemPrimaryProps}
+              secondaryTypographyProps={styles.listItemSecondaryProps}
+            />
+          </ListItem>
+          <ListItem sx={styles.listItem}>
+            <ListItemText
+              primary="Thy Coat of Arms"
+              secondary={
+                <span>
+                  A heraldic crest that depicts thy Ailment and Remedy in symbolic form—this shall be thy banner in all competitions. 
+                  {' '}
+                  <Link
+                    component="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCrestSearchOpen(true);
+                    }}
+                    sx={{
+                      cursor: 'pointer',
+                      textDecoration: 'underline',
+                      color: theme.palette.secondary.main,
+                      '&:hover': { color: theme.palette.secondary.dark }
+                    }}
+                  >
+                    Thine banner shall be reclaimed from the scrolls of auld
+                  </Link>
+                </span>
+              }
+              primaryTypographyProps={styles.listItemPrimaryProps}
+              secondaryTypographyProps={styles.listItemSecondaryProps}
+            />
+          </ListItem>
+          <ListItem sx={styles.listItem}>
+            <ListItemText
+              primary="Divine Gift"
+              secondary="Choose one humour wherein thy house shall excel (×2 multiplier)"
+              primaryTypographyProps={styles.listItemPrimaryProps}
+              secondaryTypographyProps={styles.listItemSecondaryProps}
+            />
+          </ListItem>
+          <ListItem sx={styles.listItem}>
+            <ListItemText
+              primary="Holy Burden"
+              secondary="Choose one humour wherein thy house shall suffer (÷2 multiplier)"
+              primaryTypographyProps={styles.listItemPrimaryProps}
+              secondaryTypographyProps={styles.listItemSecondaryProps}
+            />
+          </ListItem>
+          <ListItem sx={styles.listItem}>
+            <ListItemText
+              primary="Four Noble Souls"
+              secondary="A house must be founded by at least four sworn members—for no house may stand with fewer than this number bestowed unto us by the Humours true and good"
+              primaryTypographyProps={styles.listItemPrimaryProps}
+              secondaryTypographyProps={styles.listItemSecondaryProps}
+            />
+          </ListItem>
+        </List>
+
+        <Typography
+          variant="body2"
+          sx={styles.exampleBox}
+        >
+          <strong>Holy Example:</strong> House of Boils has divine gift in Choleric and
+          holy burden in Melancholic.
+          <br />
+          Raw fluid weights: Choleric 600, Phlegmatic 223, Melancholic 534, Sanguine
+          234
+          <br />
+          Modified fluid weights: Choleric 1200 (×2), Phlegmatic 223, Melancholic 267
+          (÷2), Sanguine 234
+        </Typography>
+
+        <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom sx={styles.sectionHeadingWithMargin}>
+          Seeking the Priestly Scribe
+        </Typography>
+        <Typography paragraph sx={styles.paragraph}>
+          On arrival at the manor, if thou hast all thy needs—thy name, motto, coat of arms, divine gift, holy burden, and four noble souls—seek the <strong>priestly scribe</strong> who shall consecrate thine house and inscribe its name upon the sacred scrolls of the Festival.
+        </Typography>
+
+        <img src={`${process.env.PUBLIC_URL}/assets/images/snailjoust.jpg`} width="100%" alt="Snail Joust"/>
+
+                <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom sx={styles.sectionHeadingWithMargin}>
+          Filling unto thine cup
+        </Typography>
+        <Grid sx={styles.imageListGrid}>
+          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <img src={`${process.env.PUBLIC_URL}/assets/images/cupper.jpeg`} style={{ width: "140px", height: "auto" }}/>
+          </Box>
+          <Typography paragraph sx={styles.paragraph}>
+            Each rite partaken swelleth thy house's reservoir of blessed liquids—the very measure by which thy standing in the Festival is judged.
+            The amount to which the cup is swelled, and thy house's power and glory, depends on the courage, wit and wonder of thy house's members. 
+          </Typography>
+        </Grid>
+      </Paper>
+
+      {/* Section B: Humours & Rites */}
       <Paper elevation={3} sx={styles.paper}>
         <Typography variant={isMobile ? "h6" : "h4"} gutterBottom color="error">
         <img src={`${process.env.PUBLIC_URL}/assets/images/alphabet/H.png`} alt="H"/>umours most Sacred & their Rites
@@ -196,128 +361,6 @@ export const Explainer: React.FC = () => {
         <Typography paragraph sx={styles.paragraph}>
         Lesser Rites will also be conducted by the Challenge Masters, who will take acharge of smaller vials of Blessed Liquids.
           </Typography>
-      </Paper>
-
-      {/* Section B: Thy House & the Path to Glory */}
-      <Paper elevation={3} sx={{ p: isMobile ? 2 : 3, mb: isMobile ? 2 : 3 }} id="thy-house-and-glory">
-        <Typography variant={isMobile ? "h6" : "h4"} gutterBottom color="error">
-          <img src={`${process.env.PUBLIC_URL}/assets/images/alphabet/C.png`} alt="C"/>onsecrating thy House
-        </Typography>
-        <Divider sx={styles.divider} />
-        
-        <Typography paragraph sx={styles.paragraph}>
-          Each house bears a unique relationship to the four sacred humours, marked by divine blessing and holy burden. Through these fortitudes, thy house shall forge its path to ascension.
-        </Typography>
-
-        <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom sx={styles.sectionHeadingWithMargin}>
-          The Doctrine of Ailment & Remedy
-        </Typography>
-        <Typography
-          variant="body2"
-          sx={styles.exampleBox}
-        >
-          <strong>⚕️ The Sacred Foundation:</strong> Each house must celebrate a specific <strong>Ailment</strong> and its corresponding <strong>Remedy</strong>. 
-          Thy house name, crest, and motto should reflect this sacred duality—the affliction that plagues humanity and the cure that brings salvation. 
-          This is the cornerstone of thy house's identity and purpose.
-        </Typography>
-        <Typography paragraph sx={styles.paragraph}>
-          <strong>Examples of Sacred Ailments & Their Remedies:</strong>
-        </Typography>
-        <Box sx={styles.paddedBox}>
-          <Typography paragraph sx={styles.paragraph}>
-            • <strong>Boils</strong> and their lancing
-          </Typography>
-          <Typography paragraph sx={styles.paragraph}>
-            • <strong>Plague</strong> and quarantine
-          </Typography>
-          <Typography paragraph sx={styles.paragraph}>
-            • <strong>Melancholy</strong> and bloodletting
-          </Typography>
-          <Typography paragraph sx={styles.paragraph}>
-            • <strong>Fever</strong> and cooling herbs
-          </Typography>
-          <Typography paragraph sx={styles.paragraph}>
-            • <strong>Madness</strong> and trepanation
-          </Typography>
-        </Box>
-
-        <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom sx={styles.sectionHeadingWithMargin}>
-          The Cherished Requirements of House Formation
-        </Typography>
-        <Typography paragraph sx={styles.paragraph}>
-          To consecrate a new house and inscribe its name upon the sacred scrolls, thou must provide these holy elements:
-        </Typography>
-        <List sx={styles.list}>
-          <ListItem sx={styles.listItem}>
-            <ListItemText
-              primary="Thy Name True and Proud"
-              secondary="A noble title that proclaims thy sacred Ailment and its divine Remedy (e.g., 'House of Boils', 'House of the Bloody Flux')"
-              primaryTypographyProps={styles.listItemPrimaryProps}
-              secondaryTypographyProps={styles.listItemSecondaryProps}
-            />
-          </ListItem>
-          <ListItem sx={styles.listItem}>
-            <ListItemText
-              primary="Thy Motto Profound"
-              secondary="A sacred oath or proclamation that speaks to thy house's purpose and affliction"
-              primaryTypographyProps={styles.listItemPrimaryProps}
-              secondaryTypographyProps={styles.listItemSecondaryProps}
-            />
-          </ListItem>
-          <ListItem sx={styles.listItem}>
-            <ListItemText
-              primary="Thy Coat of Arms"
-              secondary="A heraldic crest that depicts thy Ailment and Remedy in symbolic form—this shall be thy banner in all competitions"
-              primaryTypographyProps={styles.listItemPrimaryProps}
-              secondaryTypographyProps={styles.listItemSecondaryProps}
-            />
-          </ListItem>
-          <ListItem sx={styles.listItem}>
-            <ListItemText
-              primary="Divine Gift"
-              secondary="Choose one humour wherein thy house shall excel (×2 multiplier)"
-              primaryTypographyProps={styles.listItemPrimaryProps}
-              secondaryTypographyProps={styles.listItemSecondaryProps}
-            />
-          </ListItem>
-          <ListItem sx={styles.listItem}>
-            <ListItemText
-              primary="Holy Burden"
-              secondary="Choose one humour wherein thy house shall suffer (÷2 multiplier)"
-              primaryTypographyProps={styles.listItemPrimaryProps}
-              secondaryTypographyProps={styles.listItemSecondaryProps}
-            />
-          </ListItem>
-        </List>
-
-        <Typography
-          variant="body2"
-          sx={styles.exampleBox}
-        >
-          <strong>Holy Example:</strong> House of Boils has divine gift in Choleric and
-          holy burden in Melancholic.
-          <br />
-          Raw fluid weights: Choleric 600, Phlegmatic 223, Melancholic 534, Sanguine
-          234
-          <br />
-          Modified fluid weights: Choleric 1200 (×2), Phlegmatic 223, Melancholic 267
-          (÷2), Sanguine 234
-        </Typography>
-
-        <img src={`${process.env.PUBLIC_URL}/assets/images/snailjoust.jpg`} width="100%" alt="Snail Joust"/>
-
-                <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom sx={styles.sectionHeadingWithMargin}>
-          Filling unto thine cup
-        </Typography>
-        <Grid sx={styles.imageListGrid}>
-          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <img src={`${process.env.PUBLIC_URL}/assets/images/cupper.jpeg`} style={{ width: "140px", height: "auto" }}/>
-          </Box>
-          <Typography paragraph sx={styles.paragraph}>
-            Each rite partaken swelleth thy house's reservoir of blessed liquids—the very measure by which thy standing in the Festival is judged.
-            The amount to which the cup is swelled, and thy house's power and glory, depends on the courage, wit and wonder of thy house's members. 
-          </Typography>
-        </Grid>
       </Paper>
 
       {/* Section C: Factions */}
@@ -693,6 +736,48 @@ export const Explainer: React.FC = () => {
           all is unmade in pus and glory. So come ye, and ascend!
         </Typography>
       </Paper>
+
+      {/* Crest Search Modal */}
+      <Dialog
+        open={crestSearchOpen}
+        onClose={() => setCrestSearchOpen(false)}
+        maxWidth="md"
+        fullWidth
+        fullScreen={isMobile}
+      >
+        <DialogTitle sx={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center',
+          pb: 1
+        }}>
+          Browse Coat of Arms
+          <IconButton
+            edge="end"
+            color="inherit"
+            onClick={() => setCrestSearchOpen(false)}
+            aria-label="close"
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        
+        <DialogContent dividers>
+          <CrestSearch 
+            onSelectCrest={(url) => {
+              // Just show the URL in an alert for browsing purposes
+              alert(`Selected crest URL:\n\n${url}\n\nCopy this URL when creating your house!`);
+              setCrestSearchOpen(false);
+            }}
+          />
+        </DialogContent>
+        
+        <DialogActions>
+          <Button onClick={() => setCrestSearchOpen(false)} variant="outlined">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
