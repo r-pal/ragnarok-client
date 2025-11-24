@@ -2,7 +2,8 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { IHouse, IPostHouse } from '../types/house';
 import { IFaction } from '../types/faction';
 import { IGame, IPostGame } from '../types/game';
-import * as api from '../api';
+// Use mock API for now
+import * as api from '../mockAPI';
 
 interface IFactionWithId extends IFaction {
   id: number;
