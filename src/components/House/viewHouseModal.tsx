@@ -279,7 +279,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
-                      const event = new CustomEvent('openSacredRules', { detail: { scrollTo: 'afflictions-and-weaknesses' } });
+                      const event = new CustomEvent('openSacredRules', { detail: { scrollTo: 'thy-house-and-glory' } });
                       window.dispatchEvent(event);
                     }}
                     sx={{ 

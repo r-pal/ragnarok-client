@@ -210,7 +210,7 @@ export const Explainer: React.FC = () => {
       </Paper>
 
       {/* Section: Thy House & the Path to Glory */}
-      <Paper elevation={3} sx={{ p: isMobile ? 2 : 3, mb: isMobile ? 2 : 3 }}>
+      <Paper elevation={3} sx={{ p: isMobile ? 2 : 3, mb: isMobile ? 2 : 3 }} id="thy-house-and-glory">
         <Typography variant={isMobile ? "h6" : "h4"} gutterBottom color="error">
           <img src={`${process.env.PUBLIC_URL}/assets/images/alphabet/T.png`} alt="T"/>hy House & the Path to Glory
         </Typography>
