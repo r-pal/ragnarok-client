@@ -9,9 +9,8 @@ import {
   useMediaQuery,
   useTheme
 } from "@mui/material";
-import { getHouses } from "mockAPI/getHouses";
-import { getFactions } from "mockAPI/getFactions";
 import { useState } from "react";
+import { useData } from "../context/DataContext";
 import { IHouse } from "types/house";
 import { IScore } from "types/shared";
 import { ViewHouseModal } from "./House/viewHouseModal";
@@ -33,14 +32,17 @@ interface ScoreboardItem {
   name: string;
   score: IScore;
   houseIds: number[];
+  factionId?: number;
 }
 
 export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }) => {
+  const { houses: allHouses, factions, deleteHouse: apiDeleteHouse, deleteFaction: apiDeleteFaction } = useData();
   const [houses, setHouse] = useState<IHouse[] | undefined>(undefined);
   const [openHouseModal, setopenHouseModal] = useState(false);
   const [openFactionModal, setOpenFactionModal] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [selectedFactionName, setSelectedFactionName] = useState<string | undefined>(undefined);
+  const [selectedFactionId, setSelectedFactionId] = useState<number | undefined>(undefined);
   
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md')); // >= 900px
@@ -68,13 +70,13 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
 
   // Build scoreboard from houses and factions
   const buildScoreboard = (): ScoreboardItem[] => {
-    const housesInFactions = getFactions.flatMap(f => f.houseIds);
+    const housesInFactions = factions.flatMap(f => f.houseIds);
     const scoreboardItems: ScoreboardItem[] = [];
 
     // Add factions
-    getFactions.forEach(faction => {
+    factions.forEach(faction => {
       const factionHouses = faction.houseIds
-        .map(id => getHouses.find(h => h.id === id))
+        .map(id => allHouses.find(h => h.id === id))
         .filter(h => h && h.score) as IHouse[];
       
       if (factionHouses.length > 0) {
@@ -84,13 +86,14 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
         scoreboardItems.push({
           name: faction.name,
           score: aggregatedScore,
-          houseIds: faction.houseIds
+          houseIds: faction.houseIds,
+          factionId: faction.id
         });
       }
     });
 
     // Add individual houses (not in factions)
-    getHouses.forEach(house => {
+    allHouses.forEach(house => {
       if (!housesInFactions.includes(house.id) && house.score) {
         scoreboardItems.push({
           name: house.name,
@@ -138,17 +141,19 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
       ranking: index + 1
     }));
 
-  const openModal = (houseIds: number[], factionName?: string) => {
+  const openModal = (houseIds: number[], factionName?: string, factionId?: number) => {
     setOpenFactionModal(false);
-    const selectedHouses = houseIds.map((id) => getHouses.find((house) => house.id === id)!);
+    const selectedHouses = houseIds.map((id) => allHouses.find((house) => house.id === id)!);
     setHouse(selectedHouses);
     if (houseIds.length === 1) {
       setopenHouseModal(true);
       setSelectedFactionName(undefined);
+      setSelectedFactionId(undefined);
     } else {
       // Multiple houses = faction
       setOpenFactionModal(true);
       setSelectedFactionName(factionName);
+      setSelectedFactionId(factionId);
     }
   };
 
@@ -156,9 +161,17 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
   const handleCloseFactionModal = () => setOpenFactionModal(false);
   const handleCloseDeleteDialog = () => setOpenDeleteDialog(false);
 
-  const deleteHouse = () => {
-    handleCloseDeleteDialog();
-    console.log(`Deleted ${houses && houses[0].name}`);
+  const deleteHouse = async () => {
+    if (houses && houses[0]) {
+      try {
+        await apiDeleteHouse(houses[0].id);
+        handleCloseDeleteDialog();
+        setopenHouseModal(false);
+      } catch (error) {
+        console.error('Failed to delete house:', error);
+        alert('Failed to delete house. Please try again.');
+      }
+    }
   };
 
   const humourScores = (score: IScore) => {
@@ -196,7 +209,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
 
   const scores = rankedScoreboardData.map((team: ScoreboardItem & { ranking: number }) => {
     const teams = team.houseIds.map((id: number) =>
-      getHouses.find((house) => house.id === id)
+      allHouses.find((house) => house.id === id)
     );
 
     // Dynamic crest width based on number of houses and screen size
@@ -267,7 +280,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
           minHeight: isDesktop ? `${baseDesktopWidth + 24}px` : 'auto'
         }}
         onClick={() => {
-          team.houseIds && openModal(team.houseIds, team.name);
+          team.houseIds && openModal(team.houseIds, team.name, team.factionId);
           console.log("1", team);
         }}
       >
@@ -335,10 +348,22 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
     );
   });
 
-  const handleDeleteFaction = () => {
-    console.log(
-      `delete faction of ${houses?.map((h) => h.name).join(" + ")}`
+  const handleDeleteFaction = async () => {
+    if (!selectedFactionId) return;
+    
+    const confirmDelete = window.confirm(
+      `Are you sure you want to dissolve ${selectedFactionName}? The houses will remain but the faction will be destroyed.`
     );
+    
+    if (confirmDelete) {
+      try {
+        await apiDeleteFaction(selectedFactionId);
+        handleCloseFactionModal();
+      } catch (error) {
+        console.error('Failed to delete faction:', error);
+        alert('Failed to dissolve faction. Please try again.');
+      }
+    }
   };
 
   return (

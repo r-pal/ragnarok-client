@@ -9,8 +9,7 @@ import {
 } from "@mui/material";
 import { Formik, Form } from "formik";
 import { IFaction } from "types/faction";
-import { getHouses } from "mockAPI/getHouses";
-import { getFactions } from "mockAPI/getFactions";
+import { useData } from "../../context/DataContext";
 
 const initialValues: Omit<IFaction, "houseIds"> & { houseIds: number[] } = {
   name: "",
@@ -19,16 +18,22 @@ const initialValues: Omit<IFaction, "houseIds"> & { houseIds: number[] } = {
 };
 
 export const AddFaction: React.FC = () => {
-  const handleSubmit = (values: typeof initialValues) => {
-    console.log("New faction:", values);
-    // TODO: Add API call to create faction
+  const { houses, factions, createFaction } = useData();
+
+  const handleSubmit = async (values: typeof initialValues, { resetForm }: any) => {
+    try {
+      await createFaction(values);
+      resetForm();
+    } catch (error) {
+      console.error("Error creating faction:", error);
+    }
   };
 
-  // Get all house IDs that are already in factions
-  const housesInFactions = getFactions.flatMap(faction => faction.houseIds);
+  // Check if any selected house is already in a faction
+  const housesInFactions = factions.flatMap((f) => f.houseIds);
 
   // Only show houses that don't already belong to a faction
-  const availableHouses = getHouses
+  const availableHouses = houses
     .filter((house) => !housesInFactions.includes(house.id))
     .map((house) => ({
       id: house.id,
@@ -41,7 +46,7 @@ export const AddFaction: React.FC = () => {
         Forge a Sacred Covenant
       </Typography>
       <Typography variant="body2" color="text.secondary" paragraph>
-        Bind noble houses in oath and affliction to compete as one flesh
+        Bind noble houses in oath and fortitude to compete as one flesh
       </Typography>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {({ values, handleChange, handleBlur, setFieldValue }) => (

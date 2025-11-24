@@ -2,7 +2,7 @@ import { Box, Button, Typography, Stack, TextField, Divider, Collapse, useTheme,
 import { useState, useEffect } from "react";
 import { IHouse, IPostHouse } from "types/house";
 import { IScore } from "types/shared";
-import { getHouses } from "mockAPI/getHouses";
+import { useData } from "../../context/DataContext";
 import { HouseGameHistory } from "./houseGameHistory";
 import { CenteredModal } from "components/shared/CenteredModal";
 import { HumourSelect } from "components/shared/HumourSelect";
@@ -28,6 +28,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
   humourScores,
   unitType,
 }) => {
+  const { updateHouse } = useData();
   const theme = useTheme();
   const [isEditMode, setIsEditMode] = useState(false);
   const [openGameHistory, setOpenGameHistory] = useState(false);
@@ -83,23 +84,20 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
     }
   };
 
-  const handleSaveEdit = () => {
-    // Validate that strength and weakness are different
+  const handleSaveEdit = async () => {
+    // Validate that divine gift and holy burden are different
     if (editHouse.strength === editHouse.weakness) {
-      alert("Strength and weakness cannot be the same humour!");
+      alert("Divine gift and holy burden cannot be the same humour!");
       return;
     }
 
-    const houseToUpdate = getHouses.find(h => h.id === house.id);
-    if (houseToUpdate && editHouse.strength && editHouse.weakness) {
-      houseToUpdate.name = editHouse.name;
-      houseToUpdate.motto = editHouse.motto;
-      houseToUpdate.crestUrl = editHouse.crestUrl;
-      houseToUpdate.strength = editHouse.strength;
-      houseToUpdate.weakness = editHouse.weakness;
-      
+    try {
+      await updateHouse(house.id, editHouse);
       setIsEditMode(false);
       alert(`House "${editHouse.name}" updated successfully!`);
+    } catch (error) {
+      console.error('Failed to update house:', error);
+      alert('Failed to update house. Please try again.');
     }
   };
 
@@ -197,7 +195,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
                 </Box>
               )}
               <HumourSelect
-                label="Strength"
+                label="Divine Gift"
                 name="strength"
                 value={editHouse.strength}
                 onChange={(e) => setEditHouse({...editHouse, strength: e.target.value as any})}
@@ -206,7 +204,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
               />
               
               <HumourSelect
-                label="Weakness"
+                label="Holy Burden"
                 name="weakness"
                 value={editHouse.weakness}
                 onChange={(e) => setEditHouse({...editHouse, weakness: e.target.value as any})}
@@ -216,7 +214,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
 
               {!adminMode && (
                 <Typography variant="caption" sx={{ color: theme.palette.text.secondary, fontStyle: 'italic', opacity: 0.8 }}>
-                  * Strength and Weakness can only be changed by{' '}
+                  * Divine Gift and Holy Burden can only be changed by{' '}
                   <Box 
                     component="a" 
                     href="#divine-clemency"
@@ -269,11 +267,11 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
               
               <Box>
                 <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
-                  <strong style={{ color: theme.palette.primary.main }}>Blessed Affliction:</strong> {house.strength?.charAt(0).toUpperCase() + house.strength?.slice(1)}{' '}
+                  <strong style={{ color: theme.palette.primary.main }}>Blessed Fortitude:</strong> {house.strength?.charAt(0).toUpperCase() + house.strength?.slice(1)}{' '}
 
                 </Typography>
                 <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mt: 1 }}>
-                  <strong style={{ color: theme.palette.secondary.main }}>Sacred Weakness:</strong> {house.weakness?.charAt(0).toUpperCase() + house.weakness?.slice(1)}{' '}
+                  <strong style={{ color: theme.palette.secondary.main }}>Sacred Affliction:</strong> {house.weakness?.charAt(0).toUpperCase() + house.weakness?.slice(1)}{' '}
                 </Typography>
                   <Link
                     href="#"
@@ -296,7 +294,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
               
               {house.score && (
                 <Box>
-                  <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mb: 1 }}>Humour Scores:</Typography>
+                  <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mb: 1 }}>Fluid Weights:</Typography>
                   {humourScores(house.score)}
                 </Box>
               )}

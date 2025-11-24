@@ -15,7 +15,7 @@ import {
   Paper,
 } from "@mui/material";
 import { useState } from "react";
-import { getGames } from "mockAPI/getGames";
+import { useData } from "../../context/DataContext";
 import { IGame } from "types/game";
 import { UnitType } from "../../App";
 import { convertValue } from "helpers/scoreHelpers";
@@ -25,10 +25,11 @@ interface GameHistoryProps {
 }
 
 export const GameHistory: React.FC<GameHistoryProps> = ({ unitType }) => {
+  const { games } = useData();
   const [selectedGameId, setSelectedGameId] = useState<number | "">("");
 
   const selectedGame = selectedGameId
-    ? getGames.find((game) => game.id === selectedGameId)
+    ? games.find((game) => game.id === selectedGameId)
     : null;
 
   return (
@@ -51,7 +52,7 @@ export const GameHistory: React.FC<GameHistoryProps> = ({ unitType }) => {
             <MenuItem value="">
               <em>Choose a rite...</em>
             </MenuItem>
-            {getGames.map((game) => (
+            {games.map((game) => (
               <MenuItem key={game.id} value={game.id}>
                 {game.name}
               </MenuItem>

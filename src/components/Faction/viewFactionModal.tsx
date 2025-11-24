@@ -80,7 +80,7 @@ export const ViewFactionModal: React.FC<ViewFactionModalProps> = ({
         ))}
         {adminMode && (
           <ListItemButton onClick={onDelete}>
-            {`Delete ${factionName || 'faction'}?`}
+            {`Sunder the sacred bond of ${factionName}?`}
           </ListItemButton>
         )}
       </List>

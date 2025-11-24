@@ -5,16 +5,17 @@ import {
   useMediaQuery,
   useTheme
 } from "@mui/material";
-import { getHouses } from "mockAPI/getHouses";
+import { useData } from "../context/DataContext";
 import { getStandardDeviation } from "helpers/scoreHelpers";
 import { HUMOUR_CONFIG, HUMOUR_ORDER } from "config/humourConfig";
 
 export const FestivalBalance: React.FC = () => {
+  const { houses } = useData();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   
   // Calculate total scores across all houses
-  const totalScores = getHouses.reduce(
+  const totalScores = houses.reduce(
     (acc, house) => {
       if (house.score) {
         acc.choleric += house.score.choleric;

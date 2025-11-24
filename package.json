@@ -49,5 +49,6 @@
     "globals": "^16.4.0",
     "typescript": "^4.9.5"
   },
-  "homepage": "https://r-pal.github.io/ragnarok-client"
+  "homepage": "https://r-pal.github.io/ragnarok-client",
+  "proxy": "https://scoring-app-08ju.onrender.com"
 }

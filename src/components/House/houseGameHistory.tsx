@@ -13,7 +13,7 @@ import {
   Paper,
   Typography
 } from "@mui/material";
-import { getGames } from "mockAPI/getGames";
+import { useData } from "../../context/DataContext";
 import { IHouse } from "types/house";
 import { UnitType } from "../../App";
 import { convertValue } from "helpers/scoreHelpers";
@@ -31,9 +31,9 @@ export const HouseGameHistory: React.FC<HouseGameHistoryProps> = ({
   onClose,
   unitType,
 }) => {
+  const { games } = useData();
   // Filter games where this house participated
-  const houseGames = getGames
-    .map(game => {
+  const houseGames = games.filter(game => {
       const houseScore = game.scores.find(s => s.houseId === house.id);
       if (!houseScore) return null;
       
@@ -75,16 +75,16 @@ export const HouseGameHistory: React.FC<HouseGameHistoryProps> = ({
               </TableHead>
               <TableBody>
                 {houseGames.map((game) => (
-                  <TableRow key={game!.gameId}>
+                  <TableRow key={game!.id}>
                     <TableCell component="th" scope="row">
-                      {game!.gameName}
+                      {game!.name}
                     </TableCell>
-                    <TableCell align="right">{Math.round(convertValue(game!.score.choleric, unitType))}</TableCell>
-                    <TableCell align="right">{Math.round(convertValue(game!.score.phlegmatic, unitType))}</TableCell>
-                    <TableCell align="right">{Math.round(convertValue(game!.score.melancholic, unitType))}</TableCell>
-                    <TableCell align="right">{Math.round(convertValue(game!.score.sanguine, unitType))}</TableCell>
+                    <TableCell align="right">{Math.round(convertValue(game!.scores[0].score.choleric, unitType))}</TableCell>
+                    <TableCell align="right">{Math.round(convertValue(game!.scores[0].score.phlegmatic, unitType))}</TableCell>
+                    <TableCell align="right">{Math.round(convertValue(game!.scores[0].score.melancholic, unitType))}</TableCell>
+                    <TableCell align="right">{Math.round(convertValue(game!.scores[0].score.sanguine, unitType))}</TableCell>
                     <TableCell align="right">
-                      <strong>{Math.round(convertValue(game!.total, unitType))}</strong>
+                      <strong>{Math.round(convertValue(game!.scores[0].score.choleric + game!.scores[0].score.phlegmatic + game!.scores[0].score.melancholic + game!.scores[0].score.sanguine, unitType))}</strong>
                     </TableCell>
                   </TableRow>
                 ))}

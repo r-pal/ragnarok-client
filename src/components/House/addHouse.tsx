@@ -11,6 +11,7 @@ import { Formik, Form } from "formik";
 import { IPostHouse } from "types/house";
 import { HumourSelect } from "components/shared/HumourSelect";
 import { CrestSearch } from "components/shared/CrestSearch";
+import { useData } from "../../context/DataContext";
 
 const initialValues: IPostHouse = {
   name: "",
@@ -22,18 +23,19 @@ const initialValues: IPostHouse = {
 };
 
 export const AddHouse: React.FC = () => {
+  const { createHouse } = useData();
   const [showCrestSearch, setShowCrestSearch] = useState(false);
   
-  const handleSubmit = (values: IPostHouse) => {
-    // Validate that strength and weakness are selected
+  const handleSubmit = async (values: IPostHouse, { resetForm }: any) => {
+    // Validate that divine gift and holy burden are selected
     if (!values.strength || !values.weakness) {
-      alert("Thou must select both blessed affliction and sacred weakness");
+      alert("Thou must select both divine gift and holy burden");
       return;
     }
 
-    // Validate that strength and weakness are different
+    // Validate that divine gift and holy burden are different
     if (values.strength === values.weakness) {
-      alert("Thy blessed affliction and sacred weakness cannot dwell in the same humour—such is forbidden!");
+      alert("Thy divine gift and holy burden cannot dwell in the same humour—such is forbidden!");
       return;
     }
 
@@ -43,8 +45,15 @@ export const AddHouse: React.FC = () => {
       return;
     }
 
-    console.log("New house:", values);
-    // TODO: Add API call to create house
+    try {
+      await createHouse(values);
+      alert(`House "${values.name}" has been consecrated successfully!`);
+      resetForm();
+      setShowCrestSearch(false);
+    } catch (error) {
+      console.error('Failed to create house:', error);
+      alert('Failed to consecrate house. Please try again.');
+    }
   };
 
   return (
@@ -53,7 +62,7 @@ export const AddHouse: React.FC = () => {
         Consecrate a New House
       </Typography>
       <Typography variant="body2" color="text.secondary" paragraph>
-        Establish a noble house and inscribe its blessed afflictions upon the sacred scrolls
+        Establish a noble house and inscribe its blessed fortitudes upon the sacred scrolls
       </Typography>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {({ values, handleChange, handleBlur }) => (
@@ -110,7 +119,7 @@ export const AddHouse: React.FC = () => {
 
               <Stack direction="row" spacing={2}>
                 <HumourSelect
-                  label="Blessed Affliction"
+                  label="Blessed Fortitude"
                   name="strength"
                   value={values.strength}
                   onChange={handleChange}
@@ -118,7 +127,7 @@ export const AddHouse: React.FC = () => {
                   required
                 />
                 <HumourSelect
-                  label="Sacred Weakness"
+                  label="Sacred Affliction"
                   name="weakness"
                   value={values.weakness}
                   onChange={handleChange}

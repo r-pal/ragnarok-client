@@ -19,8 +19,8 @@ export const ViewHouse: React.FC = () => {
       )}
       <Grid>{house.name}</Grid>
       <Grid>{house.motto}</Grid>
-      <Grid>Strength: {house.strength}</Grid>
-      <Grid>Weakness: {house.weakness}</Grid>
+      <Grid>Divine Gift: {house.strength}</Grid>
+      <Grid>Holy Burden: {house.weakness}</Grid>
     </Grid>
   );
 };

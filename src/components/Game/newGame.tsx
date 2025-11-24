@@ -18,7 +18,7 @@ import {
   Paper
 } from "@mui/material";
 import { useState } from "react";
-import { getHouses } from "mockAPI/getHouses";
+import { useData } from "../../context/DataContext";
 import { IGameScores } from "types/game";
 import { HUMOUR_CONFIG, HUMOUR_ORDER } from "config/humourConfig";
 import { Humours } from "types/shared";
@@ -33,6 +33,7 @@ interface GameResult {
 const steps = ["Rite Information", "Houses Afflicted", "Reckon Humours"];
 
 export const NewGame: React.FC = () => {
+  const { houses, createGame } = useData();
   const [activeStep, setActiveStep] = useState(0);
   const [gameName, setGameName] = useState("");
   const [description, setDescription] = useState("");
@@ -57,7 +58,7 @@ export const NewGame: React.FC = () => {
         return prev.filter((id) => id !== houseId);
       } else {
         // Add house
-        const house = getHouses.find(h => h.id === houseId);
+        const house = houses.find(h => h.id === houseId);
         const newScores = new Map(houseScores);
         newScores.set(houseId, {
           houseId,
@@ -85,29 +86,28 @@ export const NewGame: React.FC = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const scoresArray = Array.from(houseScores.values());
     
-    // Update scores for each house
-    scoresArray.forEach(gameScore => {
-      const house = getHouses.find(h => h.id === gameScore.houseId);
-      if (house && house.score) {
-        house.score.choleric += gameScore.score.choleric;
-        house.score.phlegmatic += gameScore.score.phlegmatic;
-        house.score.melancholic += gameScore.score.melancholic;
-        house.score.sanguine += gameScore.score.sanguine;
-      }
-    });
-    
-    alert(`Sacred rite "${gameName}" inscribed! Humours bestowed upon ${scoresArray.length} house(s).`);
-    // TODO: Add API call to save game result
-    
-    // Reset form
-    setActiveStep(0);
-    setGameName("");
-    setDescription("");
-    setParticipatingHouseIds([]);
-    setHouseScores(new Map());
+    try {
+      await createGame({
+        name: gameName,
+        description,
+        scores: scoresArray
+      });
+      
+      alert("Rite recorded successfully! The sacred humours have been distributed.");
+      
+      // Reset form
+      setActiveStep(0);
+      setGameName("");
+      setDescription("");
+      setParticipatingHouseIds([]);
+      setHouseScores(new Map());
+    } catch (error) {
+      console.error('Failed to record rite:', error);
+      alert('Failed to record rite. Please try again.');
+    }
   };
 
   const isStep1Valid = gameName.trim().length > 0;
@@ -134,7 +134,7 @@ export const NewGame: React.FC = () => {
               onChange={(e) => setDescription(e.target.value)}
               multiline
               rows={3}
-              placeholder="Describe the sacred trial and its afflictions..."
+              placeholder="Describe the sacred trial and its fortitudes..."
             />
           </Stack>
         );
@@ -146,7 +146,7 @@ export const NewGame: React.FC = () => {
             <Typography variant="body2" color="text.secondary">
               Select all houses that endured this sacred trial:
             </Typography>
-            {getHouses.map((house) => (
+            {houses.map((house) => (
               <FormControlLabel
                 key={house.id}
                 control={
@@ -163,7 +163,7 @@ export const NewGame: React.FC = () => {
 
       case 2:
         // Step 3: Enter Scores
-        const participatingHouses = getHouses.filter(h => participatingHouseIds.includes(h.id));
+        const participatingHouses = houses.filter(h => participatingHouseIds.includes(h.id));
         return (
           <TableContainer component={Paper}>
             <Table>
