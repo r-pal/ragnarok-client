@@ -23,6 +23,7 @@ import { GameHistory } from "./Game/gameHistory";
 import { NewGame } from "./Game/newGame";
 import { Explainer } from "./explainer";
 import { FestivalBalance } from "./festivalBalance";
+import { CrestGallery } from "./House/crestGallery";
 import { SortBy } from "./header";
 import { useThemeContext } from "../ThemeProviderWrapper";
 import { UnitType } from "../App";
@@ -46,6 +47,7 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
   const [openGameHistoryModal, setOpenGameHistoryModal] = useState(false);
   const [openExplainer, setOpenExplainer] = useState(false);
   const [openFestivalBalance, setOpenFestivalBalance] = useState(false);
+  const [openCrestGallery, setOpenCrestGallery] = useState(false);
   const [password, setPassword] = useState("");
   const [mobileMenuAnchor, setMobileMenuAnchor] = useState<null | HTMLElement>(null);
   const [isAutoCycling, setIsAutoCycling] = useState(false);
@@ -184,6 +186,9 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
                 <MenuItem onClick={() => { setOpenFestivalBalance(true); handleMobileMenuClose(); }}>
                   THE GREAT RECKONING
                 </MenuItem>
+                <MenuItem onClick={() => { setOpenCrestGallery(true); handleMobileMenuClose(); }}>
+                  GALLERY OF CRESTS
+                </MenuItem>
                 {adminMode && (
                   <>
                     <MenuItem onClick={() => { setOpenNewHouseModal(true); handleMobileMenuClose(); }}>
@@ -221,6 +226,12 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
                 sx={{ color: "white" }}
               >
                 THE GREAT RECKONING
+              </Button>
+              <Button
+                onClick={() => setOpenCrestGallery(true)}
+                sx={{ color: "white" }}
+              >
+                GALLERY OF CRESTS
               </Button>
               {adminMode && (
                 <>
@@ -458,6 +469,11 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
       >
         <FestivalBalance />
       </Dialog>
+
+      <CrestGallery
+        open={openCrestGallery}
+        onClose={() => setOpenCrestGallery(false)}
+      />
     </>
   );
 };
