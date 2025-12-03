@@ -55,13 +55,14 @@ export const convertValue = (value: number, unitType: UnitType): number => {
 /**
  * Format a number with locale string and dynamic font size
  * Converts from fluid ounces to pints if unitType is "pints" (1 pint = 16 fl oz)
+ * Uses fractions instead of decimals
  */
 export const formatScoreDisplay = (value: number, unitType: UnitType): { 
   display: string; 
   fontSize: string;
 } => {
   const convertedValue = convertValue(value, unitType);
-  const display = Math.round(convertedValue).toLocaleString();
+  const display = formatNumberWithFraction(convertedValue);
   const fontSize = display.length > 4 ? "0.75rem" : "1rem";
   return { display, fontSize };
 };
@@ -90,4 +91,51 @@ export const getHumoursWithProperty = (property: HumourProperty): Humours[] => {
 export const calculatePropertyScore = (score: IScore, property: HumourProperty): number => {
   const humours = getHumoursWithProperty(property);
   return humours.reduce((sum: number, humour: Humours) => sum + score[humour], 0);
+};
+
+/**
+ * Convert decimal to fraction string
+ * e.g., 0.5 -> "1/2", 0.25 -> "1/4", 0.75 -> "3/4"
+ */
+const decimalToFraction = (decimal: number): string => {
+  const tolerance = 1.0e-6;
+  let numerator = 1;
+  let denominator = 1;
+  let error = Math.abs(decimal - numerator / denominator);
+  
+  if (error < tolerance) return `${numerator}/${denominator}`;
+  
+  for (let d = 2; d <= 16; d++) {
+    const n = Math.round(decimal * d);
+    const currentError = Math.abs(decimal - n / d);
+    if (currentError < error) {
+      numerator = n;
+      denominator = d;
+      error = currentError;
+      if (error < tolerance) break;
+    }
+  }
+  
+  // Simplify fraction
+  const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+  const divisor = gcd(numerator, denominator);
+  return `${numerator / divisor}/${denominator / divisor}`;
+};
+
+/**
+ * Format a number with fractions instead of decimals
+ * Returns JSX-ready string with HTML for smaller fraction
+ * e.g., 1273.5 -> "1,273 <small>1/2</small>"
+ */
+export const formatNumberWithFraction = (value: number): string => {
+  const integerPart = Math.floor(value);
+  const decimalPart = value - integerPart;
+  
+  if (decimalPart < 0.001) {
+    // No significant decimal part
+    return integerPart.toLocaleString();
+  }
+  
+  const fraction = decimalToFraction(decimalPart);
+  return `${integerPart.toLocaleString()} ${fraction}`;
 };

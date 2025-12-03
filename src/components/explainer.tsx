@@ -313,12 +313,12 @@ export const Explainer: React.FC = () => {
           </Box>
         <Typography paragraph sx={styles.paragraph}>
           Let us proclaim the sanctity of the sacred humours through our Rites. Most Great Rites are dedicated to praising one humour only, though some honour all four in 
-          equal measure, as seen below. Each Rite brimmeth with one hundred pints of either blood, twice biles or mucus, to be drained into the cup of faithful houses. May ye
+          equal measure, as seen below. Each Rite brimmeth with 16 fluid ounces of either blood, twice biles or mucus, to be drained into the cup of faithful houses. May ye
            fill unto the brim and evermore!
         </Typography>
         </Grid>
 
-        <TableContainer component={Paper} elevation={1} sx={styles.tableContainer}>
+        <TableContainer component={Paper} elevation={1} sx={styles.tableContainer} id="rite-types-table">
           <Table size={isMobile ? "small" : "medium"}>
             <TableHead>
               <TableRow sx={styles.tableHeaderRow}>
@@ -334,13 +334,13 @@ export const Explainer: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody sx={styles.tableBody}>
-              <TableRow sx={styles.melancholicRow}>
-                <TableCell sx={styles.tableCellBold}>Coin Quest</TableCell>
+              <TableRow sx={styles.phlegmaticRow}>
+                <TableCell sx={styles.tableCellBold}>Ranarama</TableCell>
                 <TableCell>Thu</TableCell>
-                <TableCell>Melancholic</TableCell>
+                <TableCell>Phlegmatic</TableCell>
               </TableRow>
               <TableRow sx={styles.sanguineRow}>
-                <TableCell sx={styles.tableCellBold}>Jelly Baby Game</TableCell>
+                <TableCell sx={styles.tableCellBold}>Ranarama X</TableCell>
                 <TableCell >Thu</TableCell>
                 <TableCell >Sanguine</TableCell>
               </TableRow>
@@ -379,20 +379,15 @@ export const Explainer: React.FC = () => {
                 <TableCell>Fri</TableCell>
                 <TableCell sx={styles.gameshowCellRight}>Choleric</TableCell>
               </TableRow>
-              <TableRow sx={styles.phlegmaticRow}>
-                <TableCell sx={styles.gameshowCellLeftBold}>Re-nay-or-yay-ssance</TableCell>
-                <TableCell>Fri</TableCell>
-                <TableCell sx={styles.gameshowCellRight}>Phlegmatic</TableCell>
-              </TableRow>
               <TableRow sx={styles.sanguineRow}>
                 <TableCell sx={styles.gameshowCellLeftBottomBold}>Arranged marriage courtship</TableCell>
                 <TableCell sx={styles.gameshowCellBottom}>Fri</TableCell>
                 <TableCell sx={styles.gameshowCellRightBottom}>Sanguine</TableCell>
               </TableRow>
-              <TableRow >
+              <TableRow sx={styles.melancholicRow}>
                 <TableCell sx={styles.tableCellBold}>Onion Dome</TableCell>
                 <TableCell>Fri</TableCell>
-                <TableCell>on request of the house</TableCell>
+                <TableCell>Melancholic</TableCell>
               </TableRow>
               <TableRow sx={styles.melancholicRow}>
                 <TableCell sx={styles.tableCellBold}>Plague</TableCell>

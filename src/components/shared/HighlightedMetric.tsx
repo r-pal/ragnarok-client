@@ -1,8 +1,9 @@
 import { useTheme, alpha } from "@mui/material";
+import { ReactNode } from "react";
 
 interface HighlightedMetricProps {
   label: string;
-  value: string | number;
+  value: string | number | ReactNode;
   isHighlighted: boolean;
 }
 

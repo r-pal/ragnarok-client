@@ -7,6 +7,7 @@ import { HouseGameHistory } from "./houseGameHistory";
 import { CenteredModal } from "components/shared/CenteredModal";
 import { HumourSelect } from "components/shared/HumourSelect";
 import { CrestSearch } from "components/shared/CrestSearch";
+import { BalanceVisualizer } from "./BalanceVisualizer";
 import { UnitType } from "../../App";
 
 interface ViewHouseModalProps {
@@ -36,6 +37,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
   const [passwordInput, setPasswordInput] = useState("");
   const [isPasswordVerified, setIsPasswordVerified] = useState(false);
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
+  const [showBalanceVisualizer, setShowBalanceVisualizer] = useState(false);
   const [editHouse, setEditHouse] = useState<IPostHouse>({
     name: "",
     motto: "",
@@ -297,8 +299,27 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
               
               {house.score && (
                 <Box>
-                  <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mb: 1 }}>Fluid Weights:</Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                    <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>Fluid Weights (Modified):</Typography>
+                    <Button 
+                      size="small" 
+                      onClick={() => setShowBalanceVisualizer(!showBalanceVisualizer)}
+                      sx={{ fontSize: '0.75rem' }}
+                    >
+                      {showBalanceVisualizer ? 'Hide' : 'Show'} Balance Visualizer
+                    </Button>
+                  </Box>
                   {humourScores(house.score)}
+                  
+                  <Collapse in={showBalanceVisualizer}>
+                    <Box sx={{ mt: 2 }}>
+                      <BalanceVisualizer 
+                        baseScore={house.score}
+                        currentStrength={house.strength}
+                        currentWeakness={house.weakness}
+                      />
+                    </Box>
+                  </Collapse>
                 </Box>
               )}
               

@@ -20,6 +20,7 @@ import { applyMultipliers, aggregateScores, calculateTotal, calculatePropertySco
 import { HUMOUR_ORDER, HumourProperty } from "config/humourConfig";
 import { HumourScoreBox } from "./shared/HumourScoreBox";
 import { HighlightedMetric } from "./shared/HighlightedMetric";
+import { NumberWithFraction } from "./shared/NumberWithFraction";
 import { UnitType } from "../App";
 
 interface Scoreboard {
@@ -332,12 +333,12 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
           >
             <HighlightedMetric
               label="Total"
-              value={Math.round(convertValue(calculateTotal(team.score), unitType))}
+              value={<NumberWithFraction value={convertValue(calculateTotal(team.score), unitType)} />}
               isHighlighted={sortBy === "total"}
             />
             <HighlightedMetric
               label="Balance"
-              value={Math.round(calculateBalance(team.score))}
+              value={<NumberWithFraction value={calculateBalance(team.score)} />}
               isHighlighted={sortBy === "balance"}
             />
           </Grid>

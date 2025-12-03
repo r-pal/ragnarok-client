@@ -1,8 +1,9 @@
 import { Box, useTheme, alpha } from "@mui/material";
 import { Humours } from "types/shared";
 import { HUMOUR_CONFIG } from "config/humourConfig";
-import { formatScoreDisplay } from "helpers/scoreHelpers";
+import { convertValue } from "helpers/scoreHelpers";
 import { UnitType } from "../../App";
+import { NumberWithFraction } from "./NumberWithFraction";
 
 interface HumourScoreBoxProps {
   humour: Humours;
@@ -21,7 +22,7 @@ export const HumourScoreBox: React.FC<HumourScoreBoxProps> = ({
 }) => {
   const theme = useTheme();
   const config = HUMOUR_CONFIG[humour];
-  const { display, fontSize } = formatScoreDisplay(value, unitType);
+  const convertedValue = convertValue(value, unitType);
   
   // Create lighter background colors based on border colors
   const getBackgroundColor = () => {
@@ -51,10 +52,10 @@ export const HumourScoreBox: React.FC<HumourScoreBoxProps> = ({
         alignItems: "center",
         justifyContent: "center",
         padding: isMobile ? "4px" : "6px",
-        fontSize: isMobile ? (fontSize === "0.75rem" ? "0.875rem" : "1rem") : (fontSize === "0.75rem" ? "1rem" : "1.25rem")
+        fontSize: isMobile ? "0.875rem" : "1rem"
       }}
     >
-      {display}
+      <NumberWithFraction value={convertedValue} />
     </Box>
   );
 };

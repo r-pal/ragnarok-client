@@ -443,7 +443,7 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         PaperProps={{ sx: { backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary } }}
       >
         <DialogContent>
-          <GameHistory unitType={unitType} />
+          <GameHistory unitType={unitType} adminMode={adminMode} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseGameHistory}>Close</Button>

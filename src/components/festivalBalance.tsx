@@ -6,22 +6,24 @@ import {
   useTheme
 } from "@mui/material";
 import { useData } from "../context/DataContext";
-import { getStandardDeviation } from "helpers/scoreHelpers";
+import { getStandardDeviation, applyMultipliers } from "helpers/scoreHelpers";
 import { HUMOUR_CONFIG, HUMOUR_ORDER } from "config/humourConfig";
+import { NumberWithFraction } from "./shared/NumberWithFraction";
 
 export const FestivalBalance: React.FC = () => {
   const { houses } = useData();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   
-  // Calculate total scores across all houses
+  // Calculate total scores across all houses (with strength/weakness multipliers)
   const totalScores = houses.reduce(
     (acc, house) => {
       if (house.score) {
-        acc.choleric += house.score.choleric;
-        acc.phlegmatic += house.score.phlegmatic;
-        acc.melancholic += house.score.melancholic;
-        acc.sanguine += house.score.sanguine;
+        const modifiedScore = applyMultipliers(house);
+        acc.choleric += modifiedScore.choleric;
+        acc.phlegmatic += modifiedScore.phlegmatic;
+        acc.melancholic += modifiedScore.melancholic;
+        acc.sanguine += modifiedScore.sanguine;
       }
       return acc;
     },
@@ -56,6 +58,9 @@ export const FestivalBalance: React.FC = () => {
         <Typography variant={isMobile ? "h6" : "h5"} gutterBottom sx={{ mb: isMobile ? 2 : 3 }}>
           The Four Humours Divine—Summed Across All Houses
         </Typography>
+        <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2, textAlign: 'center', fontStyle: 'italic' }}>
+          (Divine Gifts doubled ×2, Holy Burdens halved ÷2)
+        </Typography>
 
         <Box sx={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 2 : 3 }}>
           {HUMOUR_ORDER.map(humour => {
@@ -75,7 +80,7 @@ export const FestivalBalance: React.FC = () => {
                     {config.label} {config.emoji}
                   </Typography>
                   <Typography variant={isMobile ? "h4" : "h3"} sx={{ fontWeight: "bold", color: config.color }}>
-                    {totalScores[humour].toLocaleString()}
+                    <NumberWithFraction value={totalScores[humour]} />
                   </Typography>
                 </Paper>
               </Box>
@@ -94,7 +99,7 @@ export const FestivalBalance: React.FC = () => {
                 Sum of All Humours
               </Typography>
               <Typography variant={isMobile ? "h4" : "h2"} sx={{ fontWeight: "bold" }}>
-                {grandTotal.toLocaleString()}
+                <NumberWithFraction value={grandTotal} />
               </Typography>
             </Box>
           </Box>

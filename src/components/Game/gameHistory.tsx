@@ -13,6 +13,15 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  IconButton,
+  useTheme,
+  Link,
 } from "@mui/material";
 import { useState } from "react";
 import { useData } from "../../context/DataContext";
@@ -22,15 +31,46 @@ import { convertValue } from "helpers/scoreHelpers";
 
 interface GameHistoryProps {
   unitType: UnitType;
+  adminMode?: boolean;
 }
 
-export const GameHistory: React.FC<GameHistoryProps> = ({ unitType }) => {
-  const { games } = useData();
+export const GameHistory: React.FC<GameHistoryProps> = ({ unitType, adminMode = false }) => {
+  const { games, deleteGame } = useData();
   const [selectedGameId, setSelectedGameId] = useState<number | "">("");
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [gameToDelete, setGameToDelete] = useState<IGame | null>(null);
+  const theme = useTheme();
 
   const selectedGame = selectedGameId
     ? games.find((game) => game.id === selectedGameId)
     : null;
+
+  const handleDeleteClick = (game: IGame) => {
+    setGameToDelete(game);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (gameToDelete) {
+      try {
+        await deleteGame(gameToDelete.id);
+        setDeleteDialogOpen(false);
+        setGameToDelete(null);
+        // Clear selection if deleted game was selected
+        if (selectedGameId === gameToDelete.id) {
+          setSelectedGameId("");
+        }
+      } catch (error) {
+        console.error('Failed to delete game:', error);
+        alert('Failed to delete rite. Please try again.');
+      }
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteDialogOpen(false);
+    setGameToDelete(null);
+  };
 
   return (
     <Box sx={{ p: 3 }}>
@@ -38,27 +78,57 @@ export const GameHistory: React.FC<GameHistoryProps> = ({ unitType }) => {
         Chronicle of Sacred Rites
       </Typography>
       <Typography variant="body2" color="text.secondary" paragraph>
-        Behold the record of trials past and humours bestowed
+        Behold the record of trials past and humours bestowed.{' '}
+        <Link
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            const event = new CustomEvent('openSacredRules', { detail: { scrollTo: 'rite-types-table' } });
+            window.dispatchEvent(event);
+          }}
+          sx={{ 
+            color: theme.palette.primary.main,
+            textDecoration: 'underline',
+            cursor: 'pointer',
+            '&:hover': {
+              color: theme.palette.secondary.main
+            }
+          }}
+        >
+          Look ye! to all Great Rites and their humours
+        </Link>
       </Typography>
 
       <Stack spacing={3}>
-        <FormControl fullWidth>
-          <InputLabel>Select Sacred Rite</InputLabel>
-          <Select
-            value={selectedGameId}
-            onChange={(e) => setSelectedGameId(e.target.value as number)}
-            label="Select Sacred Rite"
-          >
-            <MenuItem value="">
-              <em>Choose a rite...</em>
-            </MenuItem>
-            {games.map((game) => (
-              <MenuItem key={game.id} value={game.id}>
-                {game.name}
+        <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start' }}>
+          <FormControl fullWidth>
+            <InputLabel>Select Sacred Rite</InputLabel>
+            <Select
+              value={selectedGameId}
+              onChange={(e) => setSelectedGameId(e.target.value as number)}
+              label="Select Sacred Rite"
+            >
+              <MenuItem value="">
+                <em>Choose a rite...</em>
               </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+              {games.map((game) => (
+                <MenuItem key={game.id} value={game.id}>
+                  {game.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          {adminMode && selectedGame && (
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => handleDeleteClick(selectedGame)}
+              sx={{ minWidth: '120px', height: '56px' }}
+            >
+              DELETE RITE
+            </Button>
+          )}
+        </Box>
 
         {selectedGame && (
           <Box>
@@ -133,6 +203,41 @@ export const GameHistory: React.FC<GameHistoryProps> = ({ unitType }) => {
           </Box>
         )}
       </Stack>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={handleDeleteCancel}
+        PaperProps={{
+          sx: {
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary
+          }
+        }}
+      >
+        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent>
+          <DialogContentText sx={{ color: theme.palette.text.secondary }}>
+            Art thou certain thou wishest to erase this sacred rite from the chronicles?
+            <br />
+            <br />
+            <strong style={{ color: theme.palette.error.main }}>
+              "{gameToDelete?.name}"
+            </strong>
+            <br />
+            <br />
+            This action cannot be undone, and all recorded humours shall be lost forever.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteCancel} sx={{ color: theme.palette.text.primary }}>
+            Cancel
+          </Button>
+          <Button onClick={handleDeleteConfirm} variant="contained" color="error">
+            Delete Forever
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
