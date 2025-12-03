@@ -57,16 +57,16 @@ export const BalanceVisualizer: React.FC<BalanceVisualizerProps> = ({
   return (
     <Box>
       <Typography variant="h6" gutterBottom sx={{ color: theme.palette.text.primary }}>
-        Balance Visualizer
+        The Sacred Scales of Equilibrium
       </Typography>
       <Typography variant="caption" sx={{ color: theme.palette.text.secondary, display: 'block', mb: 2 }}>
-        Experiment with different Divine Gifts and Holy Burdens to see how they affect your balance
+        Behold how thy Divine Gifts and Holy Burdens doth shape the balance of humours most sacred
       </Typography>
 
       {/* Base Scores */}
       <Paper elevation={2} sx={{ p: 2, mb: 2, bgcolor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)' }}>
         <Typography variant="subtitle2" gutterBottom sx={{ color: theme.palette.text.secondary }}>
-          Base Fluid Weights (Raw Scores)
+          Thy Base Humours (Ere Multipliers)
         </Typography>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
           {HUMOUR_ORDER.map(humour => {
@@ -90,7 +90,7 @@ export const BalanceVisualizer: React.FC<BalanceVisualizerProps> = ({
       {/* Current Modified Scores */}
       <Paper elevation={2} sx={{ p: 2, mb: 2, border: `2px solid ${theme.palette.primary.main}` }}>
         <Typography variant="subtitle2" gutterBottom sx={{ color: theme.palette.primary.main, fontWeight: 'bold' }}>
-          Current Modified Weights (After Multipliers)
+          Thy Current Humours (As Blessed and Burdened)
         </Typography>
         <Typography variant="caption" sx={{ color: theme.palette.text.secondary, display: 'block', mb: 1, fontStyle: 'italic' }}>
           Divine Gift: {HUMOUR_CONFIG[currentStrength].label} (×2) | Holy Burden: {HUMOUR_CONFIG[currentWeakness].label} (÷2)
@@ -126,7 +126,7 @@ export const BalanceVisualizer: React.FC<BalanceVisualizerProps> = ({
         <Divider sx={{ my: 1 }} />
         <Box sx={{ textAlign: 'center' }}>
           <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
-            Balance (σ): <strong style={{ color: getBalanceColor(currentBalance) }}><NumberWithFraction value={currentBalance} /></strong>
+            Sacred Balance (σ): <strong style={{ color: getBalanceColor(currentBalance) }}><NumberWithFraction value={currentBalance} /></strong>
           </Typography>
         </Box>
       </Paper>
@@ -134,12 +134,12 @@ export const BalanceVisualizer: React.FC<BalanceVisualizerProps> = ({
       {/* Preview Selector */}
       <Paper elevation={2} sx={{ p: 2, mb: 2, bgcolor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.05)' }}>
         <Typography variant="subtitle2" gutterBottom sx={{ color: theme.palette.text.primary }}>
-          Preview Different Configuration
+          Contemplate Alternate Blessings
         </Typography>
         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2 }}>
           <Box sx={{ flex: 1 }}>
             <HumourSelect
-              label="Preview Divine Gift"
+              label="Contemplate Divine Gift"
               name="previewStrength"
               value={previewStrength}
               onChange={(e) => setPreviewStrength(e.target.value as Humours)}
@@ -148,7 +148,7 @@ export const BalanceVisualizer: React.FC<BalanceVisualizerProps> = ({
           </Box>
           <Box sx={{ flex: 1 }}>
             <HumourSelect
-              label="Preview Holy Burden"
+              label="Contemplate Holy Burden"
               name="previewWeakness"
               value={previewWeakness}
               onChange={(e) => setPreviewWeakness(e.target.value as Humours)}
@@ -159,7 +159,7 @@ export const BalanceVisualizer: React.FC<BalanceVisualizerProps> = ({
 
         {previewStrength === previewWeakness && (
           <Typography variant="caption" sx={{ color: 'error.main', display: 'block', mt: 1 }}>
-            ⚠️ Divine Gift and Holy Burden cannot be the same!
+            ⚠️ Thy Divine Gift and Holy Burden cannot dwell in the same humour—such is forbidden!
           </Typography>
         )}
       </Paper>
@@ -168,7 +168,7 @@ export const BalanceVisualizer: React.FC<BalanceVisualizerProps> = ({
       {isPreviewDifferent && previewStrength !== previewWeakness && (
         <Paper elevation={2} sx={{ p: 2, border: `2px dashed ${theme.palette.secondary.main}` }}>
           <Typography variant="subtitle2" gutterBottom sx={{ color: theme.palette.secondary.main, fontWeight: 'bold' }}>
-            Preview Modified Weights
+            Thy Contemplated Humours
           </Typography>
           <Typography variant="caption" sx={{ color: theme.palette.text.secondary, display: 'block', mb: 1, fontStyle: 'italic' }}>
             Divine Gift: {HUMOUR_CONFIG[previewStrength].label} (×2) | Holy Burden: {HUMOUR_CONFIG[previewWeakness].label} (÷2)
@@ -206,16 +206,16 @@ export const BalanceVisualizer: React.FC<BalanceVisualizerProps> = ({
           <Divider sx={{ my: 1 }} />
           <Box sx={{ textAlign: 'center' }}>
             <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
-              Preview Balance (σ): <strong style={{ color: getBalanceColor(previewBalance) }}><NumberWithFraction value={previewBalance} /></strong>
+              Contemplated Balance (σ): <strong style={{ color: getBalanceColor(previewBalance) }}><NumberWithFraction value={previewBalance} /></strong>
             </Typography>
             <Typography variant="caption" sx={{ 
               color: previewBalance < currentBalance ? 'green' : previewBalance > currentBalance ? 'red' : theme.palette.text.secondary,
               display: 'block',
               mt: 0.5
             }}>
-              {previewBalance < currentBalance && '✓ Better balance! (Lower is better)'}
-              {previewBalance > currentBalance && '⚠️ Worse balance (Higher is worse)'}
-              {previewBalance === currentBalance && '= Same balance'}
+              {previewBalance < currentBalance && '✓ A more harmonious balance! (Lower doth bless thee)'}
+              {previewBalance > currentBalance && '⚠️ A lesser balance (Higher doth curse thee)'}
+              {previewBalance === currentBalance && '= The balance remaineth unchanged'}
             </Typography>
           </Box>
         </Paper>

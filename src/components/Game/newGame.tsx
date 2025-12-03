@@ -59,7 +59,7 @@ const RITE_TYPES: RiteType[] = [
 
 const MAX_FLUID_OUNCES = 16;
 
-const steps = ["Rite Information", "Houses Afflicted", "Reckon Humours"];
+const steps = ["The Sacred Rite", "Houses Partaking", "Bestow Humours"];
 
 export const NewGame: React.FC = () => {
   const { houses, createGame } = useData();
@@ -235,35 +235,35 @@ export const NewGame: React.FC = () => {
 
             {selectedRite && selectedRite.humour !== 'balanced' && selectedRite.humour !== 'per_item' && (
               <Alert severity="info">
-                This rite praises <strong>{HUMOUR_CONFIG[selectedRite.humour as Humours].label}</strong> only. 
-                You may only add points to this humour. Maximum <strong>{MAX_FLUID_OUNCES} fluid ounces</strong>.
+                This sacred rite doth praise <strong>{HUMOUR_CONFIG[selectedRite.humour as Humours].label}</strong> alone. 
+                Thou mayest only bestow points unto this humour. Maximum <strong>{MAX_FLUID_OUNCES} fluid ounces</strong>.
               </Alert>
             )}
 
             {selectedRite && (selectedRite.humour === 'balanced' || selectedRite.humour === 'per_item') && (
               <Alert severity="info">
-                This rite distributes humours as needed. 
-                Maximum <strong>{MAX_FLUID_OUNCES} fluid ounces</strong> total across all humours.
+                This rite doth distribute humours as befits the occasion. 
+                Maximum <strong>{MAX_FLUID_OUNCES} fluid ounces</strong> in total across all humours.
               </Alert>
             )}
 
             <TextField
               fullWidth
-              label="Rite Name"
+              label="Name of Rite"
               value={gameName}
               onChange={(e) => setGameName(e.target.value)}
               required
               disabled={selectedRiteType !== 'Custom Rite' && selectedRiteType !== ''}
-              placeholder="e.g., The Leeching Trials, The Bleeding Contest"
+              placeholder="e.g., The Leeching Trials, The Contest of Bloodletting"
             />
             <TextField
               fullWidth
-              label="Rite Description (Optional)"
+              label="Description of Rite (If it pleaseth thee)"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               multiline
               rows={3}
-              placeholder="Describe the sacred trial and its fortitudes..."
+              placeholder="Inscribe herein the nature of this sacred trial..."
             />
           </Stack>
         );
@@ -312,10 +312,10 @@ export const NewGame: React.FC = () => {
         return (
           <Stack spacing={2}>
             <Alert severity="warning">
-              <strong>Note:</strong> Enter points in <strong>fluid ounces (fl oz)</strong>. 
-              Maximum <strong>{MAX_FLUID_OUNCES} fl oz</strong> total across all houses.
+              <strong>Hark!</strong> Inscribe points in <strong>fluid ounces (fl oz)</strong>. 
+              Maximum <strong>{MAX_FLUID_OUNCES} fl oz</strong> in total across all houses.
               {currentRite && currentRite.humour !== 'per_item' && currentRite.humour !== 'balanced' && (
-                <> Only <strong>{HUMOUR_CONFIG[currentRite.humour as Humours].label}</strong> may receive points for this rite.</>
+                <> Only <strong>{HUMOUR_CONFIG[currentRite.humour as Humours].label}</strong> may receiveth points for this rite.</>
               )}
             </Alert>
 
@@ -426,12 +426,13 @@ export const NewGame: React.FC = () => {
   return (
     <Box sx={{ maxWidth: 900, mx: "auto", p: 3 }}>
       <Typography variant="h4" gutterBottom>
-        Record Sacred Rite
+        Inscribe a New Sacred Rite
       </Typography>
+
       <Typography variant="body2" color="text.secondary" paragraph>
-        Inscribe the outcome of a trial and bestow humours upon the worthy
+        Chronicle the trials most sacred, and bestow humours upon the houses worthy of such blessings
       </Typography>
-      
+
       <Stepper activeStep={activeStep} sx={{ mb: 4 }}>
         {steps.map((label) => (
           <Step key={label}>

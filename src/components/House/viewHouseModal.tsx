@@ -300,13 +300,13 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
               {house.score && (
                 <Box>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                    <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>Fluid Weights (Modified):</Typography>
+                    <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>Base Fluid Weights:</Typography>
                     <Button 
                       size="small" 
                       onClick={() => setShowBalanceVisualizer(!showBalanceVisualizer)}
                       sx={{ fontSize: '0.75rem' }}
                     >
-                      {showBalanceVisualizer ? 'Hide' : 'Show'} Balance Visualizer
+                      {showBalanceVisualizer ? 'Hide' : 'Behold'} Sacred Scales
                     </Button>
                   </Box>
                   {humourScores(house.score)}
