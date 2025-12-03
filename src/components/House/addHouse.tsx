@@ -5,6 +5,7 @@ import {
   Box,
   Stack,
   Collapse,
+  useTheme,
 } from "@mui/material";
 import { useState } from "react";
 import { Formik, Form } from "formik";
@@ -25,6 +26,8 @@ const initialValues: IPostHouse = {
 export const AddHouse: React.FC = () => {
   const { createHouse } = useData();
   const [showCrestSearch, setShowCrestSearch] = useState(false);
+  const theme = useTheme();
+  
   
   const handleSubmit = async (values: IPostHouse, { resetForm }: any) => {
     // Validate that divine gift and holy burden are selected
@@ -106,6 +109,9 @@ export const AddHouse: React.FC = () => {
                 >
                   {showCrestSearch ? "Hide Search" : "Search Wikimedia Commons"}
                 </Button>
+                  <Typography variant="caption" sx={{ color: theme.palette.text.secondary, display: 'block', fontStyle: 'italic', mt: 1 }}>
+                  Or shouldst thou prefer, convey thine image unto https://imgbb.com/ and inscribe herein the full path, including '.jpg'
+                </Typography>
               </Box>
               
               <Collapse in={showCrestSearch}>

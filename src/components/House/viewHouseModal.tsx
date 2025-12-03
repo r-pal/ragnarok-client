@@ -177,6 +177,9 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
                 >
                   {showCrestSearch ? "Hide Search" : "Search Wikimedia Commons"}
                 </Button>
+                <Typography variant="caption" sx={{ color: theme.palette.text.secondary, display: 'block', fontStyle: 'italic', mt: 1 }}>
+                  Or shouldst thou prefer, convey thine image unto https://imgbb.com/ and inscribe herein the full path, including '.jpg'
+                </Typography>
               </Box>
               
               <Collapse in={showCrestSearch}>
