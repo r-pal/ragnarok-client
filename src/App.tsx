@@ -27,7 +27,7 @@ function App() {
       }}
     >
         <div style={{ flex: 1, overflow: "hidden", paddingBottom: "80px" }}>
-        <Scoreboard adminMode={adminMode} sortBy={sortBy} unitType={unitType} />
+        <Scoreboard adminMode={adminMode} sortBy={sortBy} unitType={unitType} onUnitTypeChange={setUnitType} />
       </div>
       <Footer 
         adminMode={adminMode} 

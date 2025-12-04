@@ -24,6 +24,7 @@ import { NewGame } from "./Game/newGame";
 import { Explainer } from "./explainer";
 import { FestivalBalance } from "./festivalBalance";
 import { CrestGallery } from "./House/crestGallery";
+import { UnitToggle } from "./shared/UnitToggle";
 import { SortBy } from "./header";
 import { useThemeContext } from "../ThemeProviderWrapper";
 import { UnitType } from "../App";
@@ -250,6 +251,13 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
           )}
         </Box>
 
+            <UnitToggle
+              unitType={unitType}
+              onUnitTypeChange={onUnitTypeChange}
+              size="small"
+              color="white"
+            />
+
         <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
           <FormControl sx={{ minWidth: isMobile ? 150 : 200 }}>
             <InputLabel sx={{ color: "white" }}>Rank By</InputLabel>
@@ -286,23 +294,6 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
             </Select>
           </FormControl>
           
-          {isMobile && (
-            <IconButton
-              onClick={() => onUnitTypeChange(unitType === "fluidOunces" ? "pints" : "fluidOunces")}
-              sx={{
-                color: "white",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
-                borderRadius: "4px",
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.1)"
-                }
-              }}
-              title={unitType === "fluidOunces" ? "Switch to pints" : "Switch to fluid ounces"}
-            >
-              {unitType === "fluidOunces" ? "fl oz" : "pt"}
-            </IconButton>
-          )}
-          
           {!isMobile && (
             <IconButton
               onClick={toggleAutoCycle}
@@ -338,20 +329,6 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
               {currentTheme === "light" ? "🌙" : "☀️"}
             </IconButton>
             
-            <IconButton
-              onClick={() => onUnitTypeChange(unitType === "fluidOunces" ? "pints" : "fluidOunces")}
-              sx={{
-                color: "white",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
-                borderRadius: "4px",
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.1)"
-                }
-              }}
-              title={`Switch to ${unitType === "fluidOunces" ? "pints" : "fluid ounces"}`}
-            >
-              {unitType === "fluidOunces" ? "fl oz" : "pt"}
-            </IconButton>
             
             <Button
               onClick={() => setOpenExplainer(true)}
@@ -467,7 +444,7 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         fullWidth
         PaperProps={{ sx: { backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary } }}
       >
-        <FestivalBalance />
+        <FestivalBalance unitType={unitType} onUnitTypeChange={onUnitTypeChange} />
       </Dialog>
 
       <CrestGallery

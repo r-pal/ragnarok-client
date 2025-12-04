@@ -18,6 +18,7 @@ interface ViewHouseModalProps {
   onDelete: () => void;
   humourScores: (score: IScore) => React.ReactElement;
   unitType: UnitType;
+  onUnitTypeChange: (unitType: UnitType) => void;
 }
 
 export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
@@ -28,6 +29,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
   onDelete,
   humourScores,
   unitType,
+  onUnitTypeChange,
 }) => {
   const { updateHouse } = useData();
   const theme = useTheme();
@@ -303,6 +305,7 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
                     <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>Base Fluid Weights:</Typography>
                     <Button 
                       size="small" 
+                      variant="contained" color="primary"
                       onClick={() => setShowBalanceVisualizer(!showBalanceVisualizer)}
                       sx={{ fontSize: '0.75rem' }}
                     >
@@ -317,6 +320,8 @@ export const ViewHouseModal: React.FC<ViewHouseModalProps> = ({
                         baseScore={house.score}
                         currentStrength={house.strength}
                         currentWeakness={house.weakness}
+                        unitType={unitType}
+                        onUnitTypeChange={onUnitTypeChange}
                       />
                     </Box>
                   </Collapse>

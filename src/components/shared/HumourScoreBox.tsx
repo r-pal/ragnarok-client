@@ -52,7 +52,7 @@ export const HumourScoreBox: React.FC<HumourScoreBoxProps> = ({
         alignItems: "center",
         justifyContent: "center",
         padding: isMobile ? "4px" : "6px",
-        fontSize: isMobile ? "0.875rem" : "1rem"
+        fontSize: isMobile ? "1.25rem" : "1.5625rem"
       }}
     >
       <NumberWithFraction value={convertedValue} />

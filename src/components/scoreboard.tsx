@@ -27,6 +27,7 @@ interface Scoreboard {
   adminMode: boolean;
   sortBy: SortBy;
   unitType: UnitType;
+  onUnitTypeChange: (unitType: UnitType) => void;
 }
 
 interface ScoreboardItem {
@@ -36,7 +37,7 @@ interface ScoreboardItem {
   factionId?: number;
 }
 
-export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }) => {
+export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType, onUnitTypeChange }) => {
   const { houses: allHouses, factions, deleteHouse: apiDeleteHouse, deleteFaction: apiDeleteFaction } = useData();
   const [houses, setHouse] = useState<IHouse[] | undefined>(undefined);
   const [openHouseModal, setopenHouseModal] = useState(false);
@@ -338,7 +339,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
             />
             <HighlightedMetric
               label="Balance"
-              value={<NumberWithFraction value={calculateBalance(team.score)} />}
+              value={<NumberWithFraction value={convertValue(calculateBalance(team.score), unitType)} />}
               isHighlighted={sortBy === "balance"}
             />
           </Grid>
@@ -388,6 +389,7 @@ export const Scoreboard: React.FC<Scoreboard> = ({ adminMode, sortBy, unitType }
           onDelete={() => setOpenDeleteDialog(true)}
           humourScores={humourScores}
           unitType={unitType}
+          onUnitTypeChange={onUnitTypeChange}
         />
       )}
       {houses && houses.length > 1 && (

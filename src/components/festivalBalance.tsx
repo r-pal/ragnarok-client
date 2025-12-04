@@ -6,11 +6,18 @@ import {
   useTheme
 } from "@mui/material";
 import { useData } from "../context/DataContext";
-import { getStandardDeviation, applyMultipliers } from "helpers/scoreHelpers";
+import { getStandardDeviation, applyMultipliers, convertValue } from "helpers/scoreHelpers";
 import { HUMOUR_CONFIG, HUMOUR_ORDER } from "config/humourConfig";
 import { NumberWithFraction } from "./shared/NumberWithFraction";
+import { UnitToggle } from "./shared/UnitToggle";
+import { UnitType } from "../App";
 
-export const FestivalBalance: React.FC = () => {
+interface FestivalBalanceProps {
+  unitType: UnitType;
+  onUnitTypeChange: (unitType: UnitType) => void;
+}
+
+export const FestivalBalance: React.FC<FestivalBalanceProps> = ({ unitType, onUnitTypeChange }) => {
   const { houses } = useData();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -46,10 +53,12 @@ export const FestivalBalance: React.FC = () => {
     totalScores.sanguine;
 
   return (
-    <Box sx={{ maxWidth: 700, mx: "auto", p: isMobile ? 2 : 3 }}>
-      <Typography variant={isMobile ? "h4" : "h3"} gutterBottom sx={{ textAlign: "center", mb: isMobile ? 2 : 4 }}>
-        The Great Reckoning
-      </Typography>
+    <Box sx={{ p: isMobile ? 2 : 3 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: isMobile ? 2 : 3 }}>
+        <Typography variant={isMobile ? "h5" : "h4"}>
+          The Great Reckoning
+        </Typography>
+      </Box>
 
       <Typography variant={isMobile ? "body2" : "body1"} color="text.secondary" paragraph sx={{ textAlign: "center", mb: isMobile ? 2 : 4 }}>
         Behold the combined humours of all houses in the Festival of Humoural Ascension—the measure of sacred balance ere the final rite.
@@ -61,6 +70,14 @@ export const FestivalBalance: React.FC = () => {
         <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2, textAlign: 'center', fontStyle: 'italic' }}>
           (Divine Gifts doubled ×2, Holy Burdens halved ÷2)
         </Typography>
+
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: isMobile ? 2 : 3 }}>
+        <UnitToggle
+          unitType={unitType}
+          onUnitTypeChange={onUnitTypeChange}
+          size="small"
+          />
+          </Box>
 
         <Box sx={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 2 : 3 }}>
           {HUMOUR_ORDER.map(humour => {
@@ -79,8 +96,8 @@ export const FestivalBalance: React.FC = () => {
                   <Typography variant={isMobile ? "subtitle1" : "h6"} color="text.secondary">
                     {config.label} {config.emoji}
                   </Typography>
-                  <Typography variant={isMobile ? "h4" : "h3"} sx={{ fontWeight: "bold", color: config.color }}>
-                    <NumberWithFraction value={totalScores[humour]} />
+                  <Typography variant={isMobile ? "h3" : "h2"} sx={{ fontWeight: "bold", color: config.color, fontSize: isMobile ? '2.5rem' : '3.75rem' }}>
+                    <NumberWithFraction value={convertValue(totalScores[humour], unitType)} />
                   </Typography>
                 </Paper>
               </Box>
@@ -98,8 +115,8 @@ export const FestivalBalance: React.FC = () => {
               <Typography variant={isMobile ? "subtitle1" : "h6"} color="text.secondary" gutterBottom>
                 Sum of All Humours
               </Typography>
-              <Typography variant={isMobile ? "h4" : "h2"} sx={{ fontWeight: "bold" }}>
-                <NumberWithFraction value={grandTotal} />
+              <Typography variant={isMobile ? "h4" : "h2"} sx={{ fontWeight: "bold", fontSize: isMobile ? '2.5rem' : '6rem' }}>
+                <NumberWithFraction value={convertValue(grandTotal, unitType)} />
               </Typography>
             </Box>
           </Box>
@@ -110,13 +127,13 @@ export const FestivalBalance: React.FC = () => {
                 Sacred Balance ⚖️
               </Typography>
               <Typography 
-                variant={isMobile ? "h4" : "h2"} 
+                variant={isMobile ? "h3" : "h1"} 
                 sx={{ 
                   fontWeight: "bold",
                   color: overallBalance < 100 ? "green" : overallBalance < 200 ? "orange" : "red"
                 }}
               >
-                {overallBalance.toFixed()}
+                <NumberWithFraction value={convertValue(overallBalance, unitType)} />
               </Typography>
             </Box>
           </Box>
