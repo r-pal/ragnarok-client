@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   ButtonBase,
   Dialog,
@@ -6,28 +7,27 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
+  IconButton,
   InputLabel,
+  Menu,
   MenuItem,
   Select,
   TextField,
-  IconButton,
-  Menu,
   useMediaQuery,
-  useTheme,
-  Box
+  useTheme
 } from "@mui/material";
-import { useState, useEffect, useRef } from "react";
-import { AddHouse } from "./House/addHouse";
+import { useEffect, useRef, useState } from "react";
+import { UnitType } from "../App";
+import { useThemeContext } from "../ThemeProviderWrapper";
+import { Explainer } from "./explainer";
 import { AddFaction } from "./Faction/addFaction";
+import { FestivalBalance } from "./festivalBalance";
 import { GameHistory } from "./Game/gameHistory";
 import { NewGame } from "./Game/newGame";
-import { Explainer } from "./explainer";
-import { FestivalBalance } from "./festivalBalance";
+import { SortBy } from "./header";
+import { AddHouse } from "./House/addHouse";
 import { CrestGallery } from "./House/crestGallery";
 import { UnitToggle } from "./shared/UnitToggle";
-import { SortBy } from "./header";
-import { useThemeContext } from "../ThemeProviderWrapper";
-import { UnitType } from "../App";
 
 interface IFooter {
   adminMode: boolean;
@@ -40,7 +40,14 @@ interface IFooter {
 
 const SECRET_PASSWORD = "1234";
 
-export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onSortChange, unitType, onUnitTypeChange }) => {
+export const Footer: React.FC<IFooter> = ({
+  adminMode,
+  setAdminMode,
+  sortBy,
+  onSortChange,
+  unitType,
+  onUnitTypeChange
+}) => {
   const [openAdminModeModal, setOpenAdminModeModal] = useState(false);
   const [openNewHouseModal, setOpenNewHouseModal] = useState(false);
   const [openNewFactionModal, setOpenNewFactionModal] = useState(false);
@@ -50,13 +57,15 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
   const [openFestivalBalance, setOpenFestivalBalance] = useState(false);
   const [openCrestGallery, setOpenCrestGallery] = useState(false);
   const [password, setPassword] = useState("");
-  const [mobileMenuAnchor, setMobileMenuAnchor] = useState<null | HTMLElement>(null);
+  const [mobileMenuAnchor, setMobileMenuAnchor] = useState<null | HTMLElement>(
+    null
+  );
   const [isAutoCycling, setIsAutoCycling] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  
+
   const theme = useTheme();
   const { toggleTheme, currentTheme } = useThemeContext();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   // Listen for custom event to open Sacred Rules
   useEffect(() => {
@@ -66,19 +75,20 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
       setTimeout(() => {
         const element = document.getElementById(e.detail?.scrollTo);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
         }
       }, 300);
     };
-    
-    window.addEventListener('openSacredRules', handleOpenSacredRules);
-    return () => window.removeEventListener('openSacredRules', handleOpenSacredRules);
+
+    window.addEventListener("openSacredRules", handleOpenSacredRules);
+    return () =>
+      window.removeEventListener("openSacredRules", handleOpenSacredRules);
   }, []);
-  
+
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMenuAnchor(event.currentTarget);
   };
-  
+
   const handleMobileMenuClose = () => {
     setMobileMenuAnchor(null);
   };
@@ -99,18 +109,29 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
   };
 
   // Auto-cycle through sort options
-  const sortOptions: SortBy[] = ["balance", "total", "choleric", "phlegmatic", "melancholic", "sanguine", "hot", "cold", "moist", "dry"];
-  
+  const sortOptions: SortBy[] = [
+    "balance",
+    "total",
+    "choleric",
+    "phlegmatic",
+    "melancholic",
+    "sanguine",
+    "hot",
+    "cold",
+    "moist",
+    "dry"
+  ];
+
   useEffect(() => {
     if (isAutoCycling) {
       const currentIndex = sortOptions.indexOf(sortBy);
-      
+
       intervalRef.current = setInterval(() => {
         const nextIndex = (currentIndex + 1) % sortOptions.length;
         const nextSort = sortOptions[nextIndex];
         onSortChange(nextSort);
       }, 15000); // 15 seconds
-      
+
       return () => {
         if (intervalRef.current) {
           clearInterval(intervalRef.current);
@@ -159,9 +180,13 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
               transition: "background-color 0.3s ease"
             }}
           >
-            <img src="assets/images/quill-img.svg" alt="Q" style={{ height: 24 }} />
+            <img
+              src="assets/images/quill-img.svg"
+              alt="Q"
+              style={{ height: 24 }}
+            />
           </ButtonBase>
-          
+
           {isMobile ? (
             <>
               <IconButton
@@ -181,35 +206,80 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
                   }
                 }}
               >
-                <MenuItem onClick={() => { setOpenGameHistoryModal(true); handleMobileMenuClose(); }}>
+                <MenuItem
+                  onClick={() => {
+                    setOpenGameHistoryModal(true);
+                    handleMobileMenuClose();
+                  }}
+                >
                   CHRONICLE OF RITES
                 </MenuItem>
-                <MenuItem onClick={() => { setOpenFestivalBalance(true); handleMobileMenuClose(); }}>
+                <MenuItem
+                  onClick={() => {
+                    setOpenFestivalBalance(true);
+                    handleMobileMenuClose();
+                  }}
+                >
                   THE GREAT RECKONING
                 </MenuItem>
-                <MenuItem onClick={() => { setOpenCrestGallery(true); handleMobileMenuClose(); }}>
+                <MenuItem
+                  onClick={() => {
+                    setOpenCrestGallery(true);
+                    handleMobileMenuClose();
+                  }}
+                >
                   GALLERY OF CRESTS
                 </MenuItem>
                 {adminMode && (
                   <>
-                    <MenuItem onClick={() => { setOpenNewHouseModal(true); handleMobileMenuClose(); }}>
+                    <MenuItem
+                      onClick={() => {
+                        setOpenNewHouseModal(true);
+                        handleMobileMenuClose();
+                      }}
+                    >
                       CONSECRATE HOUSE
                     </MenuItem>
-                    <MenuItem onClick={() => { setOpenNewFactionModal(true); handleMobileMenuClose(); }}>
+                    <MenuItem
+                      onClick={() => {
+                        setOpenNewFactionModal(true);
+                        handleMobileMenuClose();
+                      }}
+                    >
                       FORGE COVENANT
                     </MenuItem>
-                    <MenuItem onClick={() => { setOpenNewGameModal(true); handleMobileMenuClose(); }}>
+                    <MenuItem
+                      onClick={() => {
+                        setOpenNewGameModal(true);
+                        handleMobileMenuClose();
+                      }}
+                    >
                       RECORD RITE
                     </MenuItem>
                   </>
                 )}
-                <MenuItem onClick={() => { setOpenExplainer(true); handleMobileMenuClose(); }}>
+                <MenuItem
+                  onClick={() => {
+                    setOpenExplainer(true);
+                    handleMobileMenuClose();
+                  }}
+                >
                   THE SACRED RULES
                 </MenuItem>
-                <MenuItem onClick={() => { toggleTheme(); handleMobileMenuClose(); }}>
+                <MenuItem
+                  onClick={() => {
+                    toggleTheme();
+                    handleMobileMenuClose();
+                  }}
+                >
                   {currentTheme === "light" ? "🌙 DARK MODE" : "☀️ LIGHT MODE"}
                 </MenuItem>
-                <MenuItem onClick={() => { toggleAutoCycle(); handleMobileMenuClose(); }}>
+                <MenuItem
+                  onClick={() => {
+                    toggleAutoCycle();
+                    handleMobileMenuClose();
+                  }}
+                >
                   {isAutoCycling ? "⏸ STOP SLIDESHOW" : "▶ START SLIDESHOW"}
                 </MenuItem>
               </Menu>
@@ -236,13 +306,22 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
               </Button>
               {adminMode && (
                 <>
-                  <Button onClick={() => setOpenNewHouseModal(true)} sx={{ color: "white" }}>
+                  <Button
+                    onClick={() => setOpenNewHouseModal(true)}
+                    sx={{ color: "white" }}
+                  >
                     CONSECRATE HOUSE
                   </Button>
-                  <Button onClick={() => setOpenNewFactionModal(true)} sx={{ color: "white" }}>
+                  <Button
+                    onClick={() => setOpenNewFactionModal(true)}
+                    sx={{ color: "white" }}
+                  >
                     FORGE COVENANT
                   </Button>
-                  <Button onClick={() => setOpenNewGameModal(true)} sx={{ color: "white" }}>
+                  <Button
+                    onClick={() => setOpenNewGameModal(true)}
+                    sx={{ color: "white" }}
+                  >
                     RECORD RITE
                   </Button>
                 </>
@@ -251,12 +330,12 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
           )}
         </Box>
 
-            <UnitToggle
-              unitType={unitType}
-              onUnitTypeChange={onUnitTypeChange}
-              size="small"
-              color="white"
-            />
+        <UnitToggle
+          unitType={unitType}
+          onUnitTypeChange={onUnitTypeChange}
+          size="small"
+          color="white"
+        />
 
         <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
           <FormControl sx={{ minWidth: isMobile ? 150 : 200 }}>
@@ -293,19 +372,29 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
               <MenuItem value="dry">Dry (Choleric + Melancholic)</MenuItem>
             </Select>
           </FormControl>
-          
+
           {!isMobile && (
             <IconButton
               onClick={toggleAutoCycle}
               sx={{
                 color: "white",
-                backgroundColor: isAutoCycling ? "rgba(255, 215, 0, 0.3)" : "transparent",
-                border: isAutoCycling ? "2px solid gold" : "2px solid rgba(255, 255, 255, 0.3)",
+                backgroundColor: isAutoCycling
+                  ? "rgba(255, 215, 0, 0.3)"
+                  : "transparent",
+                border: isAutoCycling
+                  ? "2px solid gold"
+                  : "2px solid rgba(255, 255, 255, 0.3)",
                 "&:hover": {
-                  backgroundColor: isAutoCycling ? "rgba(255, 215, 0, 0.4)" : "rgba(255, 255, 255, 0.1)"
+                  backgroundColor: isAutoCycling
+                    ? "rgba(255, 215, 0, 0.4)"
+                    : "rgba(255, 255, 255, 0.1)"
                 }
               }}
-              title={isAutoCycling ? "Stop auto-cycle" : "Auto-cycle rankings (15s each)"}
+              title={
+                isAutoCycling
+                  ? "Stop auto-cycle"
+                  : "Auto-cycle rankings (15s each)"
+              }
             >
               {isAutoCycling ? "⏸" : "▶"}
             </IconButton>
@@ -328,8 +417,7 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
             >
               {currentTheme === "light" ? "🌙" : "☀️"}
             </IconButton>
-            
-            
+
             <Button
               onClick={() => setOpenExplainer(true)}
               sx={{ color: "white", minWidth: "120px" }}
@@ -344,7 +432,12 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         onClose={handleClose}
         fullWidth
         maxWidth="xs"
-        PaperProps={{ sx: { backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary } }}
+        PaperProps={{
+          sx: {
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary
+          }
+        }}
       >
         <DialogTitle>Enter Password</DialogTitle>
         <DialogContent>
@@ -372,7 +465,12 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         onClose={handleCloseNewHouse}
         fullWidth
         maxWidth="md"
-        PaperProps={{ sx: { backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary } }}
+        PaperProps={{
+          sx: {
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary
+          }
+        }}
       >
         <DialogContent>
           <AddHouse />
@@ -387,7 +485,12 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         onClose={handleCloseNewFaction}
         fullWidth
         maxWidth="md"
-        PaperProps={{ sx: { backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary } }}
+        PaperProps={{
+          sx: {
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary
+          }
+        }}
       >
         <DialogContent>
           <AddFaction />
@@ -402,7 +505,12 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         onClose={handleCloseNewGame}
         fullWidth
         maxWidth="md"
-        PaperProps={{ sx: { backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary } }}
+        PaperProps={{
+          sx: {
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary
+          }
+        }}
       >
         <DialogContent>
           <NewGame />
@@ -417,7 +525,12 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         onClose={handleCloseGameHistory}
         fullWidth
         maxWidth="lg"
-        PaperProps={{ sx: { backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary } }}
+        PaperProps={{
+          sx: {
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary
+          }
+        }}
       >
         <DialogContent>
           <GameHistory unitType={unitType} adminMode={adminMode} />
@@ -432,7 +545,12 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         onClose={() => setOpenExplainer(false)}
         maxWidth="md"
         fullWidth
-        PaperProps={{ sx: { backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary } }}
+        PaperProps={{
+          sx: {
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary
+          }
+        }}
       >
         <Explainer />
       </Dialog>
@@ -442,9 +560,17 @@ export const Footer: React.FC<IFooter> = ({ adminMode, setAdminMode, sortBy, onS
         onClose={() => setOpenFestivalBalance(false)}
         maxWidth="md"
         fullWidth
-        PaperProps={{ sx: { backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary } }}
+        PaperProps={{
+          sx: {
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary
+          }
+        }}
       >
-        <FestivalBalance unitType={unitType} onUnitTypeChange={onUnitTypeChange} />
+        <FestivalBalance
+          unitType={unitType}
+          onUnitTypeChange={onUnitTypeChange}
+        />
       </Dialog>
 
       <CrestGallery

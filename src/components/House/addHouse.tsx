@@ -1,17 +1,17 @@
 import {
+  Box,
   Button,
+  Collapse,
+  Stack,
   TextField,
   Typography,
-  Box,
-  Stack,
-  Collapse,
-  useTheme,
+  useTheme
 } from "@mui/material";
-import { useState } from "react";
-import { Formik, Form } from "formik";
-import { IPostHouse } from "types/house";
-import { HumourSelect } from "components/shared/HumourSelect";
 import { CrestSearch } from "components/shared/CrestSearch";
+import { HumourSelect } from "components/shared/HumourSelect";
+import { Form, Formik } from "formik";
+import { useState } from "react";
+import { IPostHouse } from "types/house";
 import { useData } from "../../context/DataContext";
 
 const initialValues: IPostHouse = {
@@ -27,8 +27,7 @@ export const AddHouse: React.FC = () => {
   const { createHouse } = useData();
   const [showCrestSearch, setShowCrestSearch] = useState(false);
   const theme = useTheme();
-  
-  
+
   const handleSubmit = async (values: IPostHouse, { resetForm }: any) => {
     // Validate that divine gift and holy burden are selected
     if (!values.strength || !values.weakness) {
@@ -38,13 +37,17 @@ export const AddHouse: React.FC = () => {
 
     // Validate that divine gift and holy burden are different
     if (values.strength === values.weakness) {
-      alert("Thy divine gift and holy burden cannot dwell in the same humour—such is forbidden!");
+      alert(
+        "Thy divine gift and holy burden cannot dwell in the same humour—such is forbidden!"
+      );
       return;
     }
 
     // Validate password
     if (!values.password || values.password.length < 4) {
-      alert("Thou must provide a password of at least 4 characters to protect thy house");
+      alert(
+        "Thou must provide a password of at least 4 characters to protect thy house"
+      );
       return;
     }
 
@@ -54,8 +57,8 @@ export const AddHouse: React.FC = () => {
       resetForm();
       setShowCrestSearch(false);
     } catch (error) {
-      console.error('Failed to create house:', error);
-      alert('Failed to consecrate house. Please try again.');
+      console.error("Failed to create house:", error);
+      alert("Failed to consecrate house. Please try again.");
     }
   };
 
@@ -65,7 +68,8 @@ export const AddHouse: React.FC = () => {
         Consecrate a New House
       </Typography>
       <Typography variant="body2" color="text.secondary" paragraph>
-        Establish a noble house and inscribe its blessed fortitudes upon the sacred scrolls
+        Establish a noble house and inscribe its blessed fortitudes upon the
+        sacred scrolls
       </Typography>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {({ values, handleChange, handleBlur }) => (
@@ -79,6 +83,7 @@ export const AddHouse: React.FC = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 required
+                disabled
               />
 
               <TextField
@@ -89,6 +94,7 @@ export const AddHouse: React.FC = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 required
+                disabled
               />
 
               <Box>
@@ -99,25 +105,37 @@ export const AddHouse: React.FC = () => {
                   value={values.crestUrl}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  disabled
                 />
-                <Button 
+                <Button
                   onClick={() => setShowCrestSearch(!showCrestSearch)}
                   sx={{ mt: 1 }}
                   variant="outlined"
                   size="small"
                   type="button"
+                  disabled
                 >
                   {showCrestSearch ? "Hide Search" : "Search Wikimedia Commons"}
                 </Button>
-                  <Typography variant="caption" sx={{ color: theme.palette.text.secondary, display: 'block', fontStyle: 'italic', mt: 1 }}>
-                  Or shouldst thou prefer, convey thine image unto https://imgbb.com/ and inscribe herein the full path, including '.jpg'
+                <Typography
+                  variant="caption"
+                  sx={{
+                    color: theme.palette.text.secondary,
+                    display: "block",
+                    fontStyle: "italic",
+                    mt: 1
+                  }}
+                >
+                  Or shouldst thou prefer, convey thine image unto
+                  https://imgbb.com/ and inscribe herein the full path,
+                  including '.jpg'
                 </Typography>
               </Box>
-              
+
               <Collapse in={showCrestSearch}>
-                <CrestSearch 
+                <CrestSearch
                   onSelectCrest={(url) => {
-                    handleChange({ target: { name: 'crestUrl', value: url } });
+                    handleChange({ target: { name: "crestUrl", value: url } });
                     setShowCrestSearch(false);
                   }}
                 />
@@ -131,6 +149,7 @@ export const AddHouse: React.FC = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   required
+                  disabled
                 />
                 <HumourSelect
                   label="Sacred Affliction"
@@ -139,6 +158,7 @@ export const AddHouse: React.FC = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   required
+                  disabled
                 />
               </Stack>
 
@@ -152,6 +172,7 @@ export const AddHouse: React.FC = () => {
                 onBlur={handleBlur}
                 required
                 helperText="Required to edit house details without admin access"
+                disabled
               />
 
               {values.crestUrl && (
@@ -173,6 +194,7 @@ export const AddHouse: React.FC = () => {
                 color="primary"
                 fullWidth
                 size="large"
+                disabled
               >
                 Consecrate House
               </Button>
