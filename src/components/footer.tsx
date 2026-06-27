@@ -182,7 +182,7 @@ export const Footer: React.FC<IFooter> = ({
           >
             <img
               src="assets/images/quill-img.svg"
-              alt="Q"
+              alt="Scribe"
               style={{ height: 24 }}
             />
           </ButtonBase>
