@@ -44,5 +44,5 @@
     "typescript": "^4.9.5"
   },
   "homepage": "https://r-pal.github.io/ragnarok-client",
-  "proxy": "https://scoring-app-08ju.onrender.com"
+  "proxy": "http://localhost:3000"
 }
